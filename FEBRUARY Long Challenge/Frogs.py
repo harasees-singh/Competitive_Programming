@@ -22,39 +22,37 @@ find the index of the second lowest weight and the lowest weight and check if th
 
 
 # print(positioning)
-t = int(input())
-for _ in range(t):
-    positioning = [[0, 0] for i in range(20)]
-    n = int(input())
-    weights = list(map(int, input().split()))
-    jump_lengths = list(map(int, input().split()))
-    for i in range(len(weights)):
-        positioning[i][0], positioning[i][1] = weights[i], jump_lengths[i]
 
-    # no problem till here
+# for frog sort you need to find a method such that you can loop through a list or someting and then whenver an element with higher index is lesser than an element with a lower index you need to do something such that this issue is resolved
+# now we just need to find this kind of code
+# the problem is created by all the zeroes that are created on the way when you move an element from it's original position we could pop that position 
+# instead of using a list to do all this we could use some other logic
 
-    reference_positioning = positioning[:]
-    positioning_ = positioning[:]
-    reference = weights[:]
-    weights.sort()
-    # print(weights)
-    # print(reference)
-    jump_count = 0
-    for i in range(len(weights)-1):
-        index_of_smaller = reference.index(weights[i])
-        #print(index_of_smaller)
-        index_of_greater = reference.index(weights[i+1])
-        #print(index_of_greater)
-        jump = reference_positioning[index_of_greater][1]
-        temp = index_of_greater
-        
-        while index_of_smaller >= index_of_greater:
-            index_of_greater+= jump
-            jump_count+=1
-        
-        positioning_[index_of_greater][0] = positioning[temp][0]
-    print(jump_count)
-    
+arr = [[0, 0, 0] for _ in range(100)]
+weights = list(map(int, input().split()))
+lengths = list(map(int, input().split()))
+
+positioning = [0 for _ in range(100)]
+
+for i in range(len(weights)):
+    arr[i][0], arr[i][1] = weights[i], lengths[i]
+
+for i in range(100):
+    if arr[i][0] > arr[i+1][0]:
+        temp = i
+        temp +=arr[i][2]      # index to be increased by the jump size
+        while positioning[temp] != 0:
+            temp += arr[i][2]
+
+        positioning[temp] = arr[i][0]
         
         
         
+        '''if positioning[temp] == 0:            
+            positioning[temp] = arr[i][0] # updating the positioning list so that we have an idea of position of all the frogs at the end
+        else:
+            temp+=arr[i][2]
+            positioning[temp] = arr[i][0]'''
+
+        
+

@@ -1,6 +1,6 @@
 '''
-the given time can be converted to a format feasible for comparison so for example 12:00am CAN be assumed to be zero and then subsequently from 00:00 am to 12:00 am can
-be assumed to be -12 to 0 and then pm time can be taken as positive that should do it 
+the given time can be converted to a format feasible for comparison so 
+new plan: convert time into 24 hour format
 '''
 
 def time_format(time):
