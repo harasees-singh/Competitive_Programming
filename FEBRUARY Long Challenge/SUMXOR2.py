@@ -31,8 +31,6 @@ import itertools
 def SubsequenceMaker(number_of_elements):
     return tuple(itertools.combinations(elements, number_of_elements))
 
-
-
 computed_xors = {}      # will store all the xors here such that the key is a tuple of numbers (a subsequence in regard to the question) and it's value will be the bitwise xor of all the elements in the tuple
 
 n = int(input())
@@ -56,15 +54,16 @@ for i in range(q):
         # print(sequence)
         for v in range(len(sequence)):
             if j==2:
-                temp = computed_xors[sequence[0][0]]^sequence[0][1]
+                temp = computed_xors[sequence[v][0]]^sequence[v][1]
                 sum += temp
-                computed_xors[sequence[0]] = temp
+                # print(sequence[v])
+                computed_xors[sequence[v]] = temp
 
                 # print(computed_xors)
             else:
-                temp = computed_xors[sequence[:-1]]^sequence[-1]
+                temp = computed_xors[sequence[v][:-1]]^sequence[v][-1]
                 sum += temp
-                computed_xors[sequence] = temp
+                computed_xors[sequence[v]] = temp
 
     print(sum)
 
