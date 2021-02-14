@@ -21,7 +21,15 @@ will deal with it later
 # which will already have bitwise xors of the same subsequence but will the last element missing 
 # then i will take that xor value of the subsequence from the dictionary and then do it's bitwise xor with 
 # the last element of the subsequence and then add it to the final sum and also add its xor value as a key value pair in the dictionary
-import array
+
+
+# to avoid TLE how about I use generator?
+
+
+
+import math
+
+
 import itertools
 
 # arr = [1, 2, 5, 4, 4]
@@ -29,7 +37,7 @@ import itertools
 #    print(i)
 
 def SubsequenceMaker(number_of_elements):
-    return tuple(itertools.combinations(elements, number_of_elements))
+    yield tuple(itertools.combinations(elements, number_of_elements))
 
 computed_xors = {}      # will store all the xors here such that the key is a tuple of numbers (a subsequence in regard to the question) and it's value will be the bitwise xor of all the elements in the tuple
 
@@ -50,9 +58,24 @@ for i in range(q):
     query = int(input())
 
     for j in range(2, query+1):
-        sequence = SubsequenceMaker(j)
-        # print(sequence)
-        for v in range(len(sequence)):
+        # sequence = SubsequenceMaker(j)
+        # print(sequence) 
+        yields = SubsequenceMaker(j)
+        for v in range(math.comb(n, j)):
+            yielded_sequence = (yields)
+            if j==2:
+                print(yielded_sequence)
+                temp = computed_xors[yielded_sequence[v][0]]^yielded_sequence[v][1]
+                sum += temp
+                # print(sequence[v])
+                computed_xors[yielded_sequence[v]] = temp
+
+                # print(computed_xors)
+            else:
+                temp = computed_xors[yielded_sequence[v][:-1]]^yielded_sequence[v][-1]
+                sum += temp
+                computed_xors[yielded_sequence[v]] = temp
+        '''for v in range(len(sequence)):
             if j==2:
                 temp = computed_xors[sequence[v][0]]^sequence[v][1]
                 sum += temp
@@ -63,7 +86,7 @@ for i in range(q):
             else:
                 temp = computed_xors[sequence[v][:-1]]^sequence[v][-1]
                 sum += temp
-                computed_xors[sequence[v]] = temp
+                computed_xors[sequence[v]] = temp'''
 
     print(sum)
 
