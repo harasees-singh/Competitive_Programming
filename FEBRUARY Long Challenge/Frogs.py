@@ -32,10 +32,18 @@ find the index of the second lowest weight and the lowest weight and check if th
 # hear my latest idea. what we could do is that we could isert the required index of every frog at arr[i][2] and then we will have an idea of where every frog has to be 
 # then we could loop through the list required no of times such that no 2 frogs have the same required index 
 
+def Sort(sub_li): 
+  
+    # reverse = None (Sorts in Ascending order) 
+    # key is set to sort using second element of  
+    # sublist lambda has been used 
+    sub_li.sort(key = lambda x: x[2]) 
+     
+
 t = int(input())
 for _ in range(t):
     n = int(input())
-    q=100
+    q=n
 
     arr = [[0, 0, 0] for _ in range(q)]
     weights = list(map(int, input().split()))
@@ -48,24 +56,24 @@ for _ in range(t):
 
     count = 0
 
-    for _ in range(200):
+    for _ in range(20):
         for i in range(q-1):
             
             if arr[i][0] > arr[i+1][0]:
-                while arr[i][2]< arr[i+1][2]:
+                while arr[i][2]<= arr[i+1][2]:
                     arr[i][2]+=arr[i][1]            # the expected position will be incremented by 'jump length' until it is greater than the expected position of the lighter frog
                     count+=1
 
-                for p in range(len(arr)):           # to resolve 2 frogs at the same position
-                    if arr[i][2]==arr[p][2] and i!=p:
-                        if arr[i][0]>arr[p][0]:
-                            arr[i][2]+=arr[i][1]
-                            count+=1
-                        else:
-                            arr[p][2]+=arr[p][1]        
-                            count+=1
-
-    print(count)
- 
         
-
+                Sort(arr)
+            
+        
+        for p in range(len(arr)):           # to resolve 2 frogs at the same position
+            if arr[i][2]==arr[p][2] and i!=p:
+                if arr[i][0]>arr[p][0]:
+                    arr[i][2]+=arr[i][1]
+                    count+=1
+                else:
+                    arr[p][2]+=arr[p][1]        
+                    count+=1
+    print(count)
