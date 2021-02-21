@@ -7,6 +7,7 @@ encryptions = list()
 actual_words = list()
 mapping = dict()
 
+
 n = int(input())
 for i in range(n):
 	actual_words.append(input())
