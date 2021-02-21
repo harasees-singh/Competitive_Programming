@@ -6,6 +6,7 @@ set_of_elements = {'b', 'c', 'r', '.'}
 
 crossword = []
 
+
  
 n, m = map(int, input().split())
 
