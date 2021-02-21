@@ -5,7 +5,7 @@
 # first make a function which appends the positions of b, c, and r (row, column) in a list
 
 # then pass an arg i into the recursive function which is such that i%m gives you the column number and i//m gives you the row number
-
+import copy
 
 lenght_word_dictionary = {}
 
@@ -20,7 +20,7 @@ for i in range(n):
     crossword.append(input())
     #crossword.append(list(map(str, input().split())))
 
-answer = crossword[:]       # this is the deep copy of crossword in which i will fill the answers
+answer = copy.deepcopy(crossword)    # this is the deep copy of crossword in which i will fill the answers
 
 
 number_of_words = int(input())
@@ -226,11 +226,13 @@ def mapped_successfully_down(i):
             
 
 def remove_the_mapping(i, elements_mapped_successfully):
-    for point in elements_mapped_successfully:
+    print("Invalid")
+    exit(0)
+    '''for point in elements_mapped_successfully:
         row = point[0]
         column = point[1]
         answer[row][column] = '.'
-    
+    '''
 
 
 def crossword_ripper(i):        # i corressponds to the index of the tuple where row, column of one of b, c, r is stored
@@ -243,22 +245,22 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
     if list_of_positions[i] == 'r':
 
         were_mapped_successfully_right, elements_mapped_successfully_right = mapped_successfully_right(i)
-        were_mapped_successfully_left, elements_mapped_successfully_left = mapped_successfully_left(i)
+        #were_mapped_successfully_left, elements_mapped_successfully_left = mapped_successfully_left(i)
 
         if were_mapped_successfully_right:
             crossword_ripper(i+1)
 
             remove_the_mapping(i, elements_mapped_successfully_right)
         
-        if were_mapped_successfully_left:
+        '''if were_mapped_successfully_left:
             crossword_ripper(i+1)
 
-            remove_the_mapping(i, elements_mapped_successfully_left)
+            remove_the_mapping(i, elements_mapped_successfully_left)'''
         return                          # if mapping fails go back to the previous step 
 
     if list_of_positions[i] == 'c':
 
-        were_mapped_successfully_up, elements_mapped_successfully_up = mapped_successfully_up(i)
+        #were_mapped_successfully_up, elements_mapped_successfully_up = mapped_successfully_up(i)
         were_mapped_successfully_down, elements_mapped_successfully_down = mapped_successfully_down(i)
 
         if were_mapped_successfully_down:
@@ -266,16 +268,16 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
 
             remove_the_mapping(i, elements_mapped_successfully_down)
         
-        if were_mapped_successfully_up:
+        '''if were_mapped_successfully_up:
             crossword_ripper(i+1)
 
-            remove_the_mapping(i, elements_mapped_successfully_up)
+            remove_the_mapping(i, elements_mapped_successfully_up)'''
 
         return
 
     if list_of_positions[i] == 'b':
 
-        were_mapped_successfully_up, elements_mapped_successfully_up = mapped_successfully_up(i)
+        '''were_mapped_successfully_up, elements_mapped_successfully_up = mapped_successfully_up(i)
 
         if were_mapped_successfully_up:
 
@@ -292,7 +294,7 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
 
                 remove_the_mapping(i, elements_mapped_successfully_left)
             return                          # if mapping fails go back to the previous step 
-
+'''
     
         
         were_mapped_successfully_down, elements_mapped_successfully_down = mapped_successfully_down(i)
@@ -300,25 +302,25 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
         if were_mapped_successfully_down:
             print("mapped successfully")
             were_mapped_successfully_right, elements_mapped_successfully_right = mapped_successfully_right(i)
-            were_mapped_successfully_left, elements_mapped_successfully_left = mapped_successfully_left(i)
+            #were_mapped_successfully_left, elements_mapped_successfully_left = mapped_successfully_left(i)
             
             if were_mapped_successfully_right:
                 crossword_ripper(i+1)
 
                 remove_the_mapping(i, elements_mapped_successfully_right)
         
-            if were_mapped_successfully_left:
+            '''if were_mapped_successfully_left:
                 crossword_ripper(i+1)
 
-                remove_the_mapping(i, elements_mapped_successfully_left)
+                remove_the_mapping(i, elements_mapped_successfully_left)'''
             return                          # if mapping fails go back to the previous step 
 
         return
 
 
-print(list_of_positions)
+#print(list_of_positions)
 # crossword_ripper(0)    
-print(lenght_word_dictionary)
+#print(lenght_word_dictionary)
 print(answer)
 
 

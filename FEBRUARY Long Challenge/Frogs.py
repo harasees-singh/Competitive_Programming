@@ -56,24 +56,24 @@ for _ in range(t):
 
     count = 0
 
-    for _ in range(20):
+    for _ in range(100):
         for i in range(q-1):
             
             if arr[i][0] > arr[i+1][0]:
-                while arr[i][2]<= arr[i+1][2]:
-                    arr[i][2]+=arr[i][1]            # the expected position will be incremented by 'jump length' until it is greater than the expected position of the lighter frog
-                    count+=1
+            
+                arr[i][2]+=arr[i][1]            # the expected position will be incremented by 'jump length' until it is greater than the expected position of the lighter frog
+                count+=1
 
         
                 Sort(arr)
-            
+                
         
-        for p in range(len(arr)):           # to resolve 2 frogs at the same position
-            if arr[i][2]==arr[p][2] and i!=p:
-                if arr[i][0]>arr[p][0]:
-                    arr[i][2]+=arr[i][1]
-                    count+=1
-                else:
-                    arr[p][2]+=arr[p][1]        
-                    count+=1
+    for p in range(len(arr)):           # to resolve 2 frogs at the same position
+        if arr[p+1][2]==arr[p][2] :
+            if arr[p][0]>arr[p+1][0]:
+                arr[p][2]+=arr[p][1]
+                count+=1
+            else:
+                arr[p+1][2]+=arr[p][1]        
+                count+=1
     print(count)

@@ -16,9 +16,10 @@
 '''
 
 for i in range(int(input())):
-    list_of_time_stamps = [[0, 0] for i in range(2*10**4)]
+    list_of_time_stamps = {}
     #prefix_sums = [0 for i in range(10**6)]
-    prefix_sums = []
+    prefix_sums = set()
+    
 
     num_of_classes = int(input())
     
@@ -36,13 +37,13 @@ for i in range(int(input())):
         list_of_time_stamps[end][1] -= 1
     # poppping zeroes 
     res = [] 
-    [res.append(x) for x in list_of_time_stamps if x != [0, 0]] 
+    [res.append(x) for x in list_of_time_stamps.values() if x != [0, 0]] 
     
     # calculating prefix sums
     sum = 0
     for j in range(len(res)):
         sum = sum+res[j][0]
-        prefix_sums.append(sum)
+        prefix_sums.add(sum)
 
         sum += res[j][1]
 

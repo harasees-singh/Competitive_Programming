@@ -41,6 +41,7 @@ def encryption_decipher(i):
 
             if mapping_was_successful:
                 encryption_decipher(i+1)
+                
 
             remove_the_mapping(encryptions[i], elements_that_were_mapped) # this will remove the current mapping
 			
