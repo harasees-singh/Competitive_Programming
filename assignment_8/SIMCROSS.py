@@ -58,7 +58,7 @@ def print_the_answer():
     # 3) we hit the wall (already encounted for)
     # 4) there is already a word sitting in the same row (will be encounted for in a future update)
 
-def mapped_successfully_right(i):
+def mapped_successfully_right(i):               # mistake # mapping should fail if i !< m 
 
     elements_mapped_successfully = set()            # will store the positions of the elements that will be mapped
 
@@ -70,11 +70,16 @@ def mapped_successfully_right(i):
             return False        # if we hit the wall before ever encountering a 'b' or an 'r' then that means the mapping will never succeed 
         count+=1
         i+=1
+
+    
+    if i==m:                                    # this should resolve the issue
+        return False
+
     count+=1
 
     length_of_word = count
 
-    if length_of_word in lenght_word_dictionary.values():
+    if length_of_word in lenght_word_dictionary.keys():
         potential_candidate = lenght_word_dictionary[length_of_word]
     else:
         return False
@@ -84,7 +89,7 @@ def mapped_successfully_right(i):
     
 
     for j in range(length_of_word):
-        if answer[row][column] != '.' and answer[row][column] != potential_candidate[j]:
+        if answer[row][column] != '.' or answer[row][column] != 'b' or answer[row][column] != 'r' or answer[row][column+j] != potential_candidate[j]:
             return False
         
         else:
@@ -103,7 +108,7 @@ def mapped_successfully_left(i):
 
     row, column = list_of_positions[i][0], list_of_positions[i][1]
     count = 1
-    i = column+1
+    i = column-1
     while i>=0 and crossword[row][i] != 'r' or crossword[row][i] != 'b':
         if crossword[row][i] == '#':
             return False        # if we hit the wall before ever encountering a 'b' or an 'r' then that means the mapping will never succeed 
@@ -111,16 +116,22 @@ def mapped_successfully_left(i):
         i-=1                    # decrement i because we are moving in the left direction
     count+=1
 
+
+    if i == -1:
+        return False
+
     length_of_word = count
 
+    
 
-    if length_of_word in lenght_word_dictionary.values():
+
+    if length_of_word in lenght_word_dictionary.keys():
         potential_candidate = lenght_word_dictionary[length_of_word]
     else:
         return False
 
     for j in range(length_of_word):
-        if answer[row][column] != '.' and answer[row][column] != potential_candidate[j]:
+        if answer[row][column] != '.' or answer[row][column] != 'b' or answer[row][column] != 'r' or answer[row][column-j] != potential_candidate[-j-1]:
             return False
         
         else:
@@ -141,23 +152,26 @@ def mapped_successfully_up(i):
     row, column = list_of_positions[i][0], list_of_positions[i][1]
     count = 1
     i = row-1
-    while i>=0 and crossword[i][column] != 'r' or crossword[i][column] != 'b':
+    while i>=0 and crossword[i][column] != 'c' or crossword[i][column] != 'b':
         if crossword[i][column] == '#':
             return False        # if we hit the wall before ever encountering a 'b' or an 'r' then that means the mapping will never succeed 
         count+=1
         i-=1                    # decrement i because we are moving in the left direction
     count+=1
 
+    if i == -1:
+        return False
+
     length_of_word = count
 
 
-    if length_of_word in lenght_word_dictionary.values():
+    if length_of_word in lenght_word_dictionary.keys():
         potential_candidate = lenght_word_dictionary[length_of_word]
     else:
         return False
 
     for j in range(length_of_word):
-        if answer[row][column] != '.' and answer[row][column] != potential_candidate[j]:
+        if answer[row][column] != '.' or answer[row][column] != 'b' or answer[row][column] != 'c' or answer[row][column-j] != potential_candidate[-j-1]:
             return False
         
         else:
@@ -177,16 +191,19 @@ def mapped_successfully_down(i):
     row, column = list_of_positions[i][0], list_of_positions[i][1]
     count = 1
     i = row+1
-    while i<n and crossword[i][column] != 'r' or crossword[i][column] != 'b':
+    while i<n and crossword[i][column] != 'c' or crossword[i][column] != 'b':
         if crossword[i][column] == '#':
             return False        # if we hit the wall before ever encountering a 'b' or an 'r' then that means the mapping will never succeed 
         count+=1
         i+=1
     count+=1
 
+    if i == n:
+        return False
+
     length_of_word = count
 
-    if length_of_word in lenght_word_dictionary.values():
+    if length_of_word in lenght_word_dictionary.keys():
         potential_candidate = lenght_word_dictionary[length_of_word]
     else:
         return False
@@ -196,7 +213,7 @@ def mapped_successfully_down(i):
     
 
     for j in range(length_of_word):
-        if answer[row][column] != '.' and answer[row][column] != potential_candidate[j]:
+        if answer[row][column] != '.' or answer[row][column] != 'b' or answer[row][column] != 'c' or answer[row][column+j] != potential_candidate[j]:
             return False
         
         else:
@@ -221,6 +238,8 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
         print(answer)
         exit(0)
     
+    print(answer)
+
     if list_of_positions[i] == 'r':
 
         were_mapped_successfully_right, elements_mapped_successfully_right = mapped_successfully_right(i)
@@ -279,7 +298,7 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
         were_mapped_successfully_down, elements_mapped_successfully_down = mapped_successfully_down(i)
 
         if were_mapped_successfully_down:
-
+            print("mapped successfully")
             were_mapped_successfully_right, elements_mapped_successfully_right = mapped_successfully_right(i)
             were_mapped_successfully_left, elements_mapped_successfully_left = mapped_successfully_left(i)
             
@@ -298,7 +317,11 @@ def crossword_ripper(i):        # i corressponds to the index of the tuple where
 
 
 print(list_of_positions)
-crossword_ripper(0)    
+# crossword_ripper(0)    
+print(lenght_word_dictionary)
+print(answer)
+
+
 
 # print(answer)
 # print(crossword)
