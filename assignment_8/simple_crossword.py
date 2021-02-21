@@ -35,14 +35,14 @@ def print_crossword():
 
     for row_count in range(m):
         for column_count in range(n):
-            print(answer[row_count][column_count], end = ' ')
+            print(answer[row_count][column_count], end = '')
         print()
 
 
 def places_vacant_on_the_right(i, j):
     count = 1
     temp = 1
-    while j+temp < n:
+    while j+temp < m:       # total column count is m
         
         if crossword[i][j+temp] != '#':
             if crossword[i][j+temp] == 'b' or crossword[i][j+temp] == 'r':
@@ -57,12 +57,13 @@ def places_vacant_on_the_right(i, j):
             else:
                 return 0            # returning zero means ignore this one
         temp+=1
+    return 0
 
 
 def places_vacant_on_the_downside(i, j):
     count = 1
     temp = 1
-    while i+temp < m:
+    while i+temp < n:
         
         if crossword[i+temp][j] != '#':
             if crossword[i+temp][j] == 'b' or crossword[i+temp][j] == 'c':
@@ -93,11 +94,11 @@ for var in range(m*n):
         #print_crossword()
         #print('\n\n\n')       #debug
         length = places_vacant_on_the_downside(row, column)
-        print(length)
+        #print(length)
         if length in lenght_word_dictionary.keys():
             potential_word = lenght_word_dictionary[length]
         else:                               # if dict does not contain word of required length just print invalid
-            print("Invalid-------")
+            print("Invalid")
             exit(0)
 
         for j in range(len(potential_word)):
@@ -110,7 +111,7 @@ for var in range(m*n):
 
             
             else:
-                print("Invalid-----")            # if some other letter was already mapped then it's a fail
+                print("Invalid")            # if some other letter was already mapped then it's a fail
                 exit(0)
             
         
@@ -120,7 +121,7 @@ for var in range(m*n):
         if length in lenght_word_dictionary.keys():
             potential_word = lenght_word_dictionary[length]
         else:                               # if dict does not contain word of required length just print invalid
-            print("Invalid---")
+            print("Invalid")
             exit(0)
 
         for j in range(len(potential_word)):
@@ -129,7 +130,7 @@ for var in range(m*n):
                 answer[row_index][column_index] = potential_word[j]
             
             else:
-                print("Invalid--")            # if some other letter was already mapped then it's a fail
+                print("Invalid")            # if some other letter was already mapped then it's a fail
                 exit(0)
     
     if crossword[row][column] == 'b':
@@ -141,7 +142,7 @@ for var in range(m*n):
         if length_1 in lenght_word_dictionary.keys():
             potential_word = lenght_word_dictionary[length_1]
         else:                               # if dict does not contain word of required length just print invalid
-            print("Invalid-")
+            print("Invalid")
             exit(0)
 
         for j in range(len(potential_word)):
@@ -158,7 +159,7 @@ for var in range(m*n):
         if length_2 in lenght_word_dictionary.keys():
             potential_word = lenght_word_dictionary[length_2]
         else:                               # if dict does not contain word of required length just print invalid
-            print("--Invalid")
+            print("Invalid")
             exit(0)
 
         for j in range(len(potential_word)):
@@ -168,7 +169,7 @@ for var in range(m*n):
                 answer[row_index][column_index] = potential_word[j]
             
             else:
-                print("----Invalid")            # if some other letter was already mapped then it's a fail
+                print("Invalid")            # if some other letter was already mapped then it's a fail
                 exit(0)
             
 
