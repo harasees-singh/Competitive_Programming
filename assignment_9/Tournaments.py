@@ -2,78 +2,57 @@
 4
 1 3 2 3
 '''
+# using sets this time
+import copy
 
-# will use merge sort
+def Intersection_parity(a, b):
+    if len(a | b) < len(a) + len(b):
+        return False
+    return True
 
-count = 0   # number of non profitable matches
-
-def merge(a, b):
-    non_profitable = False
-
-    global count
-    n = len(a)
-    m = len(b)
-
-    ouput = [0]*(n+m)
-
-    i, j, k = 0, 0, 0
-    while i<n and j<m:
-
-        if a[i] == b[j]:
-            non_profitable = True           # if you find 2 elements same just increment the count which will reflect the fact that this match won't be porfitable
-
-        if a[i]<b[j]:
-            ouput[k] = a[i]
-            i+=1
-            k+=1
-        
-        else:
-            ouput[k] = b[j]
-            j+=1
-            k+=1
-
-    while(j<m):         # if i was exhausted
-        ouput[k] = b[j]
-        j+=1
-        k+=1
-    
-    while(i<n):         # if j was exhausted
-        ouput[k] = a[i]
-        i+=1
-        k+=1
-    
-    if non_profitable:
-        count += 1
-    return ouput
+# this function will take the list and make pairs of the sets present in it
+def modify_list(li):
+    modified_list = []
+    for i in range(0, len(li)-1, 2):
+        modified_list.append(li[i] | li[i+1])       # bitwise or (union of sets)
+    return modified_list
 
 
-# space complexity: O(n+m)
-# time complexity: O(n+m)
-
-
-# merge sort says if you have an unsorted list 
-# divide your list into 2 equal halves 
-# sort the left half recursively 
-# sort the right half recursively
-
-
-
-def merge_sort(arr, left, right):
-
-    if left == right:
-        # base case
-        return [arr[left]] # or return [arr[right]]
-
-    mid = (left+right)//2
-
-    left_half = merge_sort(arr, left, mid)
-    right_half = merge_sort(arr, mid+1, right)
-    ouput = merge(left_half, right_half)
-    return ouput
 
 
 n = int(input())
 li = list(map(int, input().split()))
-merge_sort(li, 0, n-1)
 
-print(n-1-count)
+for i in range(n):
+    li[i] = {li[i]}
+
+# print(li)
+profitable_matches = 0
+j = 0
+match_count = n-1
+
+
+# gathering my thoughts 
+# need to make pairs and keep making pairs 
+# number of times i need to make pairs should be n-1
+while match_count:
+    for i in range(0, (n)//2**j, 2):
+        #print(i, i+1)
+        #print(li)
+        if len(li) == 1:
+            match_count += 1
+            continue
+        else:
+            pass
+        parity = Intersection_parity(li[i], li[i+1])
+        if parity:
+            profitable_matches += 1
+        
+
+    #print(profitable_matches)
+    li = copy.deepcopy(modify_list(li))
+    #print(li)
+    match_count -= 1
+    j += 1
+    
+print(profitable_matches)
