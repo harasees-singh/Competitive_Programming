@@ -40,13 +40,14 @@ def BinarySearchRightlimit(len_arr, target):
         if find_pos(right) == target:
             return right
         if find_pos(mid) == target:
-            left = mid
+            left = mid+1
         elif find_pos(mid) > target:
             right = mid-1
         else:
             left = mid+1
+    if find_pos(right) == target:
+        return right
     return -1 
-
 
 def count(n, x):
     R = BinarySearchRightlimit(n, x)

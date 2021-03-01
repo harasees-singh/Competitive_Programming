@@ -1,4 +1,4 @@
-li = [1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 5]
+li = [1, 2, 3, 4]
 
 
 def find_pos(x):
@@ -30,16 +30,18 @@ def BinarySearchRightlimit(len_arr, target):
         if find_pos(right) == target:
             return right
         if find_pos(mid) == target:
-            left = mid
+            left = mid+1
         elif find_pos(mid) > target:
             right = mid-1
         else:
             left = mid+1
+    if find_pos(right) == target:
+        return right
     return -1 
 
 def count(n, x):
     R = BinarySearchRightlimit(n, x)
-    L = 0
+    L = BinarySearchLeftlimit(n, x)
     print("the value of L and R is", L, R)
     if L >= 0:
         ans = R - L
