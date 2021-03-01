@@ -49,7 +49,7 @@ for _ in range(int(input())):
     n = int(input())
     li = list(map(int, input().split()))
     
-    swaps = InsertionSortCustom(li)
+    swaps = BubbleSortCustom(li)
     #print()
     #insertion_sort(li)
     #print(li)
