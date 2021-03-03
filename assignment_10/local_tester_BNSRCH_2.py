@@ -1,19 +1,24 @@
-'''
-Find the number of occurrences
-'''
 import sys
-
+import random
+ 
+arr = []
+queries_count = 0
 def find_pos(x):
-    print('1 ' + str(x))
-    sys.stdout.flush()
-    t = int(input())
-    return t
+    global queries_count
+    queries_count = queries_count + 1
+    if queries_count > 40:
+        print('error, took more than 40 queries')
+        print('hidden array = ', arr, 'x = ', x)
+        exit()
+ 
+    if x < 0 or x >= len(arr):
+        print('error, index out of range')
+        print('hidden array = ', arr, 'x = ', x)
+        exit()
+    return arr[x]
+    
 # ----------------- Do not modify anything above this line -----------------------
-# Complete this function count(n, x), this returns 0 always and hence is wrong, it should return the number of occurrences of x in Chef's array
-# You can use the function find_pos(x) to find the value of the element at position x (0 indexed)
-# If the index is invalid or you use more than 40 queries to obtain the value, you will receive Wrong Answer
-# Chef's array size is not more than 10 ** 5
-
+# copy your solution here
 def BinarySearchLeftlimit(len_arr, target):
     # define the search space
     n = len_arr
@@ -61,9 +66,24 @@ def count(n, x):
     else:
         return 0
  
-# ----------------- Do not modify anything below this line ----------------------- #
+# ----------------- Do not modify anything below this line -----------------------
  
-n = int(input())
-x = int(input())
+n = random.randint(1, 100000)
+dict = {}
+for _ in range(0, n):
+    app = random.randint(0, 100000)
+    arr.append(app)
+    dict[app] = dict.get(app, 0) + 1
  
-print('2 ' + str(count(n, x)))
+arr = sorted(arr)
+
+for _ in range(1, 1000):
+    queries_count = 0
+    x = random.randint(0, 100000)
+    ans = count(len(arr), x)
+    if ans != dict[x]:
+        print('Wrong answer, expected = ', dict[x], 'got = ', ans)
+        print('hidden array = ', arr, 'x = ', x)
+        exit()
+ 
+print('Correct Answer!')

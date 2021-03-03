@@ -1,11 +1,10 @@
-li = [1, 2, 3, 4]
+'''li = [1, 2, 3, 4]
 
 
-def find_pos(x):
-    return li[x]
 
 
-'''
+
+
 def count(n, x):
     R = BinarySearchRightlimit(n, x)
     L = BinarySearchLeftlimit(n, x)
@@ -15,7 +14,7 @@ def count(n, x):
         return ans + 1
     else:
         return 0
-print(count(len(li), 4))'''
+print(count(len(li), 4))
 
 def run_program(x):
     if x <= 23:
@@ -35,8 +34,8 @@ def BinarySearch(arr):
     return min(left, right)
 
 print(BinarySearch([x for x in range(10**6)]))
-
-import sys
+'''
+'''import sys
 import random
  
 limit = 0
@@ -84,14 +83,19 @@ for _ in range(0, 1000):
         print('Error found limit = ' + str(found) + ', when actual limit = ' + str(limit))
         exit()
  
-print('your program passed 1000 random testcases!')
+print('your program passed 1000 random testcases!')'''
  
 import sys
 import random
- 
+
+li = [1, 2, 4, 4, 4, 4, 4, 7, 8, 8, 9, 9]
+def find_pos(x):
+    return li[x]
 arr = []
 queries_count = 0
-def find_pos(x):
+
+
+'''def find_pos(x):
     global queries_count
     queries_count = queries_count + 1
     if queries_count > 40:
@@ -103,7 +107,7 @@ def find_pos(x):
         print('error, index out of range')
         print('hidden array = ', arr, 'x = ', x)
         exit()
-    return arr[x]
+    return arr[x]'''
     
 # ----------------- Do not modify anything above this line -----------------------
 # copy your solution here
@@ -119,8 +123,9 @@ def BinarySearchLeftlimit(len_arr, target):
         else:
             left = mid + 1
     
-    if max(left, right) == target:
-        return max(left, right)
+    index = max(left, right)
+    if find_pos(index) == target:
+        return index
     else:
         return -1
 
@@ -137,39 +142,29 @@ def BinarySearchRightlimit(len_arr, target):
         else:
             right = mid - 1
     
-    if min(left, right) == target:
-        return min(left, right)
+    index = min(left, right)
+    if find_pos(index) == target:
+        return index
     else:
         return -1
-        '''mid = (left + right)//2
-        find_pos_mid = find_pos(mid)
-        find_pos_right = find_pos(right)
-        if find_pos_right == target:
-            return right
         
-        elif find_pos_mid == target:
-            left = mid+1
-        elif find_pos_mid > target:
-            right = mid-1
-        else:
-            left = mid+1
-    if find_pos_right == target:
-        return right
-    return -1 '''
+#print( len(li),  BinarySearchRightlimit(len(li), 4), BinarySearchLeftlimit(len(li), 4), BinarySearchRightlimit(len(li), 4) - BinarySearchLeftlimit(len(li), 4) + 1)
 
 def count(n, x):
     R = BinarySearchRightlimit(n, x)
     L = BinarySearchLeftlimit(n, x)
-    #print("the value of L and t is", L, R)
+    print("the value of L and R is", L, R)
     if L >= 0:
         ans = R - L
         return ans + 1
     else:
         return 0
  
+
+print(count(len(li), int(input())))
 # ----------------- Do not modify anything below this line -----------------------
  
-n = random.randint(1, 100000)
+'''n = random.randint(1, 100000)
 dict = {}
 for _ in range(0, n):
     app = random.randint(0, 100000)
@@ -189,3 +184,4 @@ for _ in range(1, 1000):
  
 print('Correct Answer!')
 
+'''
