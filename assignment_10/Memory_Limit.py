@@ -20,7 +20,8 @@ def BinarySearch():
     n = 10**9
     left, right = 0, n-1
     while left <= right:
-        mid = (left +right)//2
+        mid = (left +right)//2      # this binary search is custom. custom in the sense it finds the highest possible element which satisfies the given condition which is 
+                                    # being just big enough to not exceed the memory limit or in other words the bisect_right kind of thing
         if run_program(mid):
             left = mid + 1
         else:
