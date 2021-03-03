@@ -20,11 +20,12 @@ def BinarySearchLeftlimit(len_arr, target):
     left, right = 0, n-1
     while left <= right:
         mid = (left + right)//2
+        find_pos_mid = find_pos(mid)
         if find_pos(left) == target:
             return left
-        if find_pos(mid) == target:
+        elif find_pos_mid == target:
             right = mid
-        elif find_pos(mid) > target:
+        elif find_pos_mid > target:
             right = mid-1
         else:
             left = mid+1
@@ -37,22 +38,25 @@ def BinarySearchRightlimit(len_arr, target):
     left, right = 0, n-1
     while left <= right:
         mid = (left + right)//2
-        if find_pos(right) == target:
+        find_pos_mid = find_pos(mid)
+        find_pos_right = find_pos(right)
+        if find_pos_right == target:
             return right
-        if find_pos(mid) == target:
+        
+        elif find_pos_mid == target:
             left = mid+1
-        elif find_pos(mid) > target:
+        elif find_pos_mid > target:
             right = mid-1
         else:
             left = mid+1
-    if find_pos(right) == target:
+    if find_pos_right == target:
         return right
     return -1 
 
 def count(n, x):
     R = BinarySearchRightlimit(n, x)
     L = BinarySearchLeftlimit(n, x)
-    print("the value of L and t is", L, R)
+    #print("the value of L and t is", L, R)
     if L >= 0:
         ans = R - L
         return ans + 1
