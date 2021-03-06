@@ -1,17 +1,11 @@
-t = int(input())
-for _ in range(t):
+for _ in range(int(input())):
     string = input()
-    # print(string)
     count = 0
     encounter = False
-    i = 0
-    for i in range(len(string)):
-        if string[i] == '1' and encounter == False:
-            enounter = True
+    for i in string:
+        if i == '1' and encounter == False:
             count += 1
-            
-        elif string[i] == '0':
-            enounter = False
-        
+            encounter = True
+        elif i=='0':
+            encounter = False
     print(count)
-    
