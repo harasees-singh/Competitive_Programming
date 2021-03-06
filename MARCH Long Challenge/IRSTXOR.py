@@ -7,6 +7,8 @@ def Binary(integer):
     string = string[::-1]
     return string
 
+#print(Binary(10**9))
+
 def XOR_Inverse(binary, target):
     # need to prepend zeroes 
     length_of_binary = len(binary)
@@ -17,15 +19,15 @@ def XOR_Inverse(binary, target):
         target = '0'*(length_of_binary - length_of_target) + target
     
     ans = ''
-    #print(binary, 'target =', target)
+    
     for j in range(len(binary)):
         i = len(binary)-j-1
         if target[i] == '0':
-            #print('target 0 encountered ', binary[i], 'to be appended on the front')
+            
             ans = binary[i] + ans
         else:
             ans = str(1 ^ int(binary[i])) + ans
-        #print('currently ans is ', ans)
+        
     return ans
 
 def Integer(binary):
@@ -52,17 +54,15 @@ for _ in range(t):
         B = XOR_Inverse(A, C)
         b = Integer(B)
         a = Integer(A)
-        #print('candidate B ', B, '=', Integer(B),' a XOR b = ', a^b)
-        #print()
         
         if b<2**logarithm:
             temp = a*b
             if temp > max_:
                 max_ = temp
-        
+            
     
     print(max_)
 
         
-    
+
         
