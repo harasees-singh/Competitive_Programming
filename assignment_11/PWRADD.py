@@ -21,6 +21,7 @@ def add(a, b):
 # function defined above.
  
 # Note that this function should return (a ** b) % m, you are guaranteed that add(a, b) returns (a + b) % m
+
 def mul(a, b):
     res = 0
     for _ in range(0, b):
@@ -32,10 +33,6 @@ def pwr(a, b):
     for _ in range(0, b):
         res = mul(res, a)
     return res
- 
- 
- 
- 
 # --------------------- Do not touch anything below this line ----------------------
  
 def power(a, b, m):

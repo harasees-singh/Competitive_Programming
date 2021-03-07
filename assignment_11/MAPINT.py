@@ -5,39 +5,66 @@ for i in range(n):
     start,  end, street_name, direction = input().split()
     start = int(start)
     end = int(end)
-    if direction == 'E' or direction == 'W':
+    if direction == 'E':
         if street_name in streets_horizontal.keys():
-            streets_horizontal[street_name].add(start)
-            streets_horizontal[street_name].add(end)
+            if streets_horizontal[street_name][-1] == start:
+                
+                streets_horizontal[street_name].append(end)
+            else:
+                streets_horizontal[street_name].insert(0, start)
+                
         else:
-            streets_horizontal[street_name] = {start, end}
-    else:
+            streets_horizontal[street_name] = [start, end]
+    if direction == 'W':
+        start, end = end, start
+        if street_name in streets_horizontal.keys():
+            if streets_horizontal[street_name][-1] == start:
+                
+                streets_horizontal[street_name].append(end)
+            else:
+                streets_horizontal[street_name].insert(0, start)
+                
+        else:
+            streets_horizontal[street_name] = [start, end]
+    if direction == 'N':
         if street_name in streets_vertical.keys():
-            streets_vertical[street_name].add(start)
-            streets_vertical[street_name].add(end)
+            if streets_vertical[street_name][-1] == start:
+                
+                streets_vertical[street_name].append(end)
+            else:
+                streets_vertical[street_name].insert(0, start)
+                
         else:
-            streets_vertical[street_name] = {start, end}
+            streets_vertical[street_name] = [start, end]
+    if direction == 'S':
+        start, end = end, start
+        if street_name in streets_vertical.keys():
+            if streets_vertical[street_name][-1] == start:
+                
+                streets_vertical[street_name].append(end)
+            else:
+                streets_vertical[street_name].insert(0, start)
+                
+        else:
+            streets_vertical[street_name] = [start, end]
+        
+    
 
-print(streets_horizontal)
-print(streets_vertical)     
-
-
-horizontal_points = set()
-vertical_points = set()
+horizontal_points = []
+vertical_points = []
 
 for i in streets_horizontal.values():
-    p, q = min(i), max(i)
-    i.remove(p)
-    i.remove(q)
-    horizontal_points = horizontal_points | i
+    i.pop()
+    i.pop(0)
+    horizontal_points = horizontal_points + i
 
 for i in streets_vertical.values():
-    p, q = min(i), max(i)
-    i.remove(p)
-    i.remove(q)
-    vertical_points = vertical_points | i
+    i.pop()
+    i.pop(0)
+    vertical_points = vertical_points + i
 
-all_points = list(horizontal_points) + list(vertical_points)
+
+all_points = horizontal_points + vertical_points
 points_set = set(all_points)
 print(len(all_points) - len(points_set))
-#print(horizontal_points)
+
