@@ -23,27 +23,16 @@ def add(a, b):
  
 # Note that this function should return (a ** b) % m, you are guaranteed that add(a, b) returns (a + b) % m
 
-def CustomAdd(a, b):
-    m = 5
-    return (a+b)%m
-
-def mul(a, b):
-    res = 0
-    for _ in range(0, b):
-        res = add(res, a)
-    return res
- 
 
 
- 
 def pwr(a, b):
     hidden_number = 1
     number_not_found = True
-    while number_not_found:
-        print(hidden_number)
+    while hidden_number < 10**9:
+        #print(hidden_number)
         
         parity = add(hidden_number, 0)
-        print('parity', parity)
+        #print('parity', parity)
         if parity == 0:
             number_not_found = False
             break
@@ -55,8 +44,12 @@ def pwr(a, b):
             break
         
         hidden_number *= 2
+    
+    if number_not_found:
+        m =  (10**9 - add(10**9, 0))
+    else:
+        m = hidden_number # we found m
 
-    m = hidden_number # we found m
     return (a**b)%m
 
 
