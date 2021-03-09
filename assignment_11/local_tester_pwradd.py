@@ -14,7 +14,7 @@ def add(a, b):
     queries += 1
     if queries > 10000:
         print('too many queries for a = ', a, 'b = ', b, 'm = ', m)
-        
+        exit()
     return (a + b) % m
 # --------------------- Do not touch anything above this line ----------------------
  
@@ -22,7 +22,6 @@ def add(a, b):
 # function defined above.
  
 # Note that this function should return (a ** b) % m, you are guaranteed that add(a, b) returns (a + b) % m
-
 
 
 def pwr(a, b):
