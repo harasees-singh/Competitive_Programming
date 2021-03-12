@@ -22,6 +22,25 @@ for _ in range(t):
             
             
             
-            
+def no_of_columns(n, r, g, b):
+    a = min(n, r, b)
+    lo = 0
+    hi = a
+    ans = 0
+    while lo<=hi:
+        mid = lo + (hi-lo)//2
+        if 3*(mid-1) + 1 < (r + g + b):
+            ans = mid
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return ans
+
+
+t = int(input())
+for i in range(t):
+    n, r, g, b = list(map(int, input().split()))
+    a = no_of_columns(n, r, g, b)
+    print(a)
             
             
