@@ -1,9 +1,10 @@
 #include<iostream>
+#define reverse(string) string=="Even" ? "Odd":"Even"
 using namespace std;
 int main()
 {
     // For each testcase, in the new line print "Odd" if the XOR in the range is odd, else print "Even".
-    int t, l, r;
+    long long t, l, r;
     cin >> t;
     
     int number_of_odds=0;
@@ -11,71 +12,21 @@ int main()
     // calculating number of odds
     
     // number of odds will determine the number of times xor changes from odd to even or even to odd
-    // so if number_of_odds is even it will be the same as l or else different
-    for(int i = 0; i<t; i++)
+    // so if number_of_odds is even it will be even else odd
+    while(t--)
     {
-
-        if((r-l+1)/2 != 0)
+        scanf("%lld %lld", &l, &r);
+        int total = (r-l+1);
+        if(total%2 == 0)
         {
-            if(l%2!=0)
-            {
-                number_of_odds = (r-l+1)/2 + 1;
-            }
-            else
-            {
-                number_of_odds = (r-l+1)/2;
-            }
-
+            number_of_odds = total/2;
         }
         else
         {
-            number_of_odds = (r-l+1)/2;
+            number_of_odds = (l%2 != 0) ? total/2 + 1 : total/2;
         }
-
-        cin >> l >> r;
-        if((r-l+1)%2 != 0)          // if total numbers given are odd
-        {
-            if(l%2 != 0)
-            {
-                cout << "Odd" << endl;
-                continue;
-            }
-            else
-            {
-                cout << "Even" << endl;
-                continue;
-            }
-        }
-        else
-        {
-            if(number_of_odds%2!=0)        
-            {
-                if(l%2 != 0)
-            
-                {
-                    cout << "Even" << endl;
-                    continue;
-                }
-                else
-                {
-                    cout << "Odd" << endl;
-                    continue;
-                }
-            }
-            else
-            {
-                if(l%2 != 0)
-                {
-                    cout << "Odd" << endl;
-                    continue;
-                }
-                else
-                {
-                    cout << "Even" << endl;
-                    continue;
-                }
-            }
-        }   
+        number_of_odds%2 != 0 ? printf("Odd\n") : printf("Even\n");
     }
+    // printf("%s", reverse("Odd"));
     return 0;
 }
