@@ -1,6 +1,7 @@
 #include<iostream>
 #define reverse(string) string=="Even" ? "Odd":"Even"
 using namespace std;
+
 int main()
 {
     // For each testcase, in the new line print "Odd" if the XOR in the range is odd, else print "Even".
