@@ -33,10 +33,10 @@ int main() {
 
 	    //while(left<=right)
 	    //{
-	    //    ll mid = (left+right)/2;
+	    //    int mid = (left+right)/2;
 	    //    if(good(mid, a))
 	    //    {
-	    //        left= mid+1;
+	    //        left=mid+1;
 	    //    }
 	    //    else
 	    //    {
