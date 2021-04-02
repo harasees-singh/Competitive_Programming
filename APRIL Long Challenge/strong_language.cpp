@@ -23,10 +23,11 @@ int main()
             {
                 count =0;
             }
-            if(count == k)
+            if(count >= k)
             {
                 cout << "YES" << endl;
                 strong = true;
+                break;
             }
 
         }
