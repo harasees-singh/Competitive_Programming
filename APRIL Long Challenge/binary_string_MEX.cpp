@@ -1,6 +1,7 @@
 #include<iostream>
 #include<math.h>
 #include<string>
+#include<map>
 using namespace std;
 char flip(char bit)
 {
@@ -16,7 +17,8 @@ int main()
     {
         //cout << "in the loop\n";
         string s;
-        string dp[3000000];
+        map<int, string> dp;
+        //string dp[3000000];
         cin >> s;
         char second_bit;
         second_bit = s[1];
