@@ -31,9 +31,16 @@ float str_to_int(string time)
 int main()
 {
     string given;
-    cin >> given;
+    //cin >> given;
     cout << given;
     cout << str_to_int("67.98");
-
+    //float a = 8.64;
+    //double b = 8.64;
+    //bool v = b==8.64;
+    //cout << "\n" <<v;
+    char a = 'a';
+    string b = "hey";
+    string c = a+b;
+    cout << c;
 }
 
