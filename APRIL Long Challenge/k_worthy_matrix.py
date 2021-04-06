@@ -8,22 +8,22 @@
 import copy
 matrix = []
 copy_matrix = []
-
+# 2, 3, 2, 8, 4, 15 wa answer for these parameters-> debug this
 def good(i, j, l, m, n, k):
     
     average_of_matrix_of_side_l = -1
     if l>=2:
-        if m-i>=l and n-j>=l:
-            if i+l-1<=m-1 and j-1> 0:
+        if m-j>=l and n-i>=l:
+            if i+l-1<=n-1 and j-1>= 0:
                 element1 = matrix[i+l-1][j-1]
             else:
                 element1 = 0
-            if j+l-1<=n-1 and i-1>0:
+            if j+l-1<=m-1 and i-1>=0:
                 element2 = matrix[i-1][j+l-1]
             else:
                 element2 = 0
             if element1 != 0 and element2 != 0:
-                average_of_matrix_of_side_l = (matrix[i+l-1][j+l-1] - element2 - element1 + matrix[0][0])/(l**2)
+                average_of_matrix_of_side_l = (matrix[i+l-1][j+l-1] - element2 - element1 + matrix[i-1][j-1])/(l**2)
             else:
                 average_of_matrix_of_side_l = (matrix[i+l-1][j+l-1] - element2 - element1)/(l**2)
         
@@ -48,10 +48,12 @@ def BinarySearch(k, l, m, n):
         last_mid = 1
         while mid<=n*m-1:
             row = mid//m
-            column = mid%n
+            column = mid%m
 
             if good(row, column, l, m, n, k):
+                
                 ans = BinarySearchOnMatrix(k, l, m, n, last_mid, mid)
+                print("good", "mid =", mid, "ans = ", ans)
                 break
             else:
                 last_mid = mid
@@ -63,19 +65,21 @@ def BinarySearch(k, l, m, n):
 
 
 
-def BinarySearchOnMatrix(k, l, m, n, left, right):
+def BinarySearchOnMatrix(k, l, m, n, row, left):
     
+    right = m-l
     ans = -1
-    mid = 0
-    while left<= right and mid <= n*m-1:
+    #mid = 0
+    while left <= right:
         mid = (left+right)//2
-
-        row = mid//m
-        column = mid%n
-
+        #print('while', left, right)
+        
+        column = mid
+        #print(row, column, l, m, n, k)
         if good(row, column, l, m, n, k):
             right = mid-1
-            ans = mid           # potential answer
+            ans = mid          # potential answer
+            #print('good 1', mid)
         else:
             left = mid+1
     return ans
@@ -84,7 +88,8 @@ def BinarySearchOnMatrix(k, l, m, n, left, right):
 
 for _ in range(int(input())):
     n, m, k = map(int, input().split())
-    
+    matrix = []
+    copy_matrix = []
     for i in range(n):
         matrix.append(list(map(int, input().split())))
     copy_matrix = copy.deepcopy(matrix)
@@ -101,17 +106,24 @@ for _ in range(int(input())):
 
     count = 0
     for l in range(1, min(n, m)+1):
+        #l = 1
+        left = 0
+        i = n - l
+        while i >= 0:
+            row = i
+            #print("l", l, "i", i)
+            index = BinarySearchOnMatrix(k, l, m, n, row, left)
+            left = index
+            if index == -1:
+                break
+            else:
+                count += m - index - l + 1
+            i-=1
+        #    print(f"indeices start from {index}")
+        #print(f"count for {l} = ", count)
         
-        index = BinarySearch(k, l, m, n)
-        if index == -1:
-            continue
-        else:
-            i = index//m
-            j = index%n
-            if m-i>=l:
-                count += max(0, n-l-j+1)
-                count += max(0, (m-i-l)*(n-l+1))
     print(count)
+
 
 
     
