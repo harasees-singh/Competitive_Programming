@@ -67,7 +67,7 @@ def BinarySearch(k, l, m, n):
 
 def BinarySearchOnMatrix(k, l, m, n, row, left):
     
-    right = m-1
+    right = m-l
     ans = -1
     #mid = 0
     while left <= right:
@@ -88,7 +88,8 @@ def BinarySearchOnMatrix(k, l, m, n, row, left):
 
 for _ in range(int(input())):
     n, m, k = map(int, input().split())
-    
+    matrix = []
+    copy_matrix = []
     for i in range(n):
         matrix.append(list(map(int, input().split())))
     copy_matrix = copy.deepcopy(matrix)
@@ -118,17 +119,7 @@ for _ in range(int(input())):
             else:
                 count += m - index - l + 1
             i-=1
-        #print("count = ", count)
-            
-        #if index == -1:
-        #    continue
-        #else:
-        #    i = index//m
-        #    j = index%m
-        #    if m-i>=l and n-j>=l:
-        #        count += max(0, m-l-i+1)
-        #        print('count1 = ', count)
-        #        count += max(0, (n-j-l)*(m-l+1))
+        
     print(count)
 
 
