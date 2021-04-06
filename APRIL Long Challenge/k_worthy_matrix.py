@@ -36,35 +36,6 @@ def good(i, j, l, m, n, k):
     return False
         
 
-def BinarySearch(k, l, m, n):
-    mid = 0
-    row = mid//m
-    column = mid%n
-    ans = -1
-    if good(0, 0, l, m, n, k):
-        ans = BinarySearchOnMatrix(k, l, m, n, mid, mid)
-    else:
-        mid = 1
-        last_mid = 1
-        while mid<=n*m-1:
-            row = mid//m
-            column = mid%m
-
-            if good(row, column, l, m, n, k):
-                
-                ans = BinarySearchOnMatrix(k, l, m, n, last_mid, mid)
-                print("good", "mid =", mid, "ans = ", ans)
-                break
-            else:
-                last_mid = mid
-                mid = mid*2
-    return ans
-
-
-
-
-
-
 def BinarySearchOnMatrix(k, l, m, n, row, left):
     
     right = m-l
