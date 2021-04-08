@@ -7,7 +7,7 @@ def NotASubstring(a, s):
             j+=1
         else:
             j+=1
-    if j == len(s):
+    if j == len(s) and i!= len(a):
         return True
     return False
     
@@ -21,7 +21,7 @@ for _ in range(int(input())):
             flag = False
     if flag:
         print(0)
-        break
+        continue
     string_len = len(s)
     n = 2**string_len
     BinaryQueue = Queue()
@@ -35,5 +35,3 @@ for _ in range(int(input())):
             break
         BinaryQueue.put(string+"0")
         BinaryQueue.put(string+"1")
-        
-        # first n binary numbers have been generated
