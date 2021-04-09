@@ -6,6 +6,6 @@ for _ in range(int(input())):
     for i in range(len(li)):
         if li[i]<large_val:
             large_val = li[i]
-        ans+= li[i]
+        ans+= large_val
     print(ans)
         
