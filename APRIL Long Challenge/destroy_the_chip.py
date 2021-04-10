@@ -1,5 +1,5 @@
 #print("hele", flush=True)
-# 1 2
+# 1e18, 1e18
 import sys
 lx, rx, ly, ry = 0, 0, 0, 0
 def HellFire(midx, midy, answer):
@@ -52,9 +52,10 @@ def RingOfFire():
 
 
 def BinarySearch():
-    # lx, rx, ly, ry = -10, 10, -10, 10
+    # 
     global lx,rx,ly,ry
-    lx, rx, ly, ry = int(-2e18), int(2e18), int(-2e18), int(2e18)
+    lx, rx, ly, ry = -10, 10, -10, 10
+    # lx, rx, ly, ry = int(-2e18), int(2e18), int(-2e18), int(2e18)
     while lx <= rx and ly <= ry:
         midx = (lx+rx)//2
         midy = (ly+ry)//2
@@ -64,9 +65,13 @@ def BinarySearch():
         output1 = HellFire(midx, midy, answer)
         if output1 == "success":
             return
-        output2 = RingOfFire()
-        if output2 == "success":
-            return
+        lx-=1
+        rx+=1
+        ly-=1
+        ry+=1
+        # output2 = RingOfFire()
+        # if output2 == "success":
+        #     return
         
         
 
