@@ -4,9 +4,45 @@
 # larger values will definitely lie somewhere down the road.
 # check recursively whether it all the elements in the permutation lie on a straight line or not.
 # if yes then the flag remains True else the falg is set to False and we print '0' as the answer. 
+import sys 
+sys.setrecursionlimit(1000000000)
+def TraverseTheTree(index, flag, root):
+    
+    if index >= len(ordered_set_of_permuted_values):
+        return True
+
+    if root==None:
+        return False
+
+    if tree.get(root) == None:
+        tree[root] = [None, None]
+
+    if original_values[root-1] == ordered_set_of_permuted_values[index]:
+        
+
+        ans1 = TraverseTheTree(index+1, True, tree[root][0])
+        ans2 = TraverseTheTree(index+1, True, tree[root][1])
+        return ans1 or ans2
+    else:
+        return TraverseTheTree(index, True, tree[root][0]) or TraverseTheTree(index, True, tree[root][1])
+
+    
+
+original_values = list()
+ordered_set_of_permuted_values = list()
+tree = dict()
 for _ in range(int(input())):
     flag = True
     n, s = map(int, input().split())
+    if n==1:
+        a = int(input())
+        b = int(input())
+        if a==b:
+            print(1)
+        else:
+            print(0)
+        continue
+
     tree = dict()
     for i in range(1, n):
         parent, child = map(int, input().split())
@@ -48,55 +84,20 @@ for _ in range(int(input())):
                 '''
                 debugging ahead
                 '''
-                print(ordered_set_of_permuted_values)
+                #print(ordered_set_of_permuted_values)
                 # now we need to traverse through the tree
                 
                 itera = 1
                 root = original_values.index(ordered_set_of_permuted_values[0]) + 1 # root is the node corres to first value in the permutation
                 while flag and itera < len(ordered_set_of_permuted_values):
                     
-
-                    while True:
-                        if original_values[root-1] == ordered_set_of_permuted_values[itera]:   # found the node now move forward in search of next node
-                            break
-                        
-                        current_node_value = ordered_set_of_permuted_values[itera]  # we need to search the tree for this value
-                        if tree.get(root):
-                            child1, child2 = tree[root]
-                        else:
-                            child1, child2 = None, None
-                        
-
-                        if current_node_value > original_values[root-1]: # original_values[root-1] corresponds to the value written on the current node and tells us whether we need to go to the right or to the left
-                            if child1 and child2:
-                                ValueOfChild1 = original_values[child1 - 1]
-                                ValueOfChild2 = original_values[child2 - 1]
-                                if ValueOfChild1 > ValueOfChild2:
-                                    root = child1
-                                else:
-                                    root = child2
-                            elif child1:
-                                root = child1
-                            else:
-                                # tree traversal complete 
-                                flag = False
-                                break
-                        else:
-                            if child1 and child2:
-                                ValueOfChild1 = original_values[child1 - 1]
-                                ValueOfChild2 = original_values[child2 - 1]
-                                if ValueOfChild1 > ValueOfChild2:
-                                    root = child2
-                                else:
-                                    root = child1
-                            elif child1: # child 2 is None
-                                root = child1
-                            else:       # no children
-                                # tree traversal complete 
-                                flag = False
-                                break
-                    print("value of root is ", root)
-                    print("the flag is currently ", flag)
+                    if TraverseTheTree(0, True, root):
+                            flag = True
+                    else:
+                        flag = False
+                
+                    #print("value of root is ", root)
+                    #print("the flag is currently ", flag)
                     itera += 1
       
         
