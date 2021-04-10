@@ -4,6 +4,7 @@
 # larger values will definitely lie somewhere down the road.
 # check recursively whether it all the elements in the permutation lie on a straight line or not.
 # if yes then the flag remains True else the falg is set to False and we print '0' as the answer. 
+# An ancestor of a node is any other node on the path from the node to the root. 
 import sys 
 sys.setrecursionlimit(1000000000)
 def TraverseTheTree(index, flag, root):
@@ -64,7 +65,7 @@ for _ in range(int(input())):
         current_element = original_values[i]
         i+=1
         if current_element in set_of_values:
-            if original_permuted[current_element] == current_element :
+            if original_permuted[current_element] == current_element :  # but what if there are multiple copies of an element
                 set_of_values.remove(current_element)
                 
             else:
@@ -99,9 +100,7 @@ for _ in range(int(input())):
                     #print("value of root is ", root)
                     #print("the flag is currently ", flag)
                     itera += 1
-      
-        
-
+    
     if flag:
         print(1)
     else:
