@@ -6,6 +6,7 @@
 # if yes then the flag remains True else the falg is set to False and we print '0' as the answer. 
 # An ancestor of a node is any other node on the path from the node to the root. 
 import sys 
+import copy
 sys.setrecursionlimit(1000000000)
 def TraverseTheTree(index, flag, root):
     
@@ -18,7 +19,7 @@ def TraverseTheTree(index, flag, root):
     if tree.get(root) == None:
         tree[root] = [None, None]
 
-    if original_values[root-1] == ordered_set_of_permuted_values[index]:
+    if permuted_values[root-1] == ordered_set_of_permuted_values[index]:
         
 
         ans1 = TraverseTheTree(index+1, True, tree[root][0])
@@ -28,7 +29,7 @@ def TraverseTheTree(index, flag, root):
         return TraverseTheTree(index, True, tree[root][0]) or TraverseTheTree(index, True, tree[root][1])
 
     
-
+permuted_values = list()
 original_values = list()
 ordered_set_of_permuted_values = list()
 tree = dict()
@@ -43,8 +44,7 @@ for _ in range(int(input())):
         else:
             print(0)
         continue
-
-    tree = dict()
+    tree.clear()
     for i in range(1, n):
         parent, child = map(int, input().split())
         if tree.get(parent):
@@ -59,9 +59,11 @@ for _ in range(int(input())):
     # print(original_permuted, type(original_permuted))
     # permuted_original = dict(zip(permuted_values, original_values))
     set_of_values = set(original_values)
+    copy_set = copy.deepcopy(set_of_values)
+
     i = 0
     
-    while i < len(original_values) and len(set_of_values):  # stop when you have successfully divided all the elements into their respective permutations
+    while i < len(original_values) and len(set_of_values) and flag:  # stop when you have successfully divided all the elements into their respective permutations
         current_element = original_values[i]
         i+=1
         if current_element in set_of_values:
@@ -69,18 +71,23 @@ for _ in range(int(input())):
                 set_of_values.remove(current_element)
                 
             else:
-                ordered_set_of_permuted_values = list()
+                ordered_set_of_permuted_values.clear()
                 start = current_element
                 ans = -1
                 temp = start
                 
                 while ans != start:
+                    
                     ans = original_permuted[temp]
-                    set_of_values.remove(ans)
-                    ordered_set_of_permuted_values.append(ans)
-                    temp = ans
+                    if ans in copy_set:
+                        set_of_values.remove(ans)
+                        ordered_set_of_permuted_values.append(ans)
+                        temp = ans
+                    else:
+                        flag = False
+                        break
 
-                ordered_set_of_permuted_values.sort()
+                # ordered_set_of_permuted_values.sort()
 
                 '''
                 debugging ahead
@@ -89,11 +96,12 @@ for _ in range(int(input())):
                 # now we need to traverse through the tree
                 
                 itera = 1
-                root = original_values.index(ordered_set_of_permuted_values[0]) + 1 # root is the node corres to first value in the permutation
+                if flag:
+                    root = original_values.index(ordered_set_of_permuted_values[0]) + 1 # root is the node corres to first value in the permutation
                 while flag and itera < len(ordered_set_of_permuted_values):
                     
-                    if TraverseTheTree(0, True, root):
-                            flag = True
+                    if TraverseTheTree(0, True, 1):
+                        flag = True
                     else:
                         flag = False
                 
