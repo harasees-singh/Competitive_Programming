@@ -37,26 +37,35 @@ void HeapSort(int* arr, int n)          // O(nlgn) time complexity
         heapify(arr, 0, i);
     }   
 }
-int main()
-{
-    std::ios::sync_with_stdio(false);
-    int n;
-    cin >> n;
-    int* arr = new int[n];
+// int main()
+// {
+//     int arr[5];
+//     arr[50] = 87;
+//     for(int i=0; i< 100; i++)
+//     {
+//         cout << arr[i] << endl;
+//     }
+// }
+// int main()
+// {
+//     std::ios::sync_with_stdio(false);
+//     int n;
+//     cin >> n;
+//     int* arr = new int[n];
     
-    for(int i=0; i<n; i++)
-    {
-        int temp;
-        cin>> temp;
-        arr[i] = temp;
-    }
+//     for(int i=0; i<n; i++)
+//     {
+//         int temp;
+//         cin>> temp;
+//         arr[i] = temp;
+//     }
     
-    int brr[] = {5, 4, 8, 9, 6, 2};
-    HeapSort(brr, 6); 
-    // BuildAMaxHeap(brr, 6);
-    for(int i = 0; i<6; i++)
-    {
-        cout<< brr[i] << " ";
-    }
+//     int brr[] = {5, 4, 8, 9, 6, 2};
+//     HeapSort(brr, 6); 
+//     // BuildAMaxHeap(brr, 6);
+//     for(int i = 0; i<6; i++)
+//     {
+//         cout<< brr[i] << " ";
+//     }
     
-}
+// }

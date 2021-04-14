@@ -1,79 +1,80 @@
-#include"bits.cpp"
-#define ll long long
+#include"heap.cpp"
 using namespace std;
-class Heap
-{   
-    public:
-        ll* start;
-        ll Heap_size;
-        ll array_length;
-        ;
-        Heap(ll* arr, ll size, ll length)
-        {
-            //root.index = 0;
-            start = arr;
-            Heap_size = size;
-            array_length = length;
-        }
-        void Build_a_heap()
-        {
-
-        }
-};
-
-
-class Node
+class MaxHeap
 {
     public:
-        ll index;
-        int value;
-        ll left_child_index, right_child_index;
-        ll Parent(ll i)
+        int heapsize;
+        int* root;          // root pointer; will point to the arr
+        MaxHeap(int* arr, int n)
         {
-            return i/2;
+            BuildAMaxHeap(arr, n);
+            root = arr;
+            heapsize = n;
         }
-        ll Left_child()
-        {
-            return 2*index;
-        }
-        ll Right_child()
-        {
-            return 2*index+1;
-        }
-        Node(int num1, ll num2)
-        {
-            value = num1;
-            index = num2;
-        }
+        
 };
-void Max_heapify(ll* arr, Node i)
+int Parent(int child)
 {
-    ll left = i.Left_child();
-    ll right = i.Right_child();
-    ll largest = i.index;
-    if(arr[left] > arr[i.index] && left < sizeof(arr)/sizeof(arr[0]))
+    return ceil(child/2.00 - 1);
+}
+int Maximum(MaxHeap H)
+{
+    return H.root[0];
+}
+int HeapExtractMax(MaxHeap &H)
+{
+    int* arr = H.root; int n = H.heapsize; int temp = arr[0];
+    swap(arr[0], arr[n-1]);
+    H.heapsize--;
+    heapify(arr, 0, n);     // O(lgn)
+    return temp;
+}
+void HeapIncreaseKey(MaxHeap &H, int i, int key)
+{
+    if(key < H.root[i])
     {
-        largest = left;
+        cout << "error: the new key must be greater than the pervious key; key provided = " << key << " and the original key = " << H.root[i] << endl;
     }
-    if(arr[right] > arr[largest] && right < sizeof(arr)/sizeof(arr[0]))
+    H.root[i] = key;
+    while (i>0 && H.root[Parent(i)]<H.root[i])
     {
-        largest = right;
+        swap(H.root[i], H.root[Parent(i)]);
+        i = Parent(i);
     }
-    if(largest != i.index)
+}
+void MaxHeapInsert(MaxHeap &H, int val)
+{
+    //H.root = H.IncreaseHeapsize();
+    H.heapsize++;
+    H.root[H.heapsize-1] = -1*INT32_MAX;
+    HeapIncreaseKey(H, H.heapsize-1, val);
+}
+void Print(MaxHeap H)
+{
+    int* arr = H.root;
+    for(int i=0; i<H.heapsize; i++)
     {
-        swap(arr[largest], arr[i.index]);
-        // max_heapify(arr, largest) but largest is of the class long long and we need to pass a Node obj
+        cout << H.root[i] << " ";
     }
+    cout << endl;
+
 }
 int main()
 {
-    ll array_size;
-    cin >> array_size;
-    ll* arr = new ll[array_size];
-    for(int i=0; i<array_size; i++)
-    {
-        int temp;
-        arr[0] = temp;
-    }
-    Heap tree_like_structure(arr, array_size, array_size);
+    int arr[8] = {2, 4, 5, 8, 9, 6, 1, 3};
+    MaxHeap H(arr, 8);
+    cout << HeapExtractMax(H) << endl;
+    Print(H);
+    HeapIncreaseKey(H, 5, 10);
+    cout << "the highest priority in the queue references to " << Maximum(H) << endl;
+    Print(H);
+    // arr[20] = 100;      // this is not raising warnings or errors, lower level languages are weird;
+    // cout << "how the fk is this possible " << arr[20] << endl;
+    // for(int i=0; i<100; i++)
+    // {
+    //     cout << arr[i] << endl;
+    // }
+    MaxHeapInsert(H, 32);
+    
+    Print(H);
 }
