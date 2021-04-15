@@ -3,7 +3,7 @@
 int main()
 {
     std::vector<int> a = {1, 2, 3, 4};
-    std::cout << a[0] << " " << std::endl;
+    std::cout << a[3] << " " << std::endl;      // accessing vector through index
     for(int n:a)
     {
         std::cout<< n << "\n";
@@ -11,6 +11,6 @@ int main()
     auto it = a.begin();        // auto is basically "set the type of it by yourself" at runtime
     std::cout<< *it << "\n" ;
     it++;
-    std::cout<< *it;
+    std::cout<< *it;            // accessing vector through pointer
     return 0;
 }
