@@ -74,7 +74,7 @@ int main()
     // {
     //     cout << arr[i] << endl;
     // }
-    MaxHeapInsert(H, 32);
+    MaxHeapInsert(H, 32);           // if you could access memory locations out of the fixed memory block allocated to the array then what is the need of vector?
     
     Print(H);
 }
