@@ -12,5 +12,7 @@ int main()
     std::cout<< *it << "\n" ;
     it++;
     std::cout<< *it;            // accessing vector through pointer
+    std::cout << typeid(a).name() << std::endl;
+    std::cout << typeid(&a).name() << std::endl;
     return 0;
 }
