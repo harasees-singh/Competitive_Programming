@@ -27,16 +27,18 @@ void InsertAtTail(node* &head, int val)
     }
     temp->next = pointer_to_node_to_be_inserted;
 }
-bool Search(node* head, int val)
+node* Search(node* head, int val)
 {
-    while(head->next != NULL)
+    node* temp=head;
+    while(temp->next != NULL)
     {
-        if(head->next->data == val)
+        if(temp->next->data == val)
         {
-            return true;
+            return temp->next;
         }
+        temp=temp->next;
     }
-    return false;
+    return NULL;
 }
 void InsertAtHead(node* &head, int val) // taking in head's reference because we will be making head to point to a different node
 {
@@ -92,14 +94,12 @@ int main()
     Display(new_head);
     int n = 4;
     node* head_again = NULL;
-    while(n--)
+    for(int i =0; i<n; i++)
     {
-        
-        int temp;
-        cin >> temp;
-        InsertAtTail(head_again, temp);
+        InsertAtTail(head_again, i+2);
     }
     Delete(head_again, 5);
+    cout << Search(head_again, 4) << endl;          // returns the address of the node in which we have stored 4
     Display(head_again);
     return 0;
 }
