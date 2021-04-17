@@ -12,7 +12,7 @@ class node
             data = val;
             next = NULL;
         }
-        //void InsertAtTail(node*, int);
+        
 };
 
 void InsertAtTail(node* head, int val)

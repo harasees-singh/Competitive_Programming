@@ -44,6 +44,19 @@ void InsertAtHead(node* &head, int val) // taking in head's reference because we
     n->next = head;
     head = n;
 }
+void Delete(node* head, int val)
+{
+    node* temp = head;
+    while(temp->next != NULL)
+    {
+        if(temp->next->data==val)
+        {
+            temp->next = temp->next->next;   
+            break;
+        }
+        temp=temp->next;
+    }
+}
 void Display(node* head)
 {
     node* temp = head;
@@ -86,6 +99,7 @@ int main()
         cin >> temp;
         InsertAtTail(head_again, temp);
     }
+    Delete(head_again, 5);
     Display(head_again);
     return 0;
 }
