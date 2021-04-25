@@ -16,7 +16,6 @@ int main()
         int cost_for_theif, cost_for_police;
         cost_for_theif = (n-x)+(m-y);
         cost_for_police = max((n-a), (m-b));
-        cost_for_theif<=cost_for_police ? cout << "yes": cout << "no" << endl;
-
+        cost_for_theif<=cost_for_police ? cout << "yes" << endl: cout << "no" << endl;
     }   
 }
