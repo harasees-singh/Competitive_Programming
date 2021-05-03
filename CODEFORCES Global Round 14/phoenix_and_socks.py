@@ -37,15 +37,7 @@ for _ in range(int(input())):
         if r > l:
             cost += (r-l)//2
 
-        # for i in dic_r.keys():
-            
-        #     cnt += dic_r[i]//2
-        #     dic_r[i] %=2
-        #     cost += dic_r[i]
-        #     if cost > (r-l) // 2:
-        #         cost = (r-l)//2
-        #     if 2 *cnt > r - l:
-        #         cost += 2*cnt - (r-l)
+        
     else:
         li = sorted(dic_l.values())
         # li = sorted(dic_r.values())
@@ -56,16 +48,6 @@ for _ in range(int(input())):
             i -= 1 
         if l > r:
             cost += (l-r)//2
-        # for i in dic_l.keys():
-        #     cnt += dic_l[i]//2
-        #     # cost += dic_l[i]//2
-        #     dic_l[i] %=2
-        #     cost += dic_l[i]
-        #     if cost > (l-r) // 2:
-        #         cost = (l-r)//2
-        #     if 2 *cnt > l - r:
-        #         cost += 2*cnt - (l-r)
-    
-    # cost += abs((l-r)//2)
+        
     print(cost)
 
