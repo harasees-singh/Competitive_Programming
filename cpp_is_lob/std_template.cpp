@@ -17,3 +17,7 @@
 #include <chrono>
 #include <random>
 #include <bitset>
+#define int long long
+#define vi vector<int>
+#define loop(var, initial, final) for(int var=initial; var < final; var++)
+#define pb(n) push_back(n)
