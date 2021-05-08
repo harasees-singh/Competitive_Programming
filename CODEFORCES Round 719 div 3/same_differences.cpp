@@ -32,4 +32,31 @@ void fastscan_integer(int &number)      // for fastest possible integer input
     if (negative) number *= -1;      
 }
 using namespace std;
-
+int32_t main()
+{
+    test_cases_loop
+    {
+        int n;
+        cin >> n;
+        vi answer(0);
+        vi given(0);
+        loop(i, 0, n)
+        {
+            int temp;
+            cin >> temp;
+            answer.pb(temp-i);
+        }
+        int ans=0;
+        sort(answer.begin(), answer.end());
+        int noob = 1;
+        bool parity=true;
+        loop(i, 0, n-1)
+        {
+            // cout << answer[i] << endl;
+            if(answer[i] == answer[i+1]){noob++;}
+            else {ans += (noob)*(noob-1)/2 ; noob=1; parity=false;}
+        }
+        // if(parity){cout << (noob)*(noob-1)/2 << endl; continue;}
+        cout << ans + (noob)*(noob-1)/2 << endl;
+    }
+}

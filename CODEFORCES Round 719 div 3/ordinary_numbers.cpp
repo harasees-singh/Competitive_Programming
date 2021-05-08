@@ -32,4 +32,34 @@ void fastscan_integer(int &number)      // for fastest possible integer input
     if (negative) number *= -1;      
 }
 using namespace std;
-
+int32_t main()
+{
+    test_cases_loop
+    {
+        int n;
+        cin >> n;
+        int ten_power = 1;
+        int count=0;
+        while(n/ten_power)
+        {
+            ten_power*=10;
+            count++;
+        }
+        int all_ones_number=0;
+        int temp=1;
+        // cout << "no of digits = " << count << endl;
+        
+        loop(i, 0, count)
+        {
+            all_ones_number += temp;
+            temp *= 10;
+        }
+        int ans=0;
+        ten_power=ten_power/10;
+        // cout << "temp all ones = " << all_ones_number << endl;
+        // cout << "ten power = " << ten_power << endl;
+        ans += n/all_ones_number;               // this gives the count of 111, 222, 333, 444 in case of 576;
+        ans += (count-1)*9;
+        cout << ans << endl;
+    }
+}

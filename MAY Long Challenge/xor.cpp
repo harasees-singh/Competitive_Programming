@@ -33,3 +33,27 @@ void fastscan_integer(int &number)      // for fastest possible integer input
 }
 using namespace std;
 
+int list_[100001];
+
+void pow(){
+    int mod = 1000000000+7;
+    int n = 100000;
+    list_[1] = 1;
+    list_[2] = 2;
+    int cnt = 4;
+    loop(i, 3, n+1){
+        list_[i] = (cnt)%mod;
+        cnt *= 2;
+        cnt %= mod;
+    }
+    return;
+}
+int32_t main(){
+    pow();
+    test_cases_loop{
+        int n;
+        cin>>n;
+        cout<<list_[n]<<endl;
+    }
+    return 0;
+}
