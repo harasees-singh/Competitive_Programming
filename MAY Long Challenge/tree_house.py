@@ -1,3 +1,5 @@
+import sys
+sys.setrecursionlimit(int(1e6))
 children_counter = dict()
 parent_child = dict()
 
@@ -31,18 +33,67 @@ def DF_Value_distribution(parent, value):
 
 MOD_val= int(1e9 + 7)
 for _ in range(int(input())):
+    
     final_ans=0
     children_counter={}
     parent_child={}
     n, x = map(int, input().split())
+    remaining_nodes = set()
+    parents_boolean = [False]*(n+1)
     for i in range(n-1):
         u, v = map(int, input().split())
-        minimum = min(u, v)
-        maximum = max(u, v)
-        if parent_child.get(minimum):
-            parent_child[minimum].append(maximum)
+        
+        parents_boolean[1] = True
+        if parents_boolean[u]:
+            if parent_child.get(u):
+                parent_child[u].append(v)
+            else:
+                parent_child[u] = [v]
+            parents_boolean[v] = True
+        elif parents_boolean[v]:
+            if parent_child.get(v):
+                parent_child[v].append(u)
+            else: 
+                parent_child[v] = [u]
+            parents_boolean[u] = True
         else:
-            parent_child[minimum] = [maximum]
+            remaining_nodes.add((u, v))
+    
+    to_be_removed = set()
+    while(len(remaining_nodes)):
+        
+        for tuple_of_nodes in remaining_nodes:
+            u = tuple_of_nodes[0]
+            v = tuple_of_nodes[1]
+            
+            if parents_boolean[u]:
+                # print(u, v)
+                if parent_child.get(u):
+                    parent_child[u].append(v)
+                else:
+                    parent_child[u] = [v]
+                parents_boolean[v] = True
+                to_be_removed.add(tuple_of_nodes)
+
+            elif parents_boolean[v]:
+                # print("elif", u, v)
+                if parent_child.get(v):
+                    parent_child[v].append(u)
+                else: 
+                    parent_child[v] = [u]
+                parents_boolean[v] = True
+                to_be_removed.add(tuple_of_nodes)
+
+        remaining_nodes=remaining_nodes-to_be_removed
+        to_be_removed = set()
+            
+
+        # minimum = min(u, v)
+        # maximum = max(u, v)
+        # if parent_child.get(minimum):
+            # parent_child[minimum].append(maximum)
+        # else:
+            # parent_child[minimum] = [maximum]
     DF_Traversal(1)           # to count children
     # for parent in parent_child.keys():
         # print(parent, parent_child[parent])
