@@ -17,8 +17,6 @@
 #include <chrono>
 #include <random>
 #include <bitset>
-#define and &&
-#define or ||
 #define int long long
 #define vi vector<int>
 #define pb(n) push_back(n)
@@ -34,4 +32,26 @@ void fastscan_integer(int &number)      // for fastest possible integer input
     if (negative) number *= -1;      
 }
 using namespace std;
-
+int32_t main()
+{
+    test_cases_loop
+    {
+        int n; cin >>n;
+        string s; cin >> s;
+        vi indices(0);
+        int count=0;
+        for(auto ch:s)
+        {
+            if(ch=='*') indices.pb(count);
+            count++;
+        }
+        int mid_index_index = indices.size()/2;
+        int mid_index = indices[mid_index_index];
+        int ans=0;
+        loop(i, 0, indices.size())
+        {
+            ans += abs(indices[i]-mid_index);
+        }
+        cout << ans << endl;
+    }
+}
