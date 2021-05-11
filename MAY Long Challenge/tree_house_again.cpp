@@ -47,7 +47,7 @@ public:
 
     // DFS traversal of the vertices
     // reachable from v
-    int DFS(int v,int sum);
+    int DFS(int v,int sum, int parent);
 };
 
 void Graph::addEdge(int v, int w)
@@ -55,9 +55,9 @@ void Graph::addEdge(int v, int w)
     adj[v].push_back(w); // Add w to v’s list.
 }
 
-int Graph::DFS(int v, int sum)
+int Graph::DFS(int v, int sum, int parent)
 {
-    if(adj[v].size()==0) {return 1;}
+    if(adj[v].size()==1 && v!=1) {return 1;}
     int curr_sum = 1+sum;
     // Mark the current node as visited and
     // print it
@@ -68,11 +68,11 @@ int Graph::DFS(int v, int sum)
     // Recur for all the vertices adjacent
     // to this vertex
     
-    for (int i=0; i<adj[v].size(); ++i)
+    for (int i=0; i<adj[v].size(); i++)
         {
             // cout << "print node number " << v << endl;
-            if (!visited[adj[v][i]]){
-                list_of_sums.pb(DFS(adj[v][i], sum));
+            if (!visited[adj[v][i]] && adj[v][i]!=parent){
+                list_of_sums.pb(DFS(adj[v][i], sum, v));
             }
         }
     sort(list_of_sums.begin(), list_of_sums.end());
@@ -88,21 +88,23 @@ int Graph::DFS(int v, int sum)
 // Driver code
 int32_t main()
 {
+    FIO
     // Create a graph given in the above diagram
     
-    
+    const int MOD = 1e9 + 7;
     test_cases_loop
     {
         Graph g;
         int n, x;
         cin >> n>> x ;
+        
         loop(i, 0, n-1)
         {
             int u, v;
             cin >> u >> v;
-            g.addEdge(u, v);
+            g.addEdge(u, v); g.addEdge(v, u);
         }
-        cout << g.DFS(1, 0)*x << endl;
+        cout << (g.DFS(1, 0, -1)*x)%MOD << endl;
     }
     
     return 0;
