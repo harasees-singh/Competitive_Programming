@@ -104,7 +104,7 @@ int32_t main()
             cin >> u >> v;
             g.addEdge(u, v); g.addEdge(v, u);
         }
-        cout << (g.DFS(1, 0, -1)*x)%MOD << endl;
+        cout << ((g.DFS(1, 0, -1)%MOD)*x)%MOD << endl;
     }
     
     return 0;

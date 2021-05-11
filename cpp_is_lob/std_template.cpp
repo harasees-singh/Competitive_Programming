@@ -17,8 +17,9 @@
 #include <chrono>
 #include <random>
 #include <bitset>
-#define and &&
-#define or ||
+#define MOD_DEFINE const int MOD = 1e9 + 7;
+#define And &&
+#define Or ||
 #define int long long
 #define vi vector<int>
 #define pb(n) push_back(n)
