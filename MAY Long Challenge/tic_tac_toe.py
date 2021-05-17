@@ -1,53 +1,38 @@
-import sys
-import copy
-sys.setrecursionlimit(50)
-
-hellya = set()
-def recursion(chessboard, xcount, ocount):
-    if abs(xcount-ocount) > 1:
-        return
-    for i in range(3):
-        print("row iterator")
-        for j in range(3):
-            print("column iterator")
-            if chessboard[i][j]=='_':
-                copy_chessboard = copy.deepcopy(chessboard)
-                copy_chessboard[i][j]='X'
-                recursion(copy_chessboard, xcount+1, ocount)
-                for itera in range(3):
-                    print("string typecast for X")
-                    copy_chessboard[itera]=str(copy_chessboard[itera])
-                hellya.add(tuple(copy_chessboard))
-
-                if xcount > ocount:
-                    copy_2_chessboard = copy.deepcopy(chessboard)
-                    copy_2_chessboard[i][j]='O'
-                    
-                    recursion(copy_2_chessboard, xcount, ocount+1)
-                    for itera in range(3):
-                        print("string typecast for O")
-                        copy_2_chessboard[itera]=str(copy_2_chessboard[itera])
-                    hellya.add(tuple(copy_2_chessboard))
-    return
-
-
+chessboard=[]
+columns = []
+def won(i):
+    if i*3 in chessboard:
+        return True
+    if i*3 in columns:
+        return True
+    if [chessboard[i][i] for i in range(3)] == list(i*3):
+        return True
+    if [chessboard[2-i][i] for i in range(3)] == list(i*3):
+        return True
+def count(i):
+    ans = 0
+    for j in range(3):
+        for k in range(3):
+            if chessboard[j][k] == i:
+                ans += 1
+    return ans
 for _ in range(int(input())):
-    chessboard=[]
-    
-    for i in range(3):
-        chessboard.append(list(input()))
-    print(chessboard)
-    input_=[['_']*3, ['_']*3, ['_']*3]
-    # hellya.add(("hey", "what", "up"))
-    print(input_)
-    # print(type(str(input_)))
-    # print(input_)
-    # print(chessboard)
-    # print(type(tuple(chessboard)))
-    recursion(input_, 0, 0)
-    if tuple(chessboard) in hellya:
-        print("yes")
-    else:
-        print("no")
-    
-    
+    chessboard = [];columns=[]
+    chessboard.append(input());chessboard.append(input());chessboard.append(input())
+    column1 = chessboard[0][0]+chessboard[1][0]+chessboard[2][0];column2 = chessboard[0][1]+chessboard[1][1]+chessboard[2][1];column3 = chessboard[0][2]+chessboard[1][2]+chessboard[2][2]
+    columns = [column1, column2, column3]
+    if(count("X")-count("O")==1 or count("X")-count("O")==0):
+        if won("X") and won("O"):
+            print(3);continue
+        if won("X") and count("X")-count("O")==1:
+            print(1);continue
+        if won("O") and count("X")==count("O"):
+            print(1);continue
+        if not won("X") and not won("O") and count("_")>=1:
+            print(2);continue
+        else:
+            if not won("X") and not won("O"): 
+                print(1);continue
+            print(3);continue
+    print(3)
+
