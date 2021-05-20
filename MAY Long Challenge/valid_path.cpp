@@ -58,12 +58,7 @@ int tree:: dfs(int node, int parent){
         }
     }
     ans++;
-    // loop(i, 0, values_stored_for_answer.size()){
-    //     loop(j, i+1, values_stored_for_answer.size()){
-    //         ans+=(values_stored_for_answer[i]*values_stored_for_answer[j])%MOD;
-    //         ans=ans%MOD;
-    //     }
-    // }
+    
     return to_be_returned%MOD;
 }
 int32_t main(){
