@@ -4,6 +4,7 @@
         "xtree": "cpp",
         "utility": "cpp",
         "algorithm": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "vector": "cpp"
     }
 }

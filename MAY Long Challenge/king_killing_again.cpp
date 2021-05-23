@@ -28,12 +28,72 @@
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 
 using namespace std;
-
 // global variables
 map<int, set<int>> parent_leaves;
 map<int, int> child_parent;
 map<int, int> depth_map;
 vector<bool> alive_clusters(0);
+vi processed;
+bool find_(vi &v, int node){
+    for(auto x:v){
+        if(node==x)return false;
+    }
+    return true;
+}
+int Parent(int child)
+{
+    return ceil(child/2.00 - 1);
+}
+void HeapIncreaseKey(vi &H, int i, int key)
+{
+    // if(key < H.root[i])
+    // {
+    //     cout << "error: the new key must be greater than the pervious key; key provided = " << key << " and the original key = " << H.root[i] << endl;
+    // }
+    H[i] = key;
+    while (i>0 && H[Parent(i)]<H[i])
+    {
+        swap(H[i], H[Parent(i)]);
+        i = Parent(i);
+    }
+}
+void MinHeapInsert(vi &H, int val)
+{
+    //H.root = H.IncreaseHeapsize();
+    // H.heapsize++;
+    // H.root[H.heapsize-1] = -1*INT32_MAX;
+    H.pb(-1*INT32_MAX);
+    HeapIncreaseKey(H, H.size()-1, val);
+}
+void heapify(vi &arr, int i, int n)        // lg(n) time complexity
+{
+    int l = 2*i + 1;
+    int r = 2*i + 2;
+    int minimum = i;
+    if(l<n && depth_map[arr[l]] < depth_map[arr[i]])
+    {
+        minimum = l;
+    }
+    if(r<n && depth_map[arr[r]] < depth_map[arr[minimum]])
+    {
+        minimum = r;
+    }
+    if(minimum!=i)
+    {
+        swap(arr[i], arr[minimum]);
+        return heapify(arr, minimum, n);
+    }
+
+}
+void BuildAMinHeap(vi &arr)         // O(n) time complexity
+{
+    int n=arr.size();
+    int index = floor(n/2);
+    for(int i=index; i>=0; i--)
+    {
+        heapify(arr, i, n);
+    }                   
+}
 
 
 class Graph
@@ -44,6 +104,7 @@ public:
     void addEdge(int v, int w);
     set<int> DFS(int v, int depth, int parent);
     vi DFS_for_leaves(int node_number, int parent);
+    void process(int node_number, int parent, map<int, vi> &prv);
     
 };
 
@@ -86,11 +147,19 @@ set<int> Graph::DFS(int v, int depth, int parent)
 
 vi Graph::DFS_for_leaves(int node_number, int parent){
     if(adj[node_number].size()==1){
-        vi to_be_returned;
-        to_be_returned.pb(node_number);
-        return to_be_returned;
+        if(alive_clusters[node_number])
+        {    
+            vi to_be_returned;
+            to_be_returned.pb(node_number);
+            cout << "i just pb " << node_number << endl;
+            cout << adj[18].size() << endl;
+            return to_be_returned;
+        }
+        else{
+            return {};
+        }
     }
-    vi will_return;
+    vi will_return(0);
     loop(i, 0, adj[node_number].size()){
         if (alive_clusters[adj[node_number][i]] && adj[node_number][i]!=parent)
         {
@@ -101,20 +170,43 @@ vi Graph::DFS_for_leaves(int node_number, int parent){
     return will_return;
 }
 
+void Graph:: process(int node, int parent, map<int, vi> &previous_city){
+    if(true){
+        // processed[node]=1;
+        for(auto child:adj[node]){
+            if(find_(previous_city[node], child) && child!=parent){
+                if(!processed[child]){
+                    processed[child]=1;
+                    for(auto x:previous_city[node])
+                        alive_clusters[x]=false;
+                    // cout << "node marked dead cluster " << previous_city[node] << endl;
+                    process(child, node, previous_city);
+                }
+            }
+        }
+    }   
+}
+
 const int MOD = 1e9 + 7;
 int32_t main(){
     FIO
-    
     
     test_cases_loop
     {
         bool corner_case = false;
         int corner_case_count = 0;
         vi corner(0);
+        // int n;
+        // cin >> n;
+        int n=20;
         Graph g;
         depth_map.clear();
-        int n;
-        cin >> n;
+        processed.resize(0);
+        loop(i, 0, n+1){
+            processed.pb(0);
+        }
+        
+        
         loop(i, 0, n-1)
         {
             int u, v;
@@ -127,10 +219,12 @@ int32_t main(){
             alive_clusters.pb(true);
         }
 
-        vector<bool> elixir_of_life(n+1, false);
+        
         mii popped;
+        map<int , vi> previous_city;
         mii connection_map;
         vi check_for_stay_parity(n+1, false);
+        
 
         for(int node=1; node<=n; node++){
             connection_map[node]=g.adj[node].size();
@@ -149,91 +243,72 @@ int32_t main(){
                 g.DFS(g.adj[1][i], 1, 1);
                 int final_number_of_days=0;
                 set<int> set_of_leaves = parent_leaves[g.adj[1][i]];
-                // cout << "debug 2" << endl;
-                // mii position_assassin;
-                // for(int leaf:set_of_leaves){
-                //     position_assassin[leaf]=leaf;
-                // }
-                
-                    while(set_of_leaves.size() > 1 && set_of_leaves.find(g.adj[1][i])==set_of_leaves.end()){
-                        // cout << "set of leaves size = " << set_of_leaves.size() << endl;
-                        for(int leaf:set_of_leaves){
-                            connection_map[child_parent[leaf]]--;
-                        }
-                        // cout << "connection of 11 " << connection_map[4] << endl;
-                        // vi dead_assassins(0);
-                        // cout << "debug 3" << endl;
-                        // cout << "set size " << set_of_leaves.size() << endl;
-                        for(int leaf:set_of_leaves){
-                            // cout << leaf << " ";
-                            if(check_for_stay_parity[leaf]){
-                                // cout << "leaf " << leaf << endl;
-                                check_for_stay_parity[leaf]=false;
-                                // popped[child_parent[leaf]] = true;
-                                // cout << "leaf number " << leaf << " ";
-                                // cout << "check for stay parity " << check_for_stay_parity[leaf] << endl;
-                                continue;
-                            }
-                            if(connection_map[child_parent[leaf]] >= 2){
-                                if(!popped[child_parent[leaf]] && !elixir_of_life[leaf]){
-                                    alive_clusters[leaf]=false;
-                                    // cout << "2 leaf number " << leaf << " ";
-                                    // cout << "2 check for stay parity " << check_for_stay_parity[leaf] << endl;
-                                    check_for_stay_parity[leaf]=true;
-                                }
-                                int cur_parent = child_parent[leaf];
-                                if(!check_for_stay_parity[leaf]){
-                                    if(!elixir_of_life[cur_parent]){
-                                        popped[cur_parent]=true;
-                                        loop(k, 0, g.adj[cur_parent].size()){
-                                            if(g.adj[cur_parent][k]!=leaf){
-                                                elixir_of_life[g.adj[cur_parent][k]] = true;
-                                            }
-                                        }
+                vi for_min_heap;
+                for(auto leaf:set_of_leaves){
+                        previous_city[leaf]={};
+                        
+                        for_min_heap.pb(leaf);
+                }
+                BuildAMinHeap(for_min_heap);
+                mii murder_city;
+                while(set_of_leaves.size() > 1){
+                    
+                    bool murder_parity=false;
+                    for(auto node:for_min_heap){
+                        previous_city[child_parent[node]].pb(node);
+                        if(set_of_leaves.find(node)!=set_of_leaves.end() && !processed[node]){
+                            
+                            // if(g.adj[node].size()>=2){if(!processed[g.adj[node][0]] && !processed[g.adj[node][1]]){murder_parity=true;}}    // mistake
+                            for(auto child:g.adj[node]){
+                                if(find_(previous_city[node], child) && child!=child_parent[node]){
+                                    if(!processed[child]){
+                                        murder_parity=true;
+                                        break;
                                     }
                                 }
-                                // dead_assassins.pb(child_parent[leaf]);
+                            }
+                            if(murder_parity){    
+                                g.process(node, child_parent[node], previous_city);
+                                // popped[previous_city[node]]=true;
+                                for(auto x:previous_city[node])
+                                    alive_clusters[x]=false;
+                                murder_city[node]=1;
                             }
                         }
                         
-                        // cout << endl;
-                        set<int> copy_set = set_of_leaves;
-                        for(int leaf:copy_set){
-                            if(!popped[child_parent[leaf]] && !check_for_stay_parity[leaf]){
-                                set_of_leaves.erase(leaf); set_of_leaves.insert(child_parent[leaf]);
-                            }
-                            // // if(popped[child_parent[leaf]] && !check_for_stay_parity[leaf]){
-                            // //     set_of_leaves.erase(leaf); set_of_leaves.insert(child_parent[leaf]);
-                            // }
-                            else if(check_for_stay_parity[leaf]){
-                                // check_for_stay_parity[child_parent[leaf]]=false;
-                                // cout << "leaf " << leaf << endl;
-                                // set_of_leaves.insert(child_parent[leaf]);
-                                continue;
+                    }
+                    // cout << "infinity " << set_of_leaves.size() <<  endl;
+                    set<int> copy_set = set_of_leaves;
+                    for(auto leaf:copy_set){
+                        int parent=child_parent[leaf];
+                        if(!processed[leaf]){
+                            if(!murder_city[leaf])
+                            {
+                                for_min_heap.pb(parent); BuildAMinHeap(for_min_heap); 
+                                set_of_leaves.erase(leaf); set_of_leaves.insert(parent);
+                                processed[leaf]=1;
+
                             }
                             else{
-                                set_of_leaves.erase(leaf);
+                                murder_city[leaf]=0;
                             }
+
                         }
-                        
-                        
-                        
-                        final_number_of_days++;
+                        else{
+                            set_of_leaves.erase(leaf);
+                        }
                     }
+                    
+
+                    final_number_of_days++;
+                }
                 
                 
-
-
-
-
-
                 // cout << "final days before preprocessing " << final_number_of_days << endl;
                 // cout << "set of leaves size " << set_of_leaves.size() << endl;
                 int last_remaining_assassin = *set_of_leaves.begin();
                 final_number_of_days += (depth_map[last_remaining_assassin]);
-                // cout << "last remaining assassin " << last_remaining_assassin << endl;
-                // cout << "final " << final_number_of_days << endl;
-                // cout << "depth map for 5 " << depth_map[4] << endl;
+                
                 if(final_number_of_days == answer_number_of_days){
                     answer_assassins.pb(g.adj[1][i]); answer_number_of_days = final_number_of_days;
                 }
@@ -267,18 +342,12 @@ int32_t main(){
         loop(i, 0, answer_assassins.size()){
             vi leaves = g.DFS_for_leaves(answer_assassins[i], child_parent[answer_assassins[i]]);
 
-            // cout << "printing leaves "  << endl;
-            // for(auto j: leaves)cout << j << " ";
+            
 
             answer_set.insert(answer_set.end(), leaves.begin(), leaves.end());
         }
 
-        // for(auto mapshit:depth_map){
-        //     cout << mapshit.first  << " " << mapshit.second << endl;
-        // }
-
-
-
+        
         sort(answer_set.begin(), answer_set.end());
         // if(g.adj[1].size()>1)answer_number_of_days++;
         std::cout << answer_set.size()<< " " << answer_number_of_days << '\n';
@@ -287,8 +356,6 @@ int32_t main(){
         }
         std::cout << '\n';
     
-    
-        
     }
     return 0;
 

@@ -20,6 +20,7 @@
 #define MOD_DEFINE const int MOD = 1e9 + 7;
 #define And &&
 #define Or ||
+#define endl '\n'
 #define int long long
 #define vi vector<int>
 #define pb(n) push_back(n)
