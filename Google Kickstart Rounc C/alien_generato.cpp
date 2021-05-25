@@ -32,7 +32,6 @@
 using namespace std;
 int32_t main(){
     int case_ = 0;
-    // cout << parity << endl;
     test_cases_loop
     {
         case_++;
@@ -41,7 +40,7 @@ int32_t main(){
         int count=0;
         for(int i=1; i<round(pow(n, 0.5))+1; i++){
             if(n%i == 0){
-                if((i%2 == 0 And (n/i) % 2 !=0) Or (i%2!=0 And (n/i)% 2==0)){
+                if((i%2) ^ ((n/i)%2)){          // one of them should be odd
                     count++;
                 }
             }
