@@ -38,6 +38,23 @@ int power(int x, unsigned int y)
         return power(x, y / 2) * power(x, y / 2)%MOD;
     else
         return x * power(x, y / 2) * power(x, y / 2)%MOD;
+}    
+bool str_parity(string &s){
+    // bool palindrome=false; 
+    int mid_index = ceil(s.size()/2.0)-1;
+    loop(i, mid_index+1, s.size()){
+        if(s[i]<s[s.size()-i-1]){
+            return false;
+        }
+        else if(s[i]==s[s.size()-i-1]){
+            continue;
+        }
+        else{
+            // palindrome=false;
+            return true;
+        }
+    }
+    return false;
 }
 int32_t main(){
     FIO
@@ -54,11 +71,12 @@ int32_t main(){
             ans += ((s[i]-'a')*power(k, mid_index-i)%MOD)%MOD;
             ans%=MOD;
         }
-        if(n>1)
-            if((n%2==0 And s[mid_index] < s[mid_index+1]) Or (n%2!=0 And s[mid_index-1] < s[mid_index+1]))
-            {
-                ans++;
-            }    
+        // if(n>1)
+            // if((n%2==0 And s[mid_index] < s[mid_index+1]) Or (n%2!=0 And s[mid_index-1] < s[mid_index+1]))
+        if(str_parity(s))
+        {
+            ans++;
+        }    
         cout << "Case #" << case_ << ":" << space << ans << endl;
     }
 }
