@@ -35,12 +35,12 @@ int power(int x, unsigned int y)
     if (y == 0)
         return 1;
     else if (y % 2 == 0)
-        return power(x, y / 2) * power(x, y / 2)%MOD;
+        return power(x, y / 2)%MOD * power(x, y / 2)%MOD;
     else
-        return x * power(x, y / 2) * power(x, y / 2)%MOD;
+        return x * power(x, y / 2)%MOD * power(x, y / 2)%MOD;
 }    
 bool str_parity(string &s){
-    // bool palindrome=false; 
+    // bool palindrome=false; abeddeaa 
     int mid_index = ceil(s.size()/2.0)-1;
     loop(i, mid_index+1, s.size()){
         if(s[i]<s[s.size()-i-1]){
