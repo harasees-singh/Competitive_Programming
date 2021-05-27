@@ -37,26 +37,30 @@ string ans_generator(float w, float e){
 
     vector<vector<vector<float>>> dp(61, vector<vector<float>>(61, vector<float>(61)));
     vector<vector<vector<string>>> strings_dp(61, vector<vector<string>>(61, vector<string>(61)));
-    // debug(dp[4][5][6]);
-    // rock, paper, scissor
-    // return "";
+    
     float ans=0;
     string to_be_printed;
-    dp[0][0][1] = w/3 + e/3; strings_dp[0][0][1] = "S";
-    dp[0][1][0] = w/3 + e/3; strings_dp[0][1][0] = "P";
-    dp[1][0][0] = w/3 + e/3; strings_dp[1][0][0] = "R";
+    
     for(int rock=0; rock<=60; rock++){
         for(int paper=0; paper<=60; paper++){
-            for(int scissor=2; scissor<=60; scissor++){
+            for(int scissor=0; scissor<=60; scissor++){
                 // cout << "rock paper ";
                 // debug_pair(rock, paper);
+                if(rock+paper+scissor==0) continue;
                 if(rock+paper+scissor > 60) break;
+                if(rock+paper+scissor==1){
+                    // denomi will be zero so will have to do something
+                    dp[rock][paper][scissor] = w*1/3 + e*1/3; 
+                    if(scissor) strings_dp[rock][paper][scissor]="S"; if(rock) strings_dp[rock][paper][scissor]="R"; if(paper) strings_dp[rock][paper][scissor]="P";
+                    continue;
+                }
+                
                 float s_expected = 0;
-                if(scissor>1) s_expected = dp[rock][paper][scissor-1] + w*rock/(rock + scissor - 1.00 +paper) + e*paper/(rock + scissor - 1.00 +paper);
+                if(scissor>=1) s_expected = dp[rock][paper][scissor-1] + w*rock/(rock + scissor - 1.00 +paper) + e*paper/(rock + scissor - 1.00 +paper);
                 float r_expected = 0;
-                if(rock>1) r_expected =  dp[rock - 1][paper][scissor] + w*paper/(rock + scissor - 1.00 +paper) + e*scissor/(rock + scissor - 1.00 +paper);
+                if(rock>=1) r_expected =  dp[rock - 1][paper][scissor] + w*paper/(rock + scissor - 1.00 +paper) + e*scissor/(rock + scissor - 1.00 +paper);
                 float p_expected = 0;
-                if(paper>1) p_expected = dp[rock][paper-1][scissor] + w*scissor/(rock + scissor - 1.00 +paper) + e*rock/(rock + scissor - 1.00 + paper);
+                if(paper>=1) p_expected = dp[rock][paper-1][scissor] + w*scissor/(rock + scissor - 1.00 +paper) + e*rock/(rock + scissor - 1.00 + paper);
                 float maxi = max(s_expected, max(r_expected, p_expected));
                 if(s_expected==maxi){
                     // cout << "hyo" << endl;
@@ -90,7 +94,7 @@ int32_t main(){
         case_++;
         float w, e; cin >> w >> e ;
         string ans = ans_generator(w, e);
-        cout << ans.size() << endl;
+        // cout << ans.size() << endl;
         cout << "Case #" << case_ << ":" << space << ans << endl;
     }
 }
