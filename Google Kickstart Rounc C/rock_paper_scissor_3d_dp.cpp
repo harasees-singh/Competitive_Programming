@@ -44,26 +44,27 @@ string ans_generator(float w, float e){
     for(int rock=0; rock<=60; rock++){
         for(int paper=0; paper<=60; paper++){
             for(int scissor=0; scissor<=60; scissor++){
-                // cout << "rock paper ";
-                // debug_pair(rock, paper);
-                if(rock+paper+scissor==0) continue;
+        
                 if(rock+paper+scissor > 60) break;
-                if(rock+paper+scissor==1){
+                if(rock+paper+scissor<=1){
                     // denomi will be zero so will have to do something
-                    dp[rock][paper][scissor] = w*1/3 + e*1/3; 
+                    if(scissor Or paper Or rock) dp[rock][paper][scissor] = w*1/3 + e*1/3; 
                     if(scissor) strings_dp[rock][paper][scissor]="S"; if(rock) strings_dp[rock][paper][scissor]="R"; if(paper) strings_dp[rock][paper][scissor]="P";
                     continue;
                 }
+                float s_expected = 0; float r_expected = 0; float p_expected = 0;
+
+                float win_factor = w/(rock+scissor+paper-1.00); float tie_factor = e/(rock+scissor+paper-1.00);
+
+                if(scissor>=1) s_expected = dp[rock][paper][scissor-1] + rock*win_factor + paper*tie_factor;
                 
-                float s_expected = 0;
-                if(scissor>=1) s_expected = dp[rock][paper][scissor-1] + w*rock/(rock + scissor - 1.00 +paper) + e*paper/(rock + scissor - 1.00 +paper);
-                float r_expected = 0;
-                if(rock>=1) r_expected =  dp[rock - 1][paper][scissor] + w*paper/(rock + scissor - 1.00 +paper) + e*scissor/(rock + scissor - 1.00 +paper);
-                float p_expected = 0;
-                if(paper>=1) p_expected = dp[rock][paper-1][scissor] + w*scissor/(rock + scissor - 1.00 +paper) + e*rock/(rock + scissor - 1.00 + paper);
+                if(rock>=1) r_expected =  dp[rock - 1][paper][scissor] + paper*win_factor+ scissor*tie_factor;
+                
+                if(paper>=1) p_expected = dp[rock][paper-1][scissor] + scissor*win_factor + rock*tie_factor;
+
                 float maxi = max(s_expected, max(r_expected, p_expected));
+
                 if(s_expected==maxi){
-                    // cout << "hyo" << endl;
                     dp[rock][paper][scissor] = s_expected; strings_dp[rock][paper][scissor] = strings_dp[rock][paper][scissor-1]+"S";
                 }
                 else if(r_expected==maxi){
