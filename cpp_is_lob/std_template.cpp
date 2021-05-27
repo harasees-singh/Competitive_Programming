@@ -17,10 +17,14 @@
 #include <chrono>
 #include <random>
 #include <bitset>
+#include <functional>
+#define debug(a) cout << a << endl;
+#define debug(a, b) cout << a << " " << b << endl;
 #define MOD_DEFINE const int MOD = 1e9 + 7;
 #define And &&
 #define Or ||
 #define endl '\n'
+#define space " "
 #define int long long
 #define vi vector<int>
 #define pb(n) push_back(n)

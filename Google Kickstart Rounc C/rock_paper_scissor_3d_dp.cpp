@@ -44,7 +44,9 @@ string ans_generator(float w, float e){
     for(int rock=0; rock<=60; rock++){
         for(int paper=0; paper<=60; paper++){
             for(int scissor=0; scissor<=60; scissor++){
-        
+                // cout << "rock paper ";
+                // debug_pair(rock, paper);
+                // if(rock+paper+scissor==0) continue;
                 if(rock+paper+scissor > 60) break;
                 if(rock+paper+scissor<=1){
                     // denomi will be zero so will have to do something
@@ -52,8 +54,9 @@ string ans_generator(float w, float e){
                     if(scissor) strings_dp[rock][paper][scissor]="S"; if(rock) strings_dp[rock][paper][scissor]="R"; if(paper) strings_dp[rock][paper][scissor]="P";
                     continue;
                 }
+                
                 float s_expected = 0; float r_expected = 0; float p_expected = 0;
-
+                
                 float win_factor = w/(rock+scissor+paper-1.00); float tie_factor = e/(rock+scissor+paper-1.00);
 
                 if(scissor>=1) s_expected = dp[rock][paper][scissor-1] + rock*win_factor + paper*tie_factor;
