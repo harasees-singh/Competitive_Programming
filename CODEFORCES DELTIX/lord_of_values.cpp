@@ -18,10 +18,8 @@
 #include <random>
 #include <bitset>
 #include <functional>
-#define sz(v) ((int)(v).size())
-#define all(v) (v).begin(),(v).end()
 #define debug(a) cout << a << endl;
-#define debug(a, b) cout << a << " " << b << endl;
+#define debug_(a, b) cout << a << " " << b << endl;
 #define MOD_DEFINE const int MOD = 1e9 + 7;
 #define And &&
 #define Or ||
@@ -34,12 +32,24 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-void fastscan_integer(int &number)      // for fastest possible integer input
-{   
-    bool negative = false; register int c; number = 0; c = getchar();
-    if (c=='-') negative = true, c = getchar();
-    for (; (c>47 && c<58); c=getchar()) number = number *10 + c - 48;
-    if (negative) number *= -1;      
-}
 using namespace std;
-
+int32_t main(){
+    FIO;
+    test_cases_loop{
+        int n; cin >> n;
+        int copy =n;
+        while(n--){
+            int temp;
+            cin >> temp;
+        }
+        cout << copy*3 << endl;
+        loop(i, 0, copy/2){
+            cout << "2" << " " << 2*i + 1 << space << 2*i +2 << endl;
+            cout << "1" << " " << 2*i + 1 << space << 2*i+2 << endl;
+            cout << "2" << " " << 2*i + 1 << space << 2*i +2 << endl;
+            cout << "1" << " " << 2*i + 1 << space << 2*i+2 << endl;
+            cout << "2" << " " << 2*i + 1 << space << 2*i +2 << endl;
+            cout << "1" << " " << 2*i + 1 << space << 2*i+2 << endl;
+        }
+    }
+}
