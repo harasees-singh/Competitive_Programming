@@ -52,15 +52,18 @@ string make_string(vi &a){
     string potentanswer = make_string_2(a);
     int last = potentanswer.size()-1;
     string num;
-    while(potentanswer[last]!='.'){
+    while(last>=0 And potentanswer[last]!='.'){
         num+=potentanswer[last];
+        // cout << "hey " <<  num << endl;
         last--;
         potentanswer.pop_back();
     }
     reverse(num.begin(), num.end());
+    
     // string to_be_removed = potentanswer[potentanswer.size()-1];
     // potentanswer.pop_back(); potentanswer.pb(to_be_removed+1);
-    potentanswer+= to_string(stoi(num)+1);
+    int temp = stoi(num);
+    potentanswer+= to_string(temp+1);
     return potentanswer;
 }
 
@@ -85,7 +88,6 @@ int32_t main(){
                 
                 cout << make_string(parent) << endl;parent[(int)parent.size()-1]++;
             }
-            
         }
     }
 }
