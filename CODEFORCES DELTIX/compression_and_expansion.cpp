@@ -66,7 +66,6 @@ string make_string(vi &a){
     potentanswer+= to_string(temp+1);
     return potentanswer;
 }
-
 int32_t main(){
     FIO;
     test_cases_loop{
