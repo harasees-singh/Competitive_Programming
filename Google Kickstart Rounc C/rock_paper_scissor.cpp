@@ -52,16 +52,6 @@ string ans_generator(int w, int e){
             ans = ans+"P"; p_count++;
         }
 
-
-        // if(r_probability <= s_probability And r_probability <= p_probability){
-        //     s_count++; ans = ans + "S";
-        // }
-        // else if(s_probability <= r_probability And s_probability <= p_probability){
-        //     p_count++; ans = ans + "P";
-        // }
-        // else{
-        //     r_count++; ans = ans + "R";
-        // }
         r_probability = s_count/i; p_probability = r_count/i; s_probability = p_count/i;
     }
     return ans;

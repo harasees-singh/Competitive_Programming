@@ -5,6 +5,11 @@
         "utility": "cpp",
         "algorithm": "cpp",
         "ostream": "cpp",
-        "vector": "cpp"
-    }
+        "vector": "cpp",
+        "unordered_set": "cpp",
+        "xiosbase": "cpp",
+        "filesystem": "cpp",
+        "xstring": "cpp"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }

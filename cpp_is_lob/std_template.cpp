@@ -20,8 +20,6 @@
 #include <functional>
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
-#define debug(a) cout << a << endl;
-#define debug(a, b) cout << a << " " << b << endl;
 #define MOD_DEFINE const int MOD = 1e9 + 7;
 #define And &&
 #define Or ||
@@ -42,4 +40,7 @@ void fastscan_integer(int &number)      // for fastest possible integer input
     if (negative) number *= -1;      
 }
 using namespace std;
+int32_t main(){
+    FIO
+}
 
