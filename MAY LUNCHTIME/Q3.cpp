@@ -35,9 +35,9 @@
 using namespace std;
 vi is_prime(10000000+1, 1);
 vi dp(10000000+1);
-void sieve() {
+void sieve(){                       // O(Nlog(log(N)))
    
-    int N = 10000000+1;
+    int N = 10000000;
     int i=2;
     
     while(i*i <= N) {
@@ -47,7 +47,7 @@ void sieve() {
             continue;
         }
         int j = 2*i;
-        while(j < N){
+        while(j <= N){
             
             is_prime[j] = 0;
             
