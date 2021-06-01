@@ -36,28 +36,28 @@ using namespace std;
 vi is_prime(10000000+1, 1);
 vi dp(10000000+1);
 void sieve() {
-    // We cross out all composites from 2 to sqrt(N)
-    int N = 10000000;
+   
+    int N = 10000000+1;
     int i=2;
-    // This will loop from 2 to int(sqrt(x))
+    
     while(i*i <= N) {
-        // If we already crossed out this number, then continue
+        
         if(is_prime[i] == 0) {
             i++;
             continue;
         }
         int j = 2*i;
-        while(j < N) {
-            // Cross out this as it is composite
+        while(j < N){
+            
             is_prime[j] = 0;
-            // j is incremented by i, because we want to cover all multiples of i
+            
             j += i;
         }
         i++;
     }
 }
 void solve(){
-    // count prime numbers strictly greater than a/2 till a
+    
     int top = 10000000+1;
     int curr = 0;
 
@@ -72,13 +72,10 @@ int32_t main(){
     sieve();
     solve();
     dp[1]=1;
-    // cout << "yeh";
-    // cout << dp[2] << space << dp[1]<< endl;
-    // cout << is_prime[97] << endl;
+    
     test_cases_loop{
         int n; cin >> n;
         // 2 to n total n-1 numbers
-        
         
         cout << dp[n]- dp[n/2]+1 << endl;
         
