@@ -20,7 +20,6 @@
 #include <functional>
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
-#define MOD_DEFINE const int MOD = 1e9 + 7;
 #define And &&
 #define Or ||
 #define endl '\n'
