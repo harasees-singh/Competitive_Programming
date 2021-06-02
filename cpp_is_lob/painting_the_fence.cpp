@@ -39,39 +39,54 @@ int32_t main(){
     FIO
     int n, q;
     cin >> n >> q ;
-    map<int, int> painter_sole_responsibility;
-    map<pair<int, int>, int> couple_sole_responsibility;
-    map<int, vi> partition_painter_involved;
+    vi partition_frequency(n+2);
+    vector<pii> input(q+1);
     int total=0;
     loop(i, 0, q){
         int l, r;
         cin >> l >> r;
-        for(int j=l; j<=r; j++){
-            if(!sz(partition_painter_involved[j])){total++;}
-            if(partition_painter_involved[j].size() <= 2) partition_painter_involved[j].pb(i+1);
-            
-        }
+        partition_frequency[l]++; partition_frequency[r+1]--;
+        pii temp={l, r};  input[i+1]=temp;
     }
-    for(auto a:partition_painter_involved){
-        int partition = a.first; vi &painters = a.second;
-        if(sz(painters)==1){painter_sole_responsibility[painters[0]]++;}
-        if(sz(painters)==2){
-            int small=min(painters[0], painters[1]), large=max(painters[0], painters[1]);
-            // painters[0] < painters[1] ? small = painters[0], large = painters[1] : large = painters[0], small=painters[1];
-
-            // cout << "small " << painters[0] << " large " << painters[1] << endl;
-            couple_sole_responsibility[{small, large}]++;
+    int sum=0;
+    vi prefix_1s(n+1);
+    vi prefix_2s(n+1);
+    int prefix_sums_1=0, prefix_sums_2=0;
+    loop(i, 0, n+1){
+        partition_frequency[i]=sum+partition_frequency[i]; sum=partition_frequency[i]; if(sum > 0){total++;}
+        if(sum==1){
+            prefix_sums_1++;
         }
+        prefix_1s[i]=prefix_sums_1;
+        if(sum==2){
+            prefix_sums_2++;
+        }
+        
+        prefix_2s[i]=prefix_sums_2;
     }
-    // cout << "debug " <<couple_sole_responsibility[{2, 3}] << endl;
-    // cout << partition_painter_involved[2][1] << endl;
+    
+    // debug(prefix_1s[1]) debug(prefix_1s[2]) 
     int ans = infinity;
     loop(i, 1, q+1){
         loop(j, i+1, q+1){
-            pii couple = {i, j};
-            int parity = couple_sole_responsibility[couple] + painter_sole_responsibility[i] + painter_sole_responsibility[j];
-            if(parity < ans)ans=parity;
+
+            pii range1 = input[i], range2 = input[j];
+            // cout << "input " << j << input[j].first << space << input[j].second << endl;
+            // cout << "ranges " << range1.first << space << range1.second << space <<  range2.first << space << range2.second << endl;
+            int loss = 0; 
+            loss += (prefix_1s[range1.second]-prefix_1s[range1.first-1]);
+            // cout << "loss 1s " << loss << endl;
+            loss += (prefix_1s[range2.second]-prefix_1s[range2.first-1]);
+            // cout << "i = " << i << " j = " << j << endl;
+            // cout << "loss 1s + 2s " << loss << endl;
+            
+            pii common_range = {max(range1.first, range2.first), min(range1.second, range2.second)};
+            loss += max(0, (int32_t)(prefix_2s[common_range.second]- prefix_2s[common_range.first-1]));
+            // cout << "total loss " << loss << endl;
+            if(loss < ans)ans=loss;
         }
     }
     cout << total - ans << endl;
 }
+    
+   
