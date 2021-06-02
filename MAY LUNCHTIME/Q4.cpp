@@ -18,6 +18,7 @@
 #include <random>
 #include <bitset>
 #include <functional>
+#define infinity 8999999999999999999
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
 #define And &&
@@ -32,20 +33,48 @@
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 using namespace std;
-int maxSubArraySum(vi &a, int size)
-{
-    int max_so_far = INT32_MIN, max_ending_here = 0;
- 
-    for (int i = 0; i < size; i++)
-    {
-        max_ending_here = max_ending_here + a[i];
-        if (max_so_far < max_ending_here)
-            max_so_far = max_ending_here;
- 
-        if (max_ending_here < 0)
-            max_ending_here = 0;
+void kadane(vector<vi> &mat){
+    int curr_sum = 0;
+    bool start = true;
+    loop(i, 0, mat.size()){
+        int ele = mat[i][1];
+        // cout << "working on it " << endl;
+        if(start){if(ele > 0){start=false;curr_sum=ele;}mat[i][1]=ele;continue;}        // [-1, -2, 3, 4, 5, -660, -1, -2, 3, 4, 5,]
+        if(curr_sum+ele > 0)mat[i][1] = curr_sum+ele, curr_sum+=ele; 
+        else{mat[i][1]=curr_sum+ele; curr_sum=0; start=true;}
     }
-    return max_so_far;
+}
+void solve(int n, int k, vi &a){
+    vector<vi> dp(n, vi(k+1, 0));
+    dp[0][1] = a[0]; 
+    loop(i, 2, k+1){
+        dp[0][i] = -infinity;
+    }
+    
+    vector<vi> mat(n, vi(k+1, 0));
+    loop(i, 0, sz(a)){mat[i][1]=a[i];}
+    kadane(mat);                // now we have the entire first column filled 
+    loop(i, 2, k+1){mat[0][i]=-infinity;}
+    
+    loop(i, 1, n){
+        loop(j, 2, k+1){
+            int j_new_contiguous_block_max = -infinity;
+            int to_be_fitted = max(dp[i-1][j-1], mat[i-1][j-1]);
+            j_new_contiguous_block_max = to_be_fitted;
+            dp[i][j-1]=to_be_fitted;
+            // loop(itera, 0, i){mat[itera][j-1] > j_new_contiguous_block_max ? j_new_contiguous_block_max=mat[itera][j-1] : j_new_contiguous_block_max=j_new_contiguous_block_max;}
+            j_new_contiguous_block_max += j*a[i];
+
+            int j_same_contiguous_block_max = mat[i-1][j] + j*a[i];
+
+            mat[i][j] = max(j_new_contiguous_block_max, j_same_contiguous_block_max);
+        }
+    }
+    int ans=-infinity;
+    loop(i, 0, n){
+        mat[i][k] > ans ? ans = mat[i][k] : ans = ans;
+    }
+    cout << ans << endl;
 }
 int32_t main(){
     FIO
@@ -55,9 +84,10 @@ int32_t main(){
         vi a;
         loop(i, 0, n){
             int temp; cin >> temp;
-            a.pb(temp);
+            a.pb(temp);   
         }
-        cout << maxSubArraySum(a, sz(a)) << endl;
+        int a_ = infinity; cout << a_  << space << INT64_MAX << endl;
+        solve(n, k, a);
     }
 }
 
