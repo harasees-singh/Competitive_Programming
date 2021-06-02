@@ -18,6 +18,7 @@
 #include <random>
 #include <bitset>
 #include <functional>
+#define infinity 999999999999999999
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
 #define MOD_DEFINE const int MOD = 1e9 + 7;
