@@ -45,10 +45,11 @@ void kadane(vector<vi> &mat){
     }
 }
 void solve(int n, int k, vi &a){
-    vector<vi> dp(n, vi(k+1, 0));
-    dp[0][1] = a[0]; 
+    
+    vi dp(k+1);
+    dp[1] = a[0]; 
     loop(i, 2, k+1){
-        dp[0][i] = -infinity;
+        dp[i] = -infinity;
     }
     
     vector<vi> mat(n, vi(k+1, 0));
@@ -59,10 +60,10 @@ void solve(int n, int k, vi &a){
     loop(i, 1, n){
         loop(j, 2, k+1){
             int j_new_contiguous_block_max = -infinity;
-            int to_be_fitted = max(dp[i-1][j-1], mat[i-1][j-1]);
+            int to_be_fitted = max(dp[j-1], mat[i-1][j-1]);
             j_new_contiguous_block_max = to_be_fitted;
-            dp[i][j-1]=to_be_fitted;
-            // loop(itera, 0, i){mat[itera][j-1] > j_new_contiguous_block_max ? j_new_contiguous_block_max=mat[itera][j-1] : j_new_contiguous_block_max=j_new_contiguous_block_max;}
+            dp[j-1]=to_be_fitted;
+            
             j_new_contiguous_block_max += j*a[i];
 
             int j_same_contiguous_block_max = mat[i-1][j] + j*a[i];
@@ -79,15 +80,9 @@ void solve(int n, int k, vi &a){
 int32_t main(){
     FIO
     test_cases_loop{
-        int n, k ;
-        cin >> n >> k;
-        vi a;
-        loop(i, 0, n){
-            int temp; cin >> temp;
-            a.pb(temp);   
-        }
-        int a_ = infinity; cout << a_  << space << INT64_MAX << endl;
+        int n, k ; cin >> n >> k; vi a; loop(i, 0, n){int temp; cin >> temp; a.pb(temp);}       // input 
         solve(n, k, a);
     }
+    return 0;
 }
 
