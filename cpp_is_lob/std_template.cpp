@@ -27,6 +27,7 @@
 #define endl '\n'
 #define space " "
 #define int long long
+#define pii pair<int, int>
 #define vi vector<int>
 #define pb(n) push_back(n)
 #define mii map<int, int>
