@@ -46,8 +46,6 @@ int32_t main(){
             available_fule+=f;
             dist_fuel.push_back({d, f});
         }
-        // sort(all(dist_fuel));
-        // cout << dist_fuel[0].first << space << dist_fuel[1].first << space << dist_fuel[2].first << endl;
         priority_queue<int, vi, less<int>> hiphop;
         int dist, fuel; cin >> dist >> fuel;
         // cout << "n " << n << endl;
@@ -75,7 +73,7 @@ int32_t main(){
                     int fill=hiphop.top(); fuel+=fill; hiphop.pop(); ans++; 
                 }
             }
-            // bool parity=false;
+            
             while(sz(hiphop)){
                 // cout << "fuel = " << fuel << " " << "dist " << dist << endl;
                 if(fuel < dist){
@@ -88,30 +86,7 @@ int32_t main(){
             
         }
         else{cout << -1 << endl;}
-        //--------------------------------------------
-
-        // int curr_fuel = fuel;
-        // int i=0;
-        // while(i<dist_fuel.size() And dist_fuel[i].first <= fuel){hiphop.push(dist_fuel[i].second);i++;}
-        // int ans=0;
-        // // bool run_parity=true;
-        // while(true){
-        //     while(hiphop.size() And i<dist_fuel.size() And curr_fuel < dist_fuel[i].first){
-        //         int fill = hiphop.top(); hiphop.pop(); curr_fuel+=fill; ans++;
-        //     }
-            
-        //     if(!hiphop.size()){break;}
-        //     if(i==dist_fuel.size()){break;}
-        //     if(curr_fuel >= dist_fuel[i].first) hiphop.push(dist_fuel[i].second); else break;
-        //     i++;
-        // }
-        // if(curr_fuel >= dist)cout << ans << endl;
-        // else{
-        //     while(hiphop.size() And curr_fuel< dist){
-        //         curr_fuel+=hiphop.top(); hiphop.pop(); ans++;
-        //     }
-        //     curr_fuel >= dist ? cout << ans << endl: cout << -1 << endl;
-        // }
+        
     }
     return 0;
 }
