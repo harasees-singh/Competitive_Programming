@@ -54,17 +54,11 @@ int32_t main(){
 
             ans -= operation(question_mark_count); question_mark_count=0;
             
-            if((i%2) ^ (s[i]=='1')){
-
-                even_one_count++; 
-                ans+= operation(odd_one_count);
-                odd_one_count=0;
-                continue;
-            }
-
-            odd_one_count++;
-            ans+= operation(even_one_count);
-            even_one_count=0;
+            int *murder, *elixir;
+            
+            if((i%2) ^ (s[i]=='1')){murder = &odd_one_count, elixir = &even_one_count;} else{murder = &even_one_count, elixir = &odd_one_count;}
+            
+            (*elixir)++; ans+=operation(*murder); *murder=0;
         }
         ans += operation(even_one_count) + operation(odd_one_count); ans -= operation(question_mark_count);
         cout << ans << endl;
