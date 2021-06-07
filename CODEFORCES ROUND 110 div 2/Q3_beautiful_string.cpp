@@ -37,8 +37,12 @@
 using namespace std;
 char invert(char a){
     char ans;
-    a=='1'? ans= '0':ans= '1'; return ans;
+    
+    a=='1'? ans= '0':ans= '1'; 
+    cout << "fucnt " << a << space << "answer " << ans << endl;
+    return ans;
 }
+
 int32_t main(){
     FIO
     test_cases_loop{
@@ -46,28 +50,63 @@ int32_t main(){
         cin >> s;
         int ans=0;
         int contiguous_count=1;
+        mii visited;
+        vi two_pointers;
+        bool was_question_mark = false;
+        int pointer=0;
+        vi dp(sz(s));
+        for(auto a:s){
+            if(a=='?' And !was_question_mark)two_pointers.pb(pointer), was_question_mark=true;
+            else if(a!='?') was_question_mark=false;
+            pointer++;
+        }
+        // cout << "marks " << two_pointers[0] << space << two_pointers[1] << endl;
         char last = s[0];
         bool parity=false; if(last=='?')parity=true;
+
         int i=1;
-        int subtract=0;
+        // 2 pointer approach: increment pointer 2 always, increment pointer 1 only if the next element is not '?'
+        // if pointer 2 points to anything other than '?' with contiguous sum > 1 make pointer 1 = pointer 2
+        // if pointer 2 is alone on a '1' or '0' with contiguous sum==1 do pointer 1 algo and then 
+
+        // while traversing if u find a '1' or '0' and at that time contiguous sum > 1 then mark it as visited;
+
         while(i<sz(s)){
             char consideration = s[i];
             // cout << i << endl;
             // cout << "yo" << endl;
-
-            if(consideration=='?'){parity=true; contiguous_count++; last=invert(last);i++; continue;}
-            if(consideration==invert(last)){contiguous_count++; last=consideration; parity=false;}
-            else if(parity){
-                ans+= contiguous_count*(contiguous_count+1)/2;
-                contiguous_count=0; last=consideration; subtract+=1; parity=false; i-=1; while(s[i]=='?' And i>0)i--;
-            }
+            
+            if(consideration=='?'){contiguous_count++; last=invert(last);}
+            // cout << "lol " << (consideration == invert(last)) << endl;
+            if(consideration == invert(last)){contiguous_count++; last=consideration; cout << "ivert " << invert(last) << space << consideration << endl;}
+            // else if(parity){
+            //     ans+= contiguous_count*(contiguous_count+1)/2;
+            //     contiguous_count=0; last=consideration; parity=false;
+            // }
             else{
-                ans+= contiguous_count*(contiguous_count+1)/2; contiguous_count=1;last=consideration; parity=false;
+                // cout << "else " << i << endl;
+                ans+= contiguous_count*(contiguous_count+1)/2; contiguous_count=1;last=consideration;
             }
+            if(contiguous_count > 1){visited[i]=1; cout << "visited " << i << space << visited[i] << endl;}
             i+=1;
         }
+        int sum=0;
+        cout << "early " << visited[3] << space<< visited[2]<< endl;
+        for(int i=sz(s)-1; i>=0; i--){
+            int curr = visited[i]; sum+=curr;
+            curr ==0 ? visited[i]=sum+1, sum=0: visited[i]=0;
+        }
+        cout << "yo " << visited[2] << space << visited[3] << endl;
         ans+= contiguous_count*(contiguous_count+1)/2;
-        cout << ans - subtract<< endl;
+        
+        // cout << visited[2] << space << visited[1] << endl;
+        for(auto p:two_pointers){
+            int count=1;
+            while(s[p]!='?' And visited[p]){
+                count++; p++;
+            }
+        }
+        cout << ans << endl;
     }
 }
 
