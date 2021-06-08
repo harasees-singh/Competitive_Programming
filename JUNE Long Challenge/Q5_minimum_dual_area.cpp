@@ -41,12 +41,12 @@ int32_t main(){
         int points;
         cin >> points;
         vector<pii> coordinates;
-        // vector<int> x_dehydrated, y_dehydrated;
+
         loop(i, 0, points){
+
             int tempx, tempy;     
             cin >> tempx >> tempy; coordinates.push_back({tempx, tempy});
         }
-        // sort(all(x_dehydrated)); sort(all(y_dehydrated));
 
         if(points == 1){cout << 0 << endl; continue;}
 
@@ -80,8 +80,9 @@ int32_t main(){
         }
 
         // -=---------------------------------------------------------------------------------
+
         sort(all(coordinates), [](pii hell, pii heaven){return hell.second < heaven.second;});
-        // vi x_prefix_min(points); vi x_prefix_max(points); vi x_suffix_min(points); vi x_suffix_max(points);
+        
 
         x_min=coordinates[0].first, x_max = coordinates[0].first;
 
