@@ -79,11 +79,10 @@ int32_t main(){
             ansx = min(area, ansx);
         }
 
-        // -=---------------------------------------------------------------------------------
+        // -----------------------------------------------------------------------------------
 
         sort(all(coordinates), [](pii hell, pii heaven){return hell.second < heaven.second;});
         
-
         x_min=coordinates[0].first, x_max = coordinates[0].first;
 
         loop(i, 0, points){
