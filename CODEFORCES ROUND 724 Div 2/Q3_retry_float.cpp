@@ -43,7 +43,7 @@ int __gcd(int a, int b){
 int32_t main(){
     FIO;
     test_cases_loop{
-        map<long double, int> hardware;
+        unordered_map<long double, int> hardware;
         int n; cin >> n;
         string s; cin >> s;
         long double d=0, k=0;

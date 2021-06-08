@@ -32,6 +32,7 @@
 #define vi vector<int>
 #define pb(n) push_back(n)
 #define mii map<int, int>
+#define umii unordered map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
