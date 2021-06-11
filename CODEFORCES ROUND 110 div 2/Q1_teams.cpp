@@ -40,8 +40,7 @@ int32_t main(){
     test_cases_loop{
         int a, b, c, d;
         cin >> a >> b >> c >> d;
-        if(max(a, b) < min(c, d) Or min(a, b) > max(c, d))cout << "NO" << endl;
-        else cout << "YES" << endl;
+        if(max(a, b) < min(c, d) Or min(a, b) > max(c, d)) cout << "NO" << endl; else cout << "YES" << endl;
     }
 }
 

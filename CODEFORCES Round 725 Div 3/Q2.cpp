@@ -1,4 +1,3 @@
-#include<bits/stdc++.h>
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -20,6 +19,7 @@
 #include <bitset>
 #include <functional>
 #define infinity 999999999999999999
+#define float long double
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
 #define MOD_DEFINE const int MOD = 1e9 + 7;
@@ -32,41 +32,35 @@
 #define vi vector<int>
 #define pb(n) push_back(n)
 #define mii map<int, int>
+#define umii unordered map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 using namespace std;
-// using namespace __gnu_pbds;
-int gcdcall(int a, int b)
-{
-    if (a == 0)
-        return b;
-    return gcdcall(b % a, a);
-}
-// euclidean algo O(1)
 int32_t main(){
-    FIO
+    FIO MOD_DEFINE
     test_cases_loop{
-        int n; cin >> n;
+        int n ; cin >> n;
         vi arr;
+        int sum=0;
         loop(i, 0, n){
-            int temp; cin >> temp; arr.pb(temp);
+            int temp; cin >> temp;
+            arr.pb(temp); sum+=temp;
         }
-        int ans=0;
-        // sort(all(arr), greater<int>());
-        // cout << arr[0] << space << arr[1] << endl;
-        loop(i, 0, n){
-            loop(j, i+1, n){
-                int a = arr[i], b = arr[j];
-                // if(a%2==0){ans++; continue;}
-                int gcd1 = gcdcall(a, 2*b);
-                int gcd2 = gcdcall(2*a, b);
-                if(gcd1>1 Or gcd2>1)ans++;
-            }
-            // cout << __gcd(2, 6) << endl;
+        sort(all(arr));
+        if(sum%n != 0){cout << -1 << endl; continue;}
+        int demand=0;
+        int val = sum/n;
+        loop(j, 0, n){
+            if(arr[j] < val){demand+=val-arr[j];}
+            else{break;}
+        }
+        int ans = 0;
+        for(int i=n-1; i>=0; i--){
+            if(demand){demand-=arr[i]-val; ans++;}
+            else{break;}
         }
         cout << ans << endl;
-    }  
+    }
     return 0;
 }
-

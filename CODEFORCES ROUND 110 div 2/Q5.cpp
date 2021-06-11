@@ -1,4 +1,3 @@
-#include<bits/stdc++.h>
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -36,37 +35,7 @@
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 using namespace std;
-// using namespace __gnu_pbds;
-int gcdcall(int a, int b)
-{
-    if (a == 0)
-        return b;
-    return gcdcall(b % a, a);
-}
-// euclidean algo O(1)
 int32_t main(){
     FIO
-    test_cases_loop{
-        int n; cin >> n;
-        vi arr;
-        loop(i, 0, n){
-            int temp; cin >> temp; arr.pb(temp);
-        }
-        int ans=0;
-        // sort(all(arr), greater<int>());
-        // cout << arr[0] << space << arr[1] << endl;
-        loop(i, 0, n){
-            loop(j, i+1, n){
-                int a = arr[i], b = arr[j];
-                // if(a%2==0){ans++; continue;}
-                int gcd1 = gcdcall(a, 2*b);
-                int gcd2 = gcdcall(2*a, b);
-                if(gcd1>1 Or gcd2>1)ans++;
-            }
-            // cout << __gcd(2, 6) << endl;
-        }
-        cout << ans << endl;
-    }  
-    return 0;
 }
 

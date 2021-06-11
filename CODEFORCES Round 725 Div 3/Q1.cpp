@@ -1,4 +1,3 @@
-#include<bits/stdc++.h>
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -20,6 +19,7 @@
 #include <bitset>
 #include <functional>
 #define infinity 999999999999999999
+#define float long double
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
 #define MOD_DEFINE const int MOD = 1e9 + 7;
@@ -32,41 +32,34 @@
 #define vi vector<int>
 #define pb(n) push_back(n)
 #define mii map<int, int>
+#define umii unordered map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 using namespace std;
-// using namespace __gnu_pbds;
-int gcdcall(int a, int b)
-{
-    if (a == 0)
-        return b;
-    return gcdcall(b % a, a);
-}
-// euclidean algo O(1)
 int32_t main(){
-    FIO
+    FIO MOD_DEFINE
     test_cases_loop{
         int n; cin >> n;
+        int least=infinity; int greatest = -infinity;
+        int less_index, greater_index;
         vi arr;
         loop(i, 0, n){
-            int temp; cin >> temp; arr.pb(temp);
+            int temp; cin >> temp;
+            arr.pb(temp);
+            if(temp < least){least = temp; less_index = i;}
+            if(temp > greatest){greater_index = i; greatest = temp;}
         }
-        int ans=0;
-        // sort(all(arr), greater<int>());
-        // cout << arr[0] << space << arr[1] << endl;
-        loop(i, 0, n){
-            loop(j, i+1, n){
-                int a = arr[i], b = arr[j];
-                // if(a%2==0){ans++; continue;}
-                int gcd1 = gcdcall(a, 2*b);
-                int gcd2 = gcdcall(2*a, b);
-                if(gcd1>1 Or gcd2>1)ans++;
-            }
-            // cout << __gcd(2, 6) << endl;
+        if(less_index < n/2 And greater_index < n/2){cout << max(less_index, greater_index)+1 << endl;}
+        else if(less_index >= n/2 And greater_index >= n/2){cout << n-min(less_index, greater_index) << endl;}
+        else{
+            int index = min(less_index, greater_index);
+            int index2 = max(less_index, greater_index);
+            int potent_answer = min(n-index, index2+1);
+            int another_answer = min(less_index+1, n-less_index) + min(greater_index+1, n-greater_index);
+            cout << min(potent_answer, another_answer) << endl;
         }
-        cout << ans << endl;
-    }  
+        // cout << min(less_index+1, n-less_index) + min(greater_index+1, n-greater_index) << endl;
+    }
     return 0;
 }
-
