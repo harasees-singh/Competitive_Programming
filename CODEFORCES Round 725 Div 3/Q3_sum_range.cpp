@@ -49,7 +49,7 @@ int Binary_search_min_index(vi &arr, int curr, int l){
     return left;
 }
 int Binary_search_max_index(vi &arr, int curr, int r){
-    int left = 0; int right=sz(arr)-1;
+    int left = 0; int right= sz(arr) - 1;
     while(left <= right){
         int mid = (left+right)/2;
         if(curr + arr[mid] <= r){
@@ -74,9 +74,12 @@ int32_t main(){
         }
         sort(all(arr));
         if(n==1){cout << 0 << endl; continue;}
-        int count = 0;
-        vi temp = {1, 2, 3, 4};
+        
+        // vi temp = {1, 2, 3, 4};
         loop(j, 0, n){
+
+            int count = 0;
+
             int curr =arr[j];
             
             int ans_r = Binary_search_max_index(arr, arr[j], r);
@@ -85,9 +88,9 @@ int32_t main(){
             
             if(j >= ans_l And j <= ans_r){count++;}
             
-            final_ans+= (ans_r - ans_l + 1);
+            final_ans+= (ans_r - ans_l + 1 - count);
         }
-        cout << (final_ans- count)/2  << endl;
+        cout << (final_ans)/2  << endl;
     }
     return 0;
 }
