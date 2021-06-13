@@ -48,7 +48,6 @@ int Binary_search_min_index(vi &arr, int curr, int l){
     }
     return left;
 }
-
 int Binary_search_max_index(vi &arr, int curr, int r){
     int left = 0; int right=sz(arr)-1;
     while(left <= right){
@@ -62,7 +61,6 @@ int Binary_search_max_index(vi &arr, int curr, int r){
     }
     return right;
 }
-
 int32_t main(){
     FIO MOD_DEFINE
     test_cases_loop{
