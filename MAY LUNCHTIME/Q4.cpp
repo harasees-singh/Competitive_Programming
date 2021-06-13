@@ -47,18 +47,18 @@ void kadane(vector<vi> &mat){
 void solve(int n, int k, vi &a){
     
     vi dp(k+1);
-    dp[1] = a[0]; 
-    loop(i, 2, k+1){
+    // dp[1] = a[0]; 
+    loop(i, 1, k+1){
         dp[i] = -infinity;
     }
     
     vector<vi> mat(n, vi(k+1, 0));
-    loop(i, 0, sz(a)){mat[i][1]=a[i];}
-    kadane(mat);                // now we have the entire first column filled 
-    loop(i, 2, k+1){mat[0][i]=-infinity;}
+    // loop(i, 0, sz(a)){mat[i][1]=a[i];}
+    // kadane(mat);                // now we have the entire first column filled 
+    // loop(i, 1, k+1){mat[0][i]=-infinity;}
     
-    loop(i, 1, n){
-        loop(j, 2, k+1){
+    loop(i, 0, n){
+        loop(j, 1, k+1){
             int j_new_contiguous_block_max = -infinity;
             int to_be_fitted = max(dp[j-1], mat[i-1][j-1]);
             j_new_contiguous_block_max = to_be_fitted;
@@ -66,7 +66,8 @@ void solve(int n, int k, vi &a){
             
             j_new_contiguous_block_max += j*a[i];
 
-            int j_same_contiguous_block_max = mat[i-1][j] + j*a[i];
+            int j_same_contiguous_block_max;
+            i-1 >-1 ? j_same_contiguous_block_max = mat[i-1][j] + j*a[i] : j_same_contiguous_block_max = j*a[i];
 
             mat[i][j] = max(j_new_contiguous_block_max, j_same_contiguous_block_max);
         }

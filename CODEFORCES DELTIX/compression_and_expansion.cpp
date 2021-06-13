@@ -41,7 +41,7 @@ string make_string_2(vi &a){
     int count=0;
     for(auto inti:a){
         
-        string ch = to_string(inti);
+        string ch = getString(inti);
         ans += ch; 
         if(count+1 != a.size()) ans+='.';
         count++;
@@ -63,7 +63,7 @@ string make_string(vi &a){
     // string to_be_removed = potentanswer[potentanswer.size()-1];
     // potentanswer.pop_back(); potentanswer.pb(to_be_removed+1);
     int temp = stoi(num);
-    potentanswer+= to_string(temp+1);
+    potentanswer+= getString(temp+1);
     return potentanswer;
 }
 int32_t main(){

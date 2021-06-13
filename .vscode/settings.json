@@ -9,7 +9,11 @@
         "unordered_set": "cpp",
         "xiosbase": "cpp",
         "filesystem": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "cmath": "cpp",
+        "queue": "cpp",
+        "stack": "cpp",
+        "random": "cpp"
     },
     "C_Cpp.intelliSenseEngineFallback": "Enabled"
 }
