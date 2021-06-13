@@ -37,6 +37,32 @@
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 using namespace std;
+int Binary_search_min_index(vi &arr, int curr, int l){
+    int left =0; int right = sz(arr);
+    while(left < right){
+        int mid = (left+right)/2;
+        if(curr + arr[mid] >= l){
+            right=mid;
+        }
+        else left=mid+1;
+    }
+    return left;
+}
+
+int Binary_search_max_index(vi &arr, int curr, int r){
+    int left = 0; int right=sz(arr)-1;
+    while(left <= right){
+        int mid = (left+right)/2;
+        if(curr + arr[mid] <= r){
+            left = mid+1;
+        }
+        else{
+            right=mid-1;
+        }
+    }
+    return right;
+}
+
 int32_t main(){
     FIO MOD_DEFINE
     test_cases_loop{
@@ -48,24 +74,22 @@ int32_t main(){
             int temp; cin >> temp;
             arr.pb(temp);
         }
-        sort(all(arr));                 // nlong worth of preprocessing; sort the array so that we can use binary search and calculate lower bound and upper bound in logn
+        sort(all(arr));
         if(n==1){cout << 0 << endl; continue;}
-        if(arr[0]+arr[1] > r Or arr[n-1]+arr[n-2] < l){cout << 0 << endl; continue;}        // this is not corner case handling; this is just an obvious fact.
-        loop(j, 0, n)
-        {
-            int count = 0;
-
+        int count = 0;
+        vi temp = {1, 2, 3, 4};
+        loop(j, 0, n){
             int curr =arr[j];
             
-            int ans_r = (int)(upper_bound(all(arr), r - arr[j]) - arr.begin());     // this spits the index of the first number that when added to arr[j] will produce a sum strictly greater than r
+            int ans_r = Binary_search_max_index(arr, arr[j], r);
             
-            int ans_l = (int)(lower_bound(all(arr), l - arr[j]) - arr.begin());     // this spits the index of the left most index that when added to arr[j] will produce a sum greater than or equal to l
-        
-            if(j >= ans_l And j < ans_r){count++;}                                  // to avoid pairs like (j, j) where j is an index so just subtract these quietly.
+            int ans_l = Binary_search_min_index(arr, arr[j], l);
             
-            final_ans += (ans_r - ans_l - count);                                   // add all the pairs to final_ans;
+            if(j >= ans_l And j <= ans_r){count++;}
+            
+            final_ans+= (ans_r - ans_l + 1);
         }
-        cout << (final_ans)/2  << endl;                                             // hold up kiddo! u counted every pair twice; ez divide by 2 and u r good to go.
+        cout << (final_ans- count)/2  << endl;
     }
     return 0;
 }
