@@ -45,29 +45,32 @@ int32_t main(){
         bool yeas = true;
         int n; cin >> n;
         vi input;
-        int median = -infinity;
-        int front = infinity; int front_to_front = infinity;
-        int back; int back_to_back;
+        set<int> tree_set;
+        // int median = -infinity;
+        // int front = infinity; int front_to_front = infinity;
+        // int back; int back_to_back;
         loop(i, 0, n){
             int temp;cin >>  temp;
             input.pb(temp);
         }
-        loop(i, 0, n){
-            if(input[i] == median){continue;}
-            int temp = input[i]; 
+        tree_set.insert(input[0]);
+        loop(i, 1, n){
+            int element = input[i];
+            int previous_median = input[i-1];
+            set<int>::iterator it = tree_set.upper_bound(previous_median);
             
-            if(temp > median And temp <= front){
-                back = median;
-                median = temp;
-                continue;
-            }
-            if(temp < median And temp >= back)
+            if(it != tree_set.end() And *it < element And element > previous_median)
             {
-                front = median;
-                median = temp;
-                continue;
+                yeas = false; break;
             }
-            yeas = false;
+
+            it = tree_set.lower_bound(previous_median);
+
+            if(it != tree_set.begin() And *(--it) > element And element < previous_median)
+            {
+                yeas  = false; break;
+            }
+            tree_set.insert(element);
         }
         if(yeas)cout << "YES" << endl; else cout << "NO" << endl;
     }
