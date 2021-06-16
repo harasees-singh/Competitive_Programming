@@ -43,6 +43,23 @@ int __gcd(int a, int b){
 MOD_DEFINE
 int32_t main(){
     FIO
-
+    test_cases_loop{
+        int n; cin >> n;
+        vi input = {0};
+        int cost = 0;
+        loop(i, 1, n+1){
+            int temp; cin >> temp; input.pb(temp);
+            cost += abs(temp - input[i-1]);
+        }
+        cost += input[sz(input)-1];
+        input.pb(0);
+        loop(j, 1, n+1){
+            int back = input[j-1];
+            int front = input[j+1];
+            int curr = input[j];
+            curr > front And curr > back ? cost -= min(curr - back, curr - front) : cost = cost;
+        }
+        cout << cost << endl;
+    }
     return 0;
 }
