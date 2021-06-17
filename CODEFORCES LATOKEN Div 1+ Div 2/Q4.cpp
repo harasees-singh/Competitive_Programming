@@ -41,8 +41,80 @@ int __gcd(int a, int b){
     return __gcd(b, a%b);
 }
 MOD_DEFINE
+vi visited;
+vector<vi> adjacency;
+void solve(int node){
+    cout << "?" << space << node << endl; cout.flush();
+    // vi one_distance; vi two_distance;
+    vi input = {0} ;
+    loop(i, 1, sz(visited)){
+        int temp; cin >> temp; input.pb(temp);
+    }
+    loop(i, 1, sz(visited)){
+        int temp = input[i];
+        if(temp == 1)
+        {
+            adjacency[node].pb(i);
+            adjacency[i].pb(node);
+        }
+        if(temp == 2)
+        {
+            if(!(visited[i]))
+            {
+                visited[i] = 1;
+                solve(i);
+            }
+        }
+    }
+}
+void dfs(int node, int parent){
+    if(sz(adjacency[node]) == 1 And adjacency[node][0] == parent) return;
+
+    for(auto child:adjacency[node]){
+        if(child != parent){
+            cout << node << space << child << endl;
+            dfs(child, node);
+        }
+    }
+}
 int32_t main(){
     FIO
+    int n; cin >> n;
+    adjacency.resize(n+1);
+    visited.resize(n+1);
+    cout << "?" << space << 1 << endl; cout.flush();
+    // vi input[] = {{}, {}};
+    vi corner_case = {0};
+    vector<vi> input(2);
+    loop(i, 1, n+1){
+        int temp; cin >> temp; corner_case.pb(temp); 
+        input[temp & 1].push_back(i);
+    }
+    if(sz(input[0]) > sz(input[1])) swap(input[0], input[1]);
 
+    if(input[0][0] == 1)
+    {
+        visited[1] = 1;
+        loop(i, 1, n+1){
+            if(corner_case[i] == 1){
+                adjacency[1].push_back(i); adjacency[i].push_back(1);
+            }
+            if(corner_case[i] == 2)
+            {
+                if(!(visited[i]))
+                {
+                    visited[i] = 1;
+                    solve(i);
+                }
+            }
+        }
+    }
+    else
+    {
+        visited[input[0][0]] = 1;
+        solve(input[0][0]);
+    }
+    cout << "!" << endl;
+    dfs(1, 0);
     return 0;
 }

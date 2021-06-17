@@ -57,7 +57,7 @@ int32_t main(){
             int back = input[j-1];
             int front = input[j+1];
             int curr = input[j];
-            curr > front And curr > back ? cost -= min(curr - back, curr - front) : cost = cost;
+            curr > front And curr > back ? cost -= min(curr - back, curr - front) : cost = cost ;
         }
         cout << cost << endl;
     }
