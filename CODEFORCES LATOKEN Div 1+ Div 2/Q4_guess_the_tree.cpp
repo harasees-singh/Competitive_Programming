@@ -44,8 +44,9 @@ MOD_DEFINE
 vi visited;
 vector<vi> adjacency;
 void solve(int node){
+
     cout << "?" << space << node << endl; cout.flush();
-    // vi one_distance; vi two_distance;
+    
     vi input = {0} ;
     loop(i, 1, sz(visited)){
         int temp; cin >> temp; input.pb(temp);
@@ -80,19 +81,22 @@ void dfs(int node, int parent){
 int32_t main(){
     FIO
     int n; cin >> n;
+
     adjacency.resize(n+1);
     visited.resize(n+1);
+    
     cout << "?" << space << 1 << endl; cout.flush();
-    // vi input[] = {{}, {}};
+    
     vi corner_case = {0};
-    vector<vi> input(2);
+    vi input[2];
+
     loop(i, 1, n+1){
         int temp; cin >> temp; corner_case.pb(temp); 
         input[temp & 1].push_back(i);
     }
     if(sz(input[0]) > sz(input[1])) swap(input[0], input[1]);
 
-    if(input[0][0] == 1)
+    if(input[0][0] == 1) // we have hit the case when starting from 1 is the best case scenario. so we will use the corner case array 
     {
         visited[1] = 1;
         loop(i, 1, n+1){
