@@ -43,6 +43,10 @@ int __gcd(int a, int b){
 }
 int32_t main(){
     FIO
-
+    test_cases_loop{
+        int m, n, i, j; 
+        cin >> m >> n >> i >> j;
+        cout << 1 << space << 1 << space << m << space << n << endl;
+    }
     return 0;
 }

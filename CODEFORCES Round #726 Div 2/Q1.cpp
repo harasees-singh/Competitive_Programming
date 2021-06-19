@@ -43,6 +43,22 @@ int __gcd(int a, int b){
 }
 int32_t main(){
     FIO
-
+    test_cases_loop{
+        int n; cin >> n;
+        vi input;
+        float sum = 0;
+        loop(i, 0, n){
+            int temp; cin >> temp;
+            input.pb(temp);
+            sum += temp;
+        }
+        float mean = sum/n;
+        if(mean >= 1){
+            cout << (int)sum - n << endl;
+        }
+        else{
+            cout << 1 << endl;
+        }
+    }
     return 0;
 }

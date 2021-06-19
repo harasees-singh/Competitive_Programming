@@ -43,6 +43,60 @@ int __gcd(int a, int b){
 }
 int32_t main(){
     FIO
+    test_cases_loop{
+        int n; cin >> n;
+        vi input;
+        loop(i, 0, n){
+            int temp; cin >> temp;
+            input.pb(temp);
+        }
+        sort(all(input));
+        bool equal = false;
+        int diff = infinity;
+        auto it = input.begin();
+        vi::iterator required;
+        if(n >= 3){
+            loop(i, 1, n){
+                ++it;
+                
+                if(input[i] - input[i-1] <= diff ) {required = it, diff = input[i] - input[i-1];}
+            }
+            vi::iterator two_ptr = required;
+            int ele_1 = *(required - 1), ele_2 = *(required);
+            input.erase(--required, two_ptr + 1) ;
+            // cout << input[0] << space << input[1] << endl;
+            // cout << ele_2 << ele_1 << endl;
+            int ans = n - 3;
+            sort(all(input));
 
+            if(ele_1 == input[0]){
+                    cout << ele_1 << space;
+                    for(auto a:input){
+                        cout << a << space;
+                    }
+                    cout << ele_2 << endl;
+                    ans++;
+                }
+            else{
+                if(ele_2 >= input[sz(input)-2] And input[sz(input)-1]>=ele_1){
+                    cout << ele_1 << space; cout << input[sz(input)-1] << space;
+                    loop(i, 0, sz(input)-1){
+                        cout << input[i] << space;
+                    }
+                    cout << ele_2 << endl;
+                }
+                else{
+                    cout << ele_1 << space;
+                    for(auto a:input)cout << a << space;
+                    cout << ele_2 << endl;
+                }
+            }
+        }
+        else{
+            if(n==2){
+                cout << input[0] << space << input[1] << endl;
+            }
+        }
+    }
     return 0;
 }
