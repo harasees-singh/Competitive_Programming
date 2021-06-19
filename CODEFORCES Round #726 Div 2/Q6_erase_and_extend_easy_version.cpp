@@ -68,7 +68,87 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    
+    int n, k; cin >> n >> k;
+	string s; cin >> s;
+	char start = s[0];
+	// int index = sz(s) - 1;
+	int cut = -1;
+	loop(i, 0, sz(s)){
+		if(s[i] > s[0]){
+			cut = i; break;
+		}
+	}
+	// cut string from i for ex dadefgab.... here i will be 3;
+	string leftover = s.substr(0, cut);
+
+	// if(k <= sz(leftover)){
+		
+	// }
+	// now i have the left over string looking like daada;
+
+	vi indices_of_largest_char;
+	loop(i, 0, sz(leftover)){
+		if(leftover[i] == leftover[0]){
+			indices_of_largest_char.pb(i);
+		}
+	}
+	indices_of_largest_char.pb(sz(leftover));
+
+	if(sz(indices_of_largest_char) >= 3)
+	{	
+		int compare = indices_of_largest_char[1] - indices_of_largest_char[0] - 1;
+		int cut_again = -1; 			// -1 if no cut is needed
+		loop(i, 1, sz(indices_of_largest_char)-1){
+			if(indices_of_largest_char[i+1] - indices_of_largest_char[i] - 1 < compare){
+				cut_again = indices_of_largest_char[i];
+				break;
+			}
+			else{
+				compare = indices_of_largest_char[i+1] - indices_of_largest_char[i] - 1;
+			}
+		}
+
+		// daada here cut again will be 3
+
+		// now we just need to replicate the string daa such that we have k chars;
+		// corner case if 2 or more segments are equal to compare then we need to check if they are lexicographically smaller or not; if not we need to cut again for example daadbb; here need to cut dbb;
+
+		string replicate_this = leftover.substr(0, cut_again);
+		
+
+		loop(i, 0, k){
+			int rem = i%sz(replicate_this);
+			cout << replicate_this[rem];
+		}
+		cout << endl;
+	}
+
+
+
+	// cout << leftover << endl;
+	// int compare = 0;
+	// int compare_index = -1;
+	// loop(i, 0, sz(leftover)){
+	// 	if(leftover[i] == leftover[0]){
+	// 		compare_index = i;
+	// 		break;
+	// 	}
+	// 	compare++;
+	// }
+	// // daad here compare will be 2
+	// // compare_index++;
+	// int count=0, index = -1;
+	// loop(i, 1, sz(leftover)){
+	// 	if(leftover[i] == s[0]){
+	// 		if(count < compare){
+	// 			index = i; break;
+	// 		}
+	// 		count = 0; 
+	// 	}
+	// 	count++;
+	// }
+	// if(count < compare){index = sz(leftover)-1;}
+	// cout << index << endl;
     return 0;
 }
 

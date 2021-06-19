@@ -1,24 +1,4 @@
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <algorithm>
-#include <cmath>
-#include <vector>
-#include <set>
-#include <map>
-#include <unordered_set>
-#include <unordered_map>
-#include <queue>
-#include <ctime>
-#include <cassert>
-#include <complex>
-#include <string>
-#include <cstring>
-#include <chrono>
-#include <random>
-#include <bitset>
-#include <functional>
-#include <numeric>
+#include<bits/stdc++.h>
 #define infinity 999999999999999999
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
@@ -62,40 +42,18 @@ int32_t main(){
                 if(input[i] - input[i-1] <= diff ) {required = it, diff = input[i] - input[i-1];}
             }
             vi::iterator two_ptr = required;
-            int ele_1 = *(required - 1), ele_2 = *(required);
-            input.erase(--required, two_ptr + 1) ;
-            // cout << input[0] << space << input[1] << endl;
-            // cout << ele_2 << ele_1 << endl;
-            int ans = n - 3;
-            sort(all(input));
-
-            if(ele_1 == input[0]){
-                    cout << ele_1 << space;
-                    for(auto a:input){
-                        cout << a << space;
-                    }
-                    cout << ele_2 << endl;
-                    ans++;
-                }
-            else{
-                if(ele_2 >= input[sz(input)-2] And input[sz(input)-1]>=ele_1){
-                    cout << ele_1 << space; cout << input[sz(input)-1] << space;
-                    loop(i, 0, sz(input)-1){
-                        cout << input[i] << space;
-                    }
-                    cout << ele_2 << endl;
-                }
-                else{
-                    cout << ele_1 << space;
-                    for(auto a:input)cout << a << space;
-                    cout << ele_2 << endl;
-                }
+            while(required!=input.end()){
+                cout << *required << space; required++;
             }
+            vi::iterator b = input.begin();
+            while(b!=two_ptr){
+                cout << *b << space;
+                b++;
+            }
+            cout << endl;
         }
         else{
-            if(n==2){
-                cout << input[0] << space << input[1] << endl;
-            }
+            cout << input[0] << space << input[1]<< endl;
         }
     }
     return 0;
