@@ -1,4 +1,7 @@
 #include<bits/stdc++.h>
+// #include <ext/pb_ds/assoc_container.hpp> 
+#include <ext/pb_ds/tree_policy.hpp> 
+
 #define infinity 999999999999999999
 #define float long double
 #define sz(v) ((int)(v).size())
@@ -17,7 +20,10 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
+
+using namespace __gnu_pbds; 
 using namespace std;
+
 typedef long long ll;
 template<typename T>
 void print(array<T,2> &arr);
@@ -68,49 +74,16 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    int n, k; cin >> n >> k;
-	string s; cin >> s;
-	char start = s[0];
-	int cut = -1;
-	loop(i, 0, n){
-		if(s[i] > start){
-			cut = i; break;
-		}
+    test_cases_loop{
+		int n, x, t;
+		cin >> n >> x >> t;
+		int interval = min(t/x , n-1);
+		int term = interval*(n - interval - 1);
+		// cout << term << endl;
+		term > 0 ? term = term : term = 0;
+		cout << (interval*(interval + 1))/2 + term  << endl;
 	}
-	if(cut != -1){
-		s = s.substr(0, cut);
-		n = sz(s);
-	}
-	string replicate = s.substr(0, 1);
-	// cout << (int)log2(n);
-	// int limit = 1 << (int)(ceil(log2(n)));
-	loop(j, 0, n){
-		s += ('z' + 1);
-	}
-	// int i=1;
-	while(sz(replicate) < n And replicate >= s.substr(sz(replicate), sz(replicate))){
-		// cout << replicate << endl;
-		// dabcada
-		if(s[sz(replicate)] == replicate[0]){
-			// ok found another d
-			replicate = replicate + s.substr(sz(replicate), sz(replicate));
-		}
-		else{
-			// daaacdb keep including lower chars
-			replicate = replicate + s[replicate.size()];
-		}
-	}
-	// cout << replicate << endl;
-	while(sz(replicate) > n) replicate.pop_back();
-	while(sz(replicate) > 1 And replicate[sz(replicate)-1] == replicate[0]) replicate.pop_back();
-	// dadadad
-	loop(i, 0, k){
-		int rem = i%sz(replicate);
-		cout << replicate[rem];
-	}
-	cout << endl;
-
-	return 0;
+    return 0;
 }
 
 // ██████████████████████████
@@ -217,36 +190,5 @@ ll nxt(){
 bool isPowerof2(ll x){
 	return !(x && (x & (x-1)));
 }
- 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░╬▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒╬░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒░░░░░░▄▓▄░░░╬░░▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒╬░░░░░░▄▄█████▄▄░░░░░░░▒▒▒▒▒
-// ▒▒▒▒░░▄▄▄███████████████▄▄▄░░▒▒▒▒
-// ▒▒▒▒░░▐░░░▀▓▓▒▓▓▒▓▓▒▓▓▀░░░▌░░▒▒▒▒
-// ▒▒▒▒░░░░░▄█████████████▄░░░╬░▒▒▒▒
-// ▒▒▒░░▄▄███████████████████▄▄░░▒▒▒
-// ▒▒▒░░▐░░░▀▓▓▒▓▓▓▒▓▓▓▒▓▓▀░░░▌░░▒▒▒
-// ▒▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒▒
-// ▒▒▒░╬░░░▄███████████████▄░░░░░▒▒▒
-// ▒▒░░▄▄█████████████████████▄▄░░▒▒
-// ▒▒░░▐░░░▀▓▓▒▓▓▓▓▒▓▓▓▓▒▓▓▀░░░▌░░▒▒
-// ▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒
-// ▒▒░░░░░▄█████████████████▄░░░░╬▒▒
-// ▒░░▄▄███████████████████████▄▄░░▒
-// ▒░░▐░░░▀▓▓▒▓▓▓▓▓▒▓▓▓▓▓▒▓▓▀░░░▌░░▒
-// ▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒
-// ▒░╬░░░▄███████████████████▄░░░░░▒
-// ░░▄▄█████████████████████████▄▄░░
-// ░░▐░░░▀▓▓▒▓▓▓▓▓▓▒▓▓▓▓▓▓▒▓▓▀░░░▌░░
-// ▒░░▄▄███████████████████████▄▄░░▒
-// ▒▒░░░▓║║▓║║▓║║▓█▓█▓║║▓║║▓║║▓░░░╬▒
-// ▒╬░░▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄░░▒▒
-// ░░▄██████████▓▄▄▄▄▄▓██████████▄░░
-// ▄████████████▓▄▄▄▄▄▓████████████▄
+
+

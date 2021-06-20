@@ -68,49 +68,33 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    int n, k; cin >> n >> k;
-	string s; cin >> s;
-	char start = s[0];
-	int cut = -1;
+    int n; 
+	vector<pii> input;
 	loop(i, 0, n){
-		if(s[i] > start){
-			cut = i; break;
+		pii temp; //cin >> temp.first  >> -1*(temp.second);
+		int required, discount; cin >> required >> discount;
+		temp.second = -required;
+		temp.first = discount;
+		input.pb(temp);
+	}
+	sort(all(input));
+	int i=0; int j = n-1;
+	loop(i, 0, n){
+		input[i].second = -1*(input[i].second);
+	}
+	int amount = 0;
+	int purchased = 0;
+	while(i<j){
+		while(purchased < input[i].first){
+			if(input[j].second >= input[i].first - purchased) purchased = input[i].first, input[j].second -= purchased, amount += 2*(input[i].first - purchased);
+			else{
+				purchased += input[j].second; j--; amount += 2*(input[j].second);
+			}
 		}
+		amount += input[i].second; i++;
 	}
-	if(cut != -1){
-		s = s.substr(0, cut);
-		n = sz(s);
-	}
-	string replicate = s.substr(0, 1);
-	// cout << (int)log2(n);
-	// int limit = 1 << (int)(ceil(log2(n)));
-	loop(j, 0, n){
-		s += ('z' + 1);
-	}
-	// int i=1;
-	while(sz(replicate) < n And replicate >= s.substr(sz(replicate), sz(replicate))){
-		// cout << replicate << endl;
-		// dabcada
-		if(s[sz(replicate)] == replicate[0]){
-			// ok found another d
-			replicate = replicate + s.substr(sz(replicate), sz(replicate));
-		}
-		else{
-			// daaacdb keep including lower chars
-			replicate = replicate + s[replicate.size()];
-		}
-	}
-	// cout << replicate << endl;
-	while(sz(replicate) > n) replicate.pop_back();
-	while(sz(replicate) > 1 And replicate[sz(replicate)-1] == replicate[0]) replicate.pop_back();
-	// dadadad
-	loop(i, 0, k){
-		int rem = i%sz(replicate);
-		cout << replicate[rem];
-	}
-	cout << endl;
-
-	return 0;
+	cout << amount << endl;
+    return 0;
 }
 
 // ██████████████████████████
@@ -217,36 +201,5 @@ ll nxt(){
 bool isPowerof2(ll x){
 	return !(x && (x & (x-1)));
 }
- 
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░╬▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒╬░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒▒▒▒▒░░░░░░▄▓▄░░░╬░░▒▒▒▒▒▒▒▒▒
-// ▒▒▒▒▒╬░░░░░░▄▄█████▄▄░░░░░░░▒▒▒▒▒
-// ▒▒▒▒░░▄▄▄███████████████▄▄▄░░▒▒▒▒
-// ▒▒▒▒░░▐░░░▀▓▓▒▓▓▒▓▓▒▓▓▀░░░▌░░▒▒▒▒
-// ▒▒▒▒░░░░░▄█████████████▄░░░╬░▒▒▒▒
-// ▒▒▒░░▄▄███████████████████▄▄░░▒▒▒
-// ▒▒▒░░▐░░░▀▓▓▒▓▓▓▒▓▓▓▒▓▓▀░░░▌░░▒▒▒
-// ▒▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒▒
-// ▒▒▒░╬░░░▄███████████████▄░░░░░▒▒▒
-// ▒▒░░▄▄█████████████████████▄▄░░▒▒
-// ▒▒░░▐░░░▀▓▓▒▓▓▓▓▒▓▓▓▓▒▓▓▀░░░▌░░▒▒
-// ▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒
-// ▒▒░░░░░▄█████████████████▄░░░░╬▒▒
-// ▒░░▄▄███████████████████████▄▄░░▒
-// ▒░░▐░░░▀▓▓▒▓▓▓▓▓▒▓▓▓▓▓▒▓▓▀░░░▌░░▒
-// ▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒
-// ▒░╬░░░▄███████████████████▄░░░░░▒
-// ░░▄▄█████████████████████████▄▄░░
-// ░░▐░░░▀▓▓▒▓▓▓▓▓▓▒▓▓▓▓▓▓▒▓▓▀░░░▌░░
-// ▒░░▄▄███████████████████████▄▄░░▒
-// ▒▒░░░▓║║▓║║▓║║▓█▓█▓║║▓║║▓║║▓░░░╬▒
-// ▒╬░░▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄░░▒▒
-// ░░▄██████████▓▄▄▄▄▄▓██████████▄░░
-// ▄████████████▓▄▄▄▄▄▓████████████▄
+
+

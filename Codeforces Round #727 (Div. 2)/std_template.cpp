@@ -68,49 +68,8 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    int n, k; cin >> n >> k;
-	string s; cin >> s;
-	char start = s[0];
-	int cut = -1;
-	loop(i, 0, n){
-		if(s[i] > start){
-			cut = i; break;
-		}
-	}
-	if(cut != -1){
-		s = s.substr(0, cut);
-		n = sz(s);
-	}
-	string replicate = s.substr(0, 1);
-	// cout << (int)log2(n);
-	// int limit = 1 << (int)(ceil(log2(n)));
-	loop(j, 0, n){
-		s += ('z' + 1);
-	}
-	// int i=1;
-	while(sz(replicate) < n And replicate >= s.substr(sz(replicate), sz(replicate))){
-		// cout << replicate << endl;
-		// dabcada
-		if(s[sz(replicate)] == replicate[0]){
-			// ok found another d
-			replicate = replicate + s.substr(sz(replicate), sz(replicate));
-		}
-		else{
-			// daaacdb keep including lower chars
-			replicate = replicate + s[replicate.size()];
-		}
-	}
-	// cout << replicate << endl;
-	while(sz(replicate) > n) replicate.pop_back();
-	while(sz(replicate) > 1 And replicate[sz(replicate)-1] == replicate[0]) replicate.pop_back();
-	// dadadad
-	loop(i, 0, k){
-		int rem = i%sz(replicate);
-		cout << replicate[rem];
-	}
-	cout << endl;
-
-	return 0;
+    
+    return 0;
 }
 
 // ██████████████████████████
@@ -250,3 +209,4 @@ bool isPowerof2(ll x){
 // ▒╬░░▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄░░▒▒
 // ░░▄██████████▓▄▄▄▄▄▓██████████▄░░
 // ▄████████████▓▄▄▄▄▄▓████████████▄
+
