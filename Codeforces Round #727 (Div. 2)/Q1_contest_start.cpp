@@ -77,11 +77,10 @@ int32_t main(){
     test_cases_loop{
 		int n, x, t;
 		cin >> n >> x >> t;
-		int interval = min(t/x , n-1);
-		int term = interval*(n - interval - 1);
-		// cout << term << endl;
-		term > 0 ? term = term : term = 0;
-		cout << (interval*(interval + 1))/2 + term  << endl;
+		int upper_limit = min(t/x, n-1);
+		// 1 + 2 + 3 ... + t/x + t/x + t/x and so on
+		// int remaining = (t/x)*(n - t/x - 1); remaining > 0 ? remaining = remaining : remaining = 0;
+		cout << (upper_limit*(upper_limit + 1))/2 + (t/x)*(n - upper_limit - 1) << endl;
 	}
     return 0;
 }
