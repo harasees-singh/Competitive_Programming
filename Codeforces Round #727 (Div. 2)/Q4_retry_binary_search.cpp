@@ -68,45 +68,43 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    int n; 
-	cin >> n;
-	vector<pii> input;
-	loop(i, 0, n){
-		pii temp; //cin >> temp.first  >> -1*(temp.second);
-		int required, discount; cin >> required >> discount;
-		temp.second = -required;
-		temp.first = discount;
+    int n; cin >> n;
+	int sum = 0;
+    vector<pii> input;
+    loop(i, 0, n){
+		int required, discount;
+		cin >> required >> discount;
+		sum += required;
+		pii temp = {discount, required};
 		input.pb(temp);
 	}
 	sort(all(input));
-	int i=0; int j = n-1;
-	loop(i, 0, n){
-		input[i].second = -1*(input[i].second);
-	}
-	int amount = 0;
-	int purchased = 0;
-	while(i<j){
-		while(purchased < input[i].first){
-			if(input[j].second >= input[i].first - purchased) purchased = input[i].first, input[j].second -= input[i].first - purchased, amount += 2*(input[i].first - purchased);
-			else{
-				purchased += input[j].second; amount += 2*(input[j].second); input[j].second = 0;  j--;
+	// int items_purchased_on_full_rate = 0;
+	int left = 0;
+	int right = sum;
+	int ans=0;
+	while(left <= right){
+		int mid = (left + right) >> 1;
+		int curr_items_purchased = sum - mid;
+		int discounted_items_purchased = 0;
+		loop(i, 0, n){
+			if(input[i].first <= curr_items_purchased){
+				int buy_these = min(mid - discounted_items_purchased, input[i].second);
+				curr_items_purchased += buy_these;
+				discounted_items_purchased += buy_these;
 			}
 		}
-		amount += input[i].second; purchased += input[i].second;  i++;
-	}
-	// cout << i << space << j << endl;
-	if(i == j){
-		if(purchased >= input[i].first)amount += input[i].second;
-		else if(input[i].second >= input[i].first - purchased){
-			// cout << input[i].second << space << input[i].first - purchased << endl;
-			// discount on input[i].second - (input[i].first - purchased) items 
-			amount += input[i].second + (input[i].first - purchased);
+		// cout << "answer " << mid << endl;
+		if(curr_items_purchased == sum){
+			left = mid + 1; ans = mid; 
 		}
 		else{
-			amount += 2*input[i].second;
+			right = mid -1;
 		}
 	}
-	cout << amount << endl;
+	// cout << sum << space << ans << endl;
+	cout << 2*sum - ans << endl;
+	
     return 0;
 }
 
@@ -214,5 +212,37 @@ ll nxt(){
 bool isPowerof2(ll x){
 	return !(x && (x & (x-1)));
 }
-
+ 
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░╬▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒╬░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒░░░░░░▄▓▄░░░╬░░▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒╬░░░░░░▄▄█████▄▄░░░░░░░▒▒▒▒▒
+// ▒▒▒▒░░▄▄▄███████████████▄▄▄░░▒▒▒▒
+// ▒▒▒▒░░▐░░░▀▓▓▒▓▓▒▓▓▒▓▓▀░░░▌░░▒▒▒▒
+// ▒▒▒▒░░░░░▄█████████████▄░░░╬░▒▒▒▒
+// ▒▒▒░░▄▄███████████████████▄▄░░▒▒▒
+// ▒▒▒░░▐░░░▀▓▓▒▓▓▓▒▓▓▓▒▓▓▀░░░▌░░▒▒▒
+// ▒▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒▒
+// ▒▒▒░╬░░░▄███████████████▄░░░░░▒▒▒
+// ▒▒░░▄▄█████████████████████▄▄░░▒▒
+// ▒▒░░▐░░░▀▓▓▒▓▓▓▓▒▓▓▓▓▒▓▓▀░░░▌░░▒▒
+// ▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒
+// ▒▒░░░░░▄█████████████████▄░░░░╬▒▒
+// ▒░░▄▄███████████████████████▄▄░░▒
+// ▒░░▐░░░▀▓▓▒▓▓▓▓▓▒▓▓▓▓▓▒▓▓▀░░░▌░░▒
+// ▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒
+// ▒░╬░░░▄███████████████████▄░░░░░▒
+// ░░▄▄█████████████████████████▄▄░░
+// ░░▐░░░▀▓▓▒▓▓▓▓▓▓▒▓▓▓▓▓▓▒▓▓▀░░░▌░░
+// ▒░░▄▄███████████████████████▄▄░░▒
+// ▒▒░░░▓║║▓║║▓║║▓█▓█▓║║▓║║▓║║▓░░░╬▒
+// ▒╬░░▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄░░▒▒
+// ░░▄██████████▓▄▄▄▄▄▓██████████▄░░
+// ▄████████████▓▄▄▄▄▄▓████████████▄
 

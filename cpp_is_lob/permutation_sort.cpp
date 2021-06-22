@@ -68,45 +68,26 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    int n; 
-	cin >> n;
-	vector<pii> input;
-	loop(i, 0, n){
-		pii temp; //cin >> temp.first  >> -1*(temp.second);
-		int required, discount; cin >> required >> discount;
-		temp.second = -required;
-		temp.first = discount;
-		input.pb(temp);
-	}
-	sort(all(input));
-	int i=0; int j = n-1;
-	loop(i, 0, n){
-		input[i].second = -1*(input[i].second);
-	}
-	int amount = 0;
-	int purchased = 0;
-	while(i<j){
-		while(purchased < input[i].first){
-			if(input[j].second >= input[i].first - purchased) purchased = input[i].first, input[j].second -= input[i].first - purchased, amount += 2*(input[i].first - purchased);
-			else{
-				purchased += input[j].second; amount += 2*(input[j].second); input[j].second = 0;  j--;
-			}
-		}
-		amount += input[i].second; purchased += input[i].second;  i++;
-	}
-	// cout << i << space << j << endl;
-	if(i == j){
-		if(purchased >= input[i].first)amount += input[i].second;
-		else if(input[i].second >= input[i].first - purchased){
-			// cout << input[i].second << space << input[i].first - purchased << endl;
-			// discount on input[i].second - (input[i].first - purchased) items 
-			amount += input[i].second + (input[i].first - purchased);
-		}
-		else{
-			amount += 2*input[i].second;
-		}
-	}
-	cout << amount << endl;
+    test_cases_loop{
+        int n; cin >> n;
+        vi input;
+        loop(i, 0, n){
+            int temp; cin >> temp;
+            input.pb(temp);
+        }
+        vi ascending = input;
+        sort(all(ascending));
+        if(ascending == input){
+            cout << 0 << endl;
+        }
+        else if((input[0] == 1) Or (input[n-1] == n)){
+            cout << 1 << endl;
+        }
+        else if(input[0] == n And input[n-1] == 1){
+            cout << 3 << endl;
+        }
+        else cout << 2 << endl;
+    }
     return 0;
 }
 
@@ -214,5 +195,37 @@ ll nxt(){
 bool isPowerof2(ll x){
 	return !(x && (x & (x-1)));
 }
-
+ 
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░║░╬▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒╬░░▓░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒▒▒▒▒░░▐▓▌░░▒▒▒▒▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒▒▒▒▒░░░░░░▄▓▄░░░╬░░▒▒▒▒▒▒▒▒▒
+// ▒▒▒▒▒╬░░░░░░▄▄█████▄▄░░░░░░░▒▒▒▒▒
+// ▒▒▒▒░░▄▄▄███████████████▄▄▄░░▒▒▒▒
+// ▒▒▒▒░░▐░░░▀▓▓▒▓▓▒▓▓▒▓▓▀░░░▌░░▒▒▒▒
+// ▒▒▒▒░░░░░▄█████████████▄░░░╬░▒▒▒▒
+// ▒▒▒░░▄▄███████████████████▄▄░░▒▒▒
+// ▒▒▒░░▐░░░▀▓▓▒▓▓▓▒▓▓▓▒▓▓▀░░░▌░░▒▒▒
+// ▒▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒▒
+// ▒▒▒░╬░░░▄███████████████▄░░░░░▒▒▒
+// ▒▒░░▄▄█████████████████████▄▄░░▒▒
+// ▒▒░░▐░░░▀▓▓▒▓▓▓▓▒▓▓▓▓▒▓▓▀░░░▌░░▒▒
+// ▒▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒▒
+// ▒▒░░░░░▄█████████████████▄░░░░╬▒▒
+// ▒░░▄▄███████████████████████▄▄░░▒
+// ▒░░▐░░░▀▓▓▒▓▓▓▓▓▒▓▓▓▓▓▒▓▓▀░░░▌░░▒
+// ▒▒░░░▒░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░▒░░░▒▒
+// ▒░╬░░░▄███████████████████▄░░░░░▒
+// ░░▄▄█████████████████████████▄▄░░
+// ░░▐░░░▀▓▓▒▓▓▓▓▓▓▒▓▓▓▓▓▓▒▓▓▀░░░▌░░
+// ▒░░▄▄███████████████████████▄▄░░▒
+// ▒▒░░░▓║║▓║║▓║║▓█▓█▓║║▓║║▓║║▓░░░╬▒
+// ▒╬░░▄▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▄░░▒▒
+// ░░▄██████████▓▄▄▄▄▄▓██████████▄░░
+// ▄████████████▓▄▄▄▄▄▓████████████▄
 
