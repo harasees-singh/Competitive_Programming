@@ -68,7 +68,25 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    
+    int n; cin >> n;
+    umii x_coordinates;
+    umii y_coordinates;
+    map<pii, int> cant_hash_pairs;
+    int answer = 0;
+    while(n--){
+
+        int x, y;
+        
+        cin >> x >> y; 
+
+        answer -= cant_hash_pairs[{x, y}]; cant_hash_pairs[{x, y}]++;
+
+        answer += x_coordinates[x] + y_coordinates[y]; x_coordinates[x]++; y_coordinates[y]++;
+
+    }
+
+    cout << answer << endl;
+
     return 0;
 }
 

@@ -68,7 +68,18 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    
+    int n; cin >> n;
+	if(!(n&1)) cout << -1 << endl;
+	else{
+		loop(i, 0, n) cout << i << space;
+		cout << endl;
+		loop(j, 1, n) cout << j << space;
+		cout << 0 << endl;
+		loop(i, 0, n){
+			cout << ((i << 1)+1)%n << space;
+		}
+		cout << endl;
+	}
     return 0;
 }
 
