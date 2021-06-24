@@ -8,7 +8,7 @@
 #define Or ||
 #define endl '\n'
 #define space " "
-// #define int long long
+#define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define pb(n) push_back(n)
@@ -68,45 +68,25 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    int n; cin >> n;
-    deque<int> a;
-    deque<int> b;
-    int len_of_a; cin >> len_of_a;
-
-    while(len_of_a--){
-        int temp; cin >> temp;
-        a.push_back(temp);
-    }
-    int len_of_b; cin >> len_of_b;
-
-    while(len_of_b--){
-        int temp; cin >> temp;
-        b.push_back(temp);
-    }
-
-    // print<int>(a);
-    // print<int>(b);
-
-    // cout << a.front() << space << b.front() << endl;
-    int cycles = 0;
-    while(cycles < 107){
-
-        if(!a.size() or !b.size()){cout << cycles << space << (bool)a.size() + 2*((bool)b.size()) << endl; break;}
-
-        int curr_a = a.front(); int curr_b = b.front();
-        
-        if(curr_a > curr_b){
-            a.pop_front(); a.push_back(curr_b); a.push_back(curr_a); b.pop_front();
+    test_cases_loop
+    {    
+        int n; cin >> n;
+        if(n==1){
+            cout << "Bob" << endl; continue;
         }
-        if(curr_a < curr_b){
-            b.pop_front(); b.push_back(curr_a); b.push_back(curr_b); a.pop_front();
+        if(isPowerof2(n)){
+            if(n==2)cout << "Bob" << endl;
+            else{
+                int iterations = log2(n);
+                if(iterations%2) cout << "Bob" << endl;
+                else cout << "Alice" << endl;
+            }
         }
-
-        cycles++;
+        else{
+            if(n%2) cout << "Bob" << endl;
+            else cout << "Alice" << endl;
+        }
     }
-
-    if(cycles == 107) cout << -1 << endl;
-
     return 0;
 }
 
