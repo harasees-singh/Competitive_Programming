@@ -68,7 +68,11 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+        int a, b; cin >> a >> b;
+        if(isPowerof2(b)) cout << "Yes" << endl;
+        else cout << "No" << endl;
+    }
     return 0;
 }
 

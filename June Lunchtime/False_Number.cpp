@@ -68,7 +68,15 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+        string s; cin >> s;
+        if(s[0] == '1'){
+            cout << s[0] << '0' << s.substr(1, sz(s)-1) << endl;
+        }
+        else{
+            cout << 1 << s << endl;
+        }
+    }
     return 0;
 }
 

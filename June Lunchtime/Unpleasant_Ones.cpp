@@ -68,7 +68,23 @@ vector<int> divisors(ll n){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+        int n; cin >> n;
+        vi input; 
+        loop(i, 0, n){
+            int temp; cin >> temp;
+            input.pb(temp);
+        }
+        vi even, odd;
+        loop(i, 0, n){
+            int curr = input[i];
+            if(curr%2) odd.pb(curr);
+            else even.pb(curr);
+        }
+        for(auto a: even) cout << a << space;
+        for(auto b: odd) cout << b << space;
+        cout << endl;
+    }
     return 0;
 }
 
