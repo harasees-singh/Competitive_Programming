@@ -65,7 +65,7 @@ vector<int> divisors(ll n){
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-void whatever(int p_, int &alice, unordered_map<int, int> &heirarchy, int m, int k){
+void whatever(int p_, int &alice, vi &heirarchy, int m, int k){
     int maxi = -infinity;
             pii p = {p_/m , p_%m};
             int row_low_limit = p.first - k, row_up_limit = p.first;
@@ -87,7 +87,8 @@ int32_t main(){
         int n, m, k;
         cin >> n >> m >> k;
         // map<pii, int> heirarchy;
-        unordered_map<int, int> heirarchy;
+        // int heirarchy[1000000 + 5];
+        vi heirarchy(1e6 + 5);
         // vector<vi> input(n, vi(m));
         int input[n][m];
         int parity = 1;
@@ -98,12 +99,7 @@ int32_t main(){
             heirarchy[temp.first*m + temp.second] = i;
             input[temp.first - 1][temp.second -1] = parity; parity = parity^1;
         }
-        // loop(i, 0, n){
-        //     loop(j, 0, m){
-        //         cout << input[i][j] << space;
-        //     }
-        //     cout << endl;
-        // }
+        
         loop(i, 0, n){
             loop(j, 0, m){
                 int store = input[i][j];
@@ -113,19 +109,6 @@ int32_t main(){
             }
         }
         
-        // loop(i, 1, n){
-        //     loop(j, 0, m){
-        //         input[i][j] = input[i-1][j] + input[i][j];
-        //     }
-        // }
-        
-        
-        // loop(i, 0, n){
-        //     loop(j, 0, m){
-        //         cout << input[i][j] << space;
-        //     }
-        //     cout << endl;
-        // }
         int alice = infinity;
         int bob = infinity;
         // unordered_set<int> check_for_alice, check_for_bob;
@@ -143,7 +126,7 @@ int32_t main(){
         }
         
         string winner;
-        if(alice == infinity And bob == infinity){ cout << "Draw" << endl; continue;}
+        if(alice == infinity And bob == infinity){cout << "Draw" << endl; continue;}
         bob < alice ? winner = "Bob" : winner = "Alice";
         cout << winner << endl;
     }
