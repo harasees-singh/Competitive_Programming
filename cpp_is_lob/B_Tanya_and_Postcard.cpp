@@ -65,78 +65,68 @@ vector<int> divisors(ll n){
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-
+int max(int a, int b){
+    int ans; 
+    a < b ? ans = b : ans = a;
+    return ans;
+}
 int32_t main(){
     FIO
-    int sum, limit;
-
-    // 4 3
-    // 1, 2, 3, 4, 5, 6, 7, 8
-    // 1, 2, 1, 4, 1, 2, 1, 8
-
-    // 2, 3, 1
-    cin >> sum >> limit;
-    int curr = 0 ;
-    multimap<int, int> lara_croft;
-    loop(jj, 1, limit + 1){
-        int least_signi_1 = 1;
-        int i = jj;
-        while(!(i&1)){
-            least_signi_1*=2;
-            i = i >> 1;
-        }
-        // 1 >> 1 -> 10 -> 2;
-        // lara_croft[least_signi_1] = jj;
-        lara_croft.insert({least_signi_1, jj});
-        curr += least_signi_1;
+    string want, newspaper; cin >> want >> newspaper;
+    vi alphabets_needed(1500);
+    vi alphabets_given(1500);
+    for(auto a : want){
+        alphabets_needed[a]++;
     }
-    
-    if(curr - sum >= 0){
-        
-        
-        multimap<int, int>::iterator limit = --lara_croft.end();
-        vi answer;
-        while(sum){
-            // cout << min(sum, limit) << space;
-            if(sum >= (*limit).first)
-            {
-                answer.pb((*limit).second);
-
-                sum -= (*limit).first; 
-            }
-
-            limit--;
-        }
-        
-        cout << sz(answer) << endl;
-        // cout << endl;
-        print<int>(answer);
+    for(auto b : newspaper){
+        alphabets_given[b]++;
     }
-    else{
-        cout << -1 << endl;
+    int yeah = 0, whoops = 0;
+    // cout << "debug" << 'A' - 'a' << endl;
+    loop(i, 0, 150){
+
+        int whatever = min(alphabets_given[i], alphabets_needed[i]);
+        
+        yeah += whatever;
+
+        alphabets_needed[i] -= whatever, alphabets_given[i] -= whatever;
+
+        int firse_whatever = min(alphabets_given[i + 'a' - 'A'], alphabets_needed[i + 'a' - 'A']); 
+        
+        yeah += firse_whatever;
+
+        alphabets_given[i + 'a' - 'A'] -= firse_whatever; alphabets_needed[i + 'a' - 'A'] -= firse_whatever;
+
+        whoops += min(alphabets_needed[i], alphabets_given[i + 'a' - 'A']) + min(alphabets_needed[i + 'a' - 'A'], alphabets_given[i]);
     }
+    cout << yeah << space << whoops << endl;
     return 0;
 }
 
-//          ▄              ▄    
-//         ▌▒█           ▄▀▒▌   
-//         ▌▒▒█        ▄▀▒▒▒▐   
-//        ▐▄█▒▒▀▀▀▀▄▄▄▀▒▒▒▒▒▐   
-//      ▄▄▀▒▒▒▒▒▒▒▒▒▒▒█▒▒▄█▒▐   
-//    ▄▀▒▒▒░░░▒▒▒░░░▒▒▒▀██▀▒▌   
-//   ▐▒▒▒▄▄▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▀▄▒▌  
-//   ▌░░▌█▀▒▒▒▒▒▄▀█▄▒▒▒▒▒▒▒█▒▐  
-//  ▐░░░▒▒▒▒▒▒▒▒▌██▀▒▒░░░▒▒▒▀▄▌ 
-//  ▌░▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░░░░░▒▒▒▒▌ 
-// ▌▒▒▒▄██▄▒▒▒▒▒▒▒▒░░░░░░░░▒▒▒▐ 
-// ▐▒▒▐▄█▄█▌▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▒▒▌
-// ▐▒▒▐▀▐▀▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒░▒▒▐ 
-//  ▌▒▒▀▄▄▄▄▄▄▒▒▒▒▒▒▒▒░▒░▒░▒▒▒▌ 
-//  ▐▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒▒▄▒▒▐  
-//   ▀▄▒▒▒▒▒▒▒▒▒▒▒▒▒░▒░▒▄▒▒▒▒▌  
-//     ▀▄▒▒▒▒▒▒▒▒▒▒▄▄▄▀▒▒▒▒▄▀   
-//       ▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀     
-//          ▀▀▀▀▀▀▀▀▀▀▀▀       
+// ██████████████████████████
+// ▌════════════════════════▐
+// ▌══▄▄▓█████▓▄═════▄▄▓█▓▄═▐ 
+// ▌═▄▓▀▀▀██████▓▄═▄▓█████▓▌▐
+// ▌═══════▄▓███████████▓▀▀▓▐ 
+// ▌═══▄▓█████████▓████▓▄═══▐
+// ▌═▄▓████▓███▓█████████▓▄═▐ 
+// ▌▐▓██▓▓▀▀▓▓███████▓▓▀▓█▓▄▐
+// ▌▓▀▀════▄▓██▓██████▓▄═▀▓█▐
+// ▌══════▓██▓▀═██═▀▓██▓▄══▀▐
+// ▌═════▄███▀═▐█▌═══▀▓█▓▌══▐ 
+// ▌════▐▓██▓══██▌═════▓▓█══▐
+// ▌════▐▓█▓══▐██═══════▀▓▌═▐
+// ▌═════▓█▀══██▌════════▀══▐
+// ▌══════▀═══██▌═══════════▐ 
+// ▌═════════▐██▌═══════════▐
+// ▌═════════▐██════════════▐
+// ▌═════════███════════════▐
+// ▌═════════███════════════▐ 
+// ▌════════▐██▌════════════▐
+// ▌▓▓▓▓▓▓▓▓▐██▌▓▓▓▓▓▓▓▓▓▓▓▓▐
+// ▌▓▓▓▓▓▓▓▓▐██▌▓▓▓▓▓▓▓▓▓▓▓▓▐
+// ▌▓▓▓▓▓▄▄██████▄▄▄▓▓▓▓▓▓▓▓▐ 
+// ██████████████████████████
 
 template<typename T>
 T power(T x, T y, ll p) { 
