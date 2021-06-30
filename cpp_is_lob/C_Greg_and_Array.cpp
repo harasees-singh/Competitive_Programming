@@ -48,13 +48,6 @@ vector<int> divisors(ll n){
 	ans.pb(1);
 	return ans;
 }
-int binomial_coefficient(int n, int r){
-    float ans = 1;
-    loop(i, 0, r){
-        ans*=(n-i)/(float)(i+1);
-    }
-    return round(ans);
-}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -75,7 +68,38 @@ int binomial_coefficient(int n, int r){
 
 int32_t main(){
     FIO
-    
+    int n, m, k; cin >> n >> m >> k;
+    vi input(n+2);
+    loop(i, 0, n){
+        int temp; cin >> temp; input[i+1] = temp;
+    }
+    vector<vi> operations(m, vi(3));
+    loop(i, 0, m){
+        int x, y, d; cin >> x >> y >> d;
+        operations[i][0] = x, operations[i][1] = y, operations[i][2] = d;
+    }
+    vi queries(m+2, 0);
+    loop(i, 0, k){
+        int x, y; cin >> x >> y;
+        queries[x]++; queries[y+1]--;
+    }
+    loop(i, 1, m+1){
+        queries[i] = queries[i-1] + queries[i];
+    }
+    vi lara_croft(n+2, 0);
+    loop(i, 0, m){
+        int x = operations[i][0], y = operations[i][1],  d = operations[i][2];
+        lara_croft[x]+=(d*queries[i+1]); lara_croft[y+1]-=(d*queries[i+1]);
+    }
+    loop(i, 1, n+1){
+        lara_croft[i] = lara_croft[i-1] + lara_croft[i];
+    }
+    loop(i, 1, n+1){
+        input[i] = input[i] + lara_croft[i];
+        cout << input[i] << space;
+    }
+
+    cout << endl;
     return 0;
 }
 

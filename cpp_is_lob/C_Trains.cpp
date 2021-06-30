@@ -72,10 +72,24 @@ int binomial_coefficient(int n, int r){
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-
+long long lcm(int a, int b)
+{
+    return (a / _gcd(a, b)) * b;
+}
 int32_t main(){
     FIO
-    
+    int dasha, masha;
+    cin >> dasha >> masha;
+    // int gcd = _gcd(dasha, masha);
+    int lcm_ = lcm(dasha, masha);
+    if(abs(lcm_/dasha - lcm_/masha) <= 1) cout << "Equal" << endl;
+
+    else{
+        string ans;
+        dasha < masha ? ans = "Dasha" : ans = "Masha";
+        cout << ans << endl;
+    }
+
     return 0;
 }
 

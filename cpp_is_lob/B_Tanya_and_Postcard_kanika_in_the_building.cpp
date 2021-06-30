@@ -75,6 +75,37 @@ int binomial_coefficient(int n, int r){
 
 int32_t main(){
     FIO
+    string s,t; cin>>s>>t;
+ 
+    // map<int,int> m;
+        
+    map<int,int> z;
+    
+    // for(char c:s) m[c-'a']+=1;
+    for(char x:t) z[x]+=1;
+    map<int, int> hame_bhi_match_karo;
+    int yay=0;
+    int whoops = 0;
+    for(char i:s)
+    {
+        if(z[i]) {yay++; z[i]--;}
+        else{
+            hame_bhi_match_karo[i]++;
+        }
+        // else {
+        //     if(isupper(i)) z[i-'a'-32]--;
+        //     else z[i+32-'a']--;}
+    }
+    for(auto p:hame_bhi_match_karo){
+
+        if(isupper(p.first)) whoops += min(z[p.first+32], p.second);
+        else whoops += min(z[p.first - 32], p.second);
+    }
+    // int len=s.size();
+    // int whoops=len-yay;
+    cout<<yay<<' '<<whoops<<endl;
+    // a-> 97
+    // A-> 65
     
     return 0;
 }

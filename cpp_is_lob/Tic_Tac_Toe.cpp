@@ -94,7 +94,6 @@ int32_t main(){
                 if(stop >= mid) break;
 
                 stop++;
-
             }   
             loop(i, 0, n*m){
                 int row = i/m, column=i%m;
