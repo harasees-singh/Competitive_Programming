@@ -48,12 +48,10 @@ vector<int> divisors(ll n){
 	ans.pb(1);
 	return ans;
 }
-int binomial_coefficient(int n, int r){
-    float ans = 1;
-    loop(i, 0, r){
-        ans*=(n-i)/(float)(i+1);
-    }
-    return round(ans);
+int binomial_cofficient(int n, int r){
+    
+    if(r == 0) return 1;
+    return n*binomial_cofficient(n-1, r-1)/r;
 }
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░

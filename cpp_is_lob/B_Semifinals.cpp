@@ -48,6 +48,11 @@ vector<int> divisors(ll n){
 	ans.pb(1);
 	return ans;
 }
+int binomial_cofficient(int n, int r){
+    
+    if(r == 0) return 1;
+    return n*binomial_cofficient(n-1, r-1)/r;
+}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -65,30 +70,36 @@ vector<int> divisors(ll n){
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-int factorial(int n){
-    if(n==1 or n==0) return 1;
-    return n*factorial(n-1);
-}
-int binomial_cofficient(int n, int r){
-    
-    if(r == 0) return 1;
-    return n*binomial_cofficient(n-1, r-1)/r;
-}
+
 int32_t main(){
     FIO
-    int boys, gals, total_humans; cin >> boys >> gals >> total_humans;
-    int ans = binomial_cofficient(boys+gals, total_humans);
-    if(boys >= total_humans) ans-= binomial_cofficient(boys, total_humans);
+    int n; cin >> n;
+    vi a, b, c;
+    loop(i, 0, n){
+        int t1, t2; cin >> t1 >> t2;
+        a.pb(t1); b.pb(t2); c.pb(t1); c.pb(t2);
+    }
     
-    if(gals >= total_humans-3) ans -= binomial_cofficient(gals, total_humans-3)*binomial_cofficient(boys, 3);
+    sort(all(c));
 
-    if(gals >= total_humans-2) ans -= binomial_cofficient(gals, total_humans-2)*binomial_cofficient(boys, 2);
-
-    if(gals >= total_humans-1) ans -= binomial_cofficient(gals, total_humans - 1)*binomial_cofficient(boys, 1);
-
-    if(gals >= total_humans) ans -= binomial_cofficient(gals, total_humans);
-
-    cout << ans  << endl;
+    umii mark_true;
+    int i = 0;
+    for(int thiis : c){
+        if(i == n) break;
+        mark_true[thiis] = 1;
+        i ++;
+    }
+    loop(i, 0, n){
+        char ans;
+        i < n/2 or mark_true[a[i]] ? ans = '1' : ans = '0';
+        cout << ans;
+    }
+    cout << endl;
+    loop(i, 0, n){
+        char ans;
+        i < n/2 or mark_true[b[i]] ? ans = '1' : ans = '0';
+        cout << ans;
+    }
     return 0;
 }
 

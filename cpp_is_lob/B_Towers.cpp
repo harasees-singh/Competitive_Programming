@@ -48,6 +48,13 @@ vector<int> divisors(ll n){
 	ans.pb(1);
 	return ans;
 }
+int binomial_coefficient(int n, int r){
+    float ans = 1;
+    loop(i, 0, r){
+        ans*=(n-i)/(float)(i+1);
+    }
+    return round(ans);
+}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -65,30 +72,54 @@ vector<int> divisors(ll n){
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
-int factorial(int n){
-    if(n==1 or n==0) return 1;
-    return n*factorial(n-1);
+int find_min(vi &input){
+    int minma = infinity;
+    int ans;
+    loop(i, 0, sz(input)){
+        if(input[i] < minma){
+            minma = input[i]; ans = i;
+        }
+    }
+    return ans;
 }
-int binomial_cofficient(int n, int r){
-    
-    if(r == 0) return 1;
-    return n*binomial_cofficient(n-1, r-1)/r;
+int find_max(vi &input){
+    int minma = -infinity;
+    int ans;
+    loop(i, 0, sz(input)){
+        if(input[i] > minma){
+            minma = input[i]; ans = i;
+        }
+    }
+    return ans;
 }
 int32_t main(){
     FIO
-    int boys, gals, total_humans; cin >> boys >> gals >> total_humans;
-    int ans = binomial_cofficient(boys+gals, total_humans);
-    if(boys >= total_humans) ans-= binomial_cofficient(boys, total_humans);
+    int n, k; cin >> n >> k;
+    vi input;
+    loop(i, 0, n){
+        int temp; cin >> temp;
+        input.pb(temp);
+    }
+    // sort(all(input));
+    int moves = 0;
     
-    if(gals >= total_humans-3) ans -= binomial_cofficient(gals, total_humans-3)*binomial_cofficient(boys, 3);
-
-    if(gals >= total_humans-2) ans -= binomial_cofficient(gals, total_humans-2)*binomial_cofficient(boys, 2);
-
-    if(gals >= total_humans-1) ans -= binomial_cofficient(gals, total_humans - 1)*binomial_cofficient(boys, 1);
-
-    if(gals >= total_humans) ans -= binomial_cofficient(gals, total_humans);
-
-    cout << ans  << endl;
+    int min_index = find_min(input);
+    int max_index = find_max(input);
+    vector<pii> print_this_at_the_end;
+    while(moves < k){
+        min_index = find_min(input);
+        max_index = find_max(input);
+        if(input[max_index] - input[min_index] > 1){
+            print_this_at_the_end.push_back({max_index+1, min_index+1});
+            input[max_index]--; input[min_index]++;
+            moves++;
+        }
+        else break;
+    }
+    min_index = find_min(input);
+    max_index = find_max(input);
+    cout << input[max_index] - input[min_index] << space << moves << endl;
+    loop(i, 0, sz(print_this_at_the_end)) cout << print_this_at_the_end[i].first << space << print_this_at_the_end[i].second << endl;
     return 0;
 }
 
