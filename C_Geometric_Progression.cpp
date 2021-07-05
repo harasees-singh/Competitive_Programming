@@ -74,30 +74,30 @@ int binomial_cofficient(int n, int r){
 int32_t main(){
     FIO
     int n, k; cin >> n >> k;
-    map<pii, int> mujhekdedo,  mujheksquarededo, answermap;
+    unordered_map<double, int> mujhekdedo,  mujheksquarededo, answermap;
     // umii mujhekdedo;
     int ans = 0;
     loop(i, 0, n){
 
         int crr; cin >> crr;
 
-        if(mujheksquarededo.count({crr/_gcd(crr, k*k), k*k/_gcd(crr, k*k)})){
+        if(mujheksquarededo.count(crr/(double)(k*k))){
             
             // cout << "debug " << crr << space;
-            // cout << mujheksquarededo[{crr/_gcd(crr, k*k), k*k/_gcd(crr, k*k)}] << endl;
+            // cout << mujheksquarededo[crr/(double)(k*k)] << endl;
 
-            ans += mujheksquarededo[{crr/_gcd(crr, k*k), k*k/_gcd(crr, k*k)}];
-            // answermap[crr] = mujheksquarededo[{crr/_gcd(crr, k*k), k*k/_gcd(crr, k*k)}];
+            ans += mujheksquarededo[crr/(double)(k*k)];
+            // answermap[crr] = mujheksquarededo[crr/(double)(k*k)];
         }
 
-        if(mujhekdedo.count({crr/_gcd(crr, k), k/_gcd(crr, k)})){
+        if(mujhekdedo.count(crr/(double)k)){
             // cout << "debug lol " << crr << space;
-            // cout  << mujhekdedo[{crr/_gcd(crr, k), k/_gcd(crr, k)}] << endl;
-            mujheksquarededo[{crr/_gcd(crr, k), k/_gcd(crr, k)}] += mujhekdedo[{crr/_gcd(crr, k), k/_gcd(crr, k)}];
+            // cout  << mujhekdedo[crr/(double)k] << endl;
+            mujheksquarededo[crr/(double)k] += mujhekdedo[crr/(double)k];
             
         }
 
-        mujhekdedo[{crr, 1}]++;
+        mujhekdedo[crr]++;
 
     }
 
