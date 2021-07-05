@@ -72,37 +72,27 @@ int binomial_cofficient(int n, int r){
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
 int32_t main(){
+    
     FIO
+    
     int n, k; cin >> n >> k;
+
     unordered_map<double, int> mujhekdedo,  mujheksquarededo, answermap;
-    // umii mujhekdedo;
+
     int ans = 0;
+
     loop(i, 0, n){
 
         int crr; cin >> crr;
 
-        if(mujheksquarededo.count(crr/(double)(k*k))){
+        ans += mujheksquarededo[crr/(double)(k*k)];
+
+        mujheksquarededo[crr/(double)k] += mujhekdedo[crr/(double)k];
             
-            // cout << "debug " << crr << space;
-            // cout << mujheksquarededo[crr/(double)(k*k)] << endl;
-
-            ans += mujheksquarededo[crr/(double)(k*k)];
-            // answermap[crr] = mujheksquarededo[crr/(double)(k*k)];
-        }
-
-        if(mujhekdedo.count(crr/(double)k)){
-            // cout << "debug lol " << crr << space;
-            // cout  << mujhekdedo[crr/(double)k] << endl;
-            mujheksquarededo[crr/(double)k] += mujhekdedo[crr/(double)k];
-            
-        }
-
         mujhekdedo[crr]++;
 
     }
 
-    // cout << _gcd(-4, 2) << endl;
-    
     cout << ans << endl;
     
     return 0;

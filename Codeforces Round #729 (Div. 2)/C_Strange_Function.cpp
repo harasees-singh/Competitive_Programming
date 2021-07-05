@@ -73,9 +73,11 @@ int binomial_cofficient(int n, int r){
 
 int32_t main(){
     FIO
+    
     MOD_DEFINE;
+    
     vi eratosthenes = sieve<int>(100);
-    // found primes in the first 100 natural numbers;
+
     vi primes_and_powers(eratosthenes);
 
     for(auto a : eratosthenes){
@@ -87,8 +89,6 @@ int32_t main(){
     }
 
     sort(all(primes_and_powers));
-
-    // print<int>(primes_and_powers);
 
     test_cases_loop{
 
