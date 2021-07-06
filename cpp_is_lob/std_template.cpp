@@ -18,6 +18,7 @@
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 using namespace std;
+MOD_DEFINE
 typedef long long ll;
 template<typename T>
 void print(array<T,2> &arr);
@@ -52,6 +53,25 @@ int binomial_cofficient(int n, int r){
     
     if(r == 0) return 1;
     return n*binomial_cofficient(n-1, r-1)/r;
+}
+int power_modulus(int x, int y)
+{
+    if (y == 0)
+        return 1;
+
+    else if (y % 2 == 0)
+    {
+        int chloe = power_modulus(x, y/2);
+        
+        return (chloe*chloe)%MOD;
+    }
+    else
+    {
+        int mermaid = power_modulus(x, y/2);
+        
+        return (((mermaid*mermaid)%MOD)*x)%MOD;
+    }
+
 }
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
