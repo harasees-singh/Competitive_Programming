@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -98,9 +95,84 @@ int pow_good(int a, int b){
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int hash_(const string &t){
+
+    int hash_val = 0;
+
+    int twenty_six_power = 1;
+
+    loop(i, 0, sz(t)){
+
+        hash_val += ((t[i] - 'a')*twenty_six_power)%MOD;
+
+        hash_val%=MOD;
+
+        twenty_six_power*=26; twenty_six_power%=MOD;
+    }
+
+    return hash_val;
+}
+
 int32_t main(){
     FIO
+
+    MOD_DEFINE
     
+    test_cases_loop{
+
+        int n, m ; cin  >> n >> m;
+
+        vi strings_hashed;
+
+        vector<string> actual_strings; 
+
+        int total_hash = 0;
+
+        loop(i, 0, n){
+
+            string t; cin >> t;
+
+            actual_strings.pb(t);
+
+            int hash_it = hash_(t);
+
+            total_hash+=hash_it;
+
+            total_hash%=MOD;
+
+            strings_hashed.push_back(hash_it);
+        }
+
+        int val_without_odd_string = 0;
+
+        loop(i, 0, n-1){
+
+            string t; cin >> t;
+
+            int hash_it = hash_(t);
+
+            val_without_odd_string+=hash_it;
+
+            val_without_odd_string%=MOD;
+
+        }
+
+        loop(i, 0, n){
+
+            int val = strings_hashed[i];
+
+            if((total_hash - val_without_odd_string + MOD)%MOD == val){
+
+                // missing string found;;
+                
+                cout << actual_strings[i] << endl;
+
+                cout.flush();
+
+                break;
+            }
+        }
+    }
     return 0;
 }
 

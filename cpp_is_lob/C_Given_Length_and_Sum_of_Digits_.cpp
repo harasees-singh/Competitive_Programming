@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -101,6 +98,57 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    int m, s; cin >> m >> s;
+
+    int copy = s;
+
+    if(s == 0){
+
+        if(m == 1) std::cout << 0 << space << 0 << endl;
+
+        else std::cout << -1 << space << -1 << endl;
+
+        exit(0);
+    }
+
+    if(s > 9*m) std::cout << -1 << space << -1 << endl;
+
+    else{
+
+        vi minima(m, 0);
+
+        s--;
+
+        minima[0] = 1;
+
+        for(int i = m - 1; i > 0; i--){
+
+            minima[i] += min((long long)9, s);
+
+            s -= minima[i];
+        }
+
+        minima[0]+=s;
+
+        vi maxima(m, 0);
+
+        s = copy;
+
+        loop(i, 0, m){
+
+            maxima[i]+=min((long long)9, s);
+
+            s -= maxima[i];
+        }
+
+        loop(p, 0, m) std::cout << minima[p];
+
+        std::cout << space;
+
+        loop(p, 0, m) std::cout << maxima[p];
+
+        std::cout << endl;
+    }
     return 0;
 }
 

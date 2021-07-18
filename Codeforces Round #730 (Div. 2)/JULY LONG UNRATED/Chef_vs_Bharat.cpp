@@ -17,11 +17,7 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
-MOD_DEFINE
 typedef long long ll;
 template<typename T>
 void print(array<T,2> &arr);
@@ -33,8 +29,8 @@ template<typename T>
 T _gcd(T a, T b);
 template<typename T>
 vector<T> sieve(T n);
-template<typename T>
-T power(T x, T y, ll p = LLONG_MAX);
+// template<typename T>
+// T power(T x, T y, ll p = LLONG_MAX);
 ll nxt();
 // // Returns n^(-1) mod p 
 template<typename T>
@@ -57,29 +53,6 @@ int binomial_cofficient(int n, int r){
     if(r == 0) return 1;
     return n*binomial_cofficient(n-1, r-1)/r;
 }
-int power_modulus(int x, int y)
-{
-    if (y == 0)
-        return 1;
-
-    else if (y % 2 == 0)
-    {
-        int chloe = power_modulus(x, y/2);
-        
-        return (chloe*chloe)%MOD;
-    }
-    else
-    {
-        int mermaid = power_modulus(x, y/2);
-        
-        return (((mermaid*mermaid)%MOD)*x)%MOD;
-    }
-
-}
-int pow_good(int a, int b){
-    
-    return (int)round(pow(a, b));
-}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -97,10 +70,91 @@ int pow_good(int a, int b){
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+MOD_DEFINE
+// int multiply(int a, int b){
+//     // cout << a << space << b <<endl;
+//     if(b == 1){
+//         return a%MOD;
+//     }
+//     if(a == 1){
+//         return b%MOD;
+//     }
+//     int pip = 4*multiply(a/2, b/2);
+//     bool hue = false, huehue = false;
+//     if(b%2){
+//         // cout << pip << endl;     
+//         // return ((pip + pip)%MOD + a%MOD + b%MOD)%MOD;
+//         hue = true;
+//         pip += a%MOD;
+//     }
+//     if(a%2){
+//         // return ((pip + pip)%MOD + b%MOD)%MOD;
+//         huehue = true;
+//         pip += b%MOD;
+//     }
+//     if(hue and huehue) pip -= 1;
+//     return (pip)%MOD;
+// }
+int power(int x, int y)
+{
+    if (y == 0)
+        return 1;
 
+    else if (y % 2 == 0)
+    {
+        int chloe = power(x, y/2);
+        
+        return (chloe*chloe)%MOD;
+    }
+    else
+    {
+        int mermaid = power(x, y/2);
+        
+        return (((mermaid*mermaid)%MOD)*x)%MOD;
+    }
+
+}
 int32_t main(){
-    FIO
     
+    FIO
+    int candidate = 0;
+    
+    vi pallindromes = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int curr = 1;
+    loop(i, 0, 1e5+100){
+
+
+        string replica = to_string(curr);
+
+        reverse(all(replica));            
+
+        loop(i, 0, 10)
+        {    
+            int lara = curr*round(pow(10, (sz(replica) + 1)));
+
+            int palindrome = lara + i*pow(10, sz(replica)) + stoi(replica);
+
+            pallindromes.pb(palindrome); 
+        }
+        curr++;
+    }
+    sort(all(pallindromes));
+    
+    vi pref_sum(sz(pallindromes), 0);
+
+    loop(i, 1, sz(pallindromes)){
+   
+        pref_sum[i] = pref_sum[i-1] + pallindromes[i];
+    }
+    int q; cin >> q;
+
+    loop(i, 0, q){
+
+        int l, r; cin >> l >> r;
+
+        cout << power(pallindromes[l]%MOD, pref_sum[r] - pref_sum[l])%MOD << endl;
+    }
+
     return 0;
 }
 
@@ -124,26 +178,26 @@ int32_t main(){
 //       ▀▄▄▄▄▄▄▀▀▀▒▒▒▒▒▄▄▀     
 //          ▀▀▀▀▀▀▀▀▀▀▀▀       
 
-template<typename T>
-T power(T x, T y, ll p) { 
-    T res = 1;      // Initialize result 
+// template<typename T>
+// T power(T x, T y, ll p) { 
+//     T res = 1;      // Initialize result 
   
-    x = x % p;  // Update x if it is more than or 
-                // equal to p 
-    // cout <<"x= "<< x << endl;
-    while (y > 0) 
-    { 
-        // If y is odd, multiply x with result 
-        if (y & 1) 
-            res = (res*x) % p; 
+//     x = x % p;  // Update x if it is more than or 
+//                 // equal to p 
+//     // cout <<"x= "<< x << endl;
+//     while (y > 0) 
+//     { 
+//         // If y is odd, multiply x with result 
+//         if (y & 1) 
+//             res = (res*x) % p; 
   
-        // y must be even now 
-        y = y>>1; // y = y/2 
-        x = (x*x) % p; 
-    } 
-    // cout << "res" << res << endl;
-    return res; 
-} 
+//         // y must be even now 
+//         y = y>>1; // y = y/2 
+//         x = (x*x) % p; 
+//     } 
+//     // cout << "res" << res << endl;
+//     return res; 
+// } 
  
 template<typename T>
 vector<T> sieve(T n){

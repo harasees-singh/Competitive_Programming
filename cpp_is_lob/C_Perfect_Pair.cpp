@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -101,6 +98,48 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    int x, y, m;
+
+    cin >> x >> y >> m ;
+
+    if(x >= m or y >= m) {cout << 0 << endl; exit(0);}
+
+    // if(m < 0){m*=-1; x*=-1; y*=-1;}
+
+    if(x <= 0 and y <= 0){
+
+        cout << -1 << endl;
+    }
+
+    else{
+
+        int count = 0;
+
+        if(x < y){
+
+            count += (y - x)/y;
+
+            x += count*y;
+        }
+
+        if(y < x){
+
+            count += (x - y)/x;
+
+            y += count*x;
+        }
+
+        while(max(x, y) < m){
+
+            count++; 
+
+            if(x < y) x += y; else y += x;
+        }
+
+        cout << count << endl;
+    }
+    
+
     return 0;
 }
 

@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#define infinity 999999999999999999
+#define infinity INT32_MAX
 #define float long double
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
@@ -8,7 +8,7 @@
 #define Or ||
 #define endl '\n'
 #define space " "
-#define int long long
+// #define int long long
 #define pii pair<int, int>
 #define vi vector<int>
 #define pb(n) push_back(n)
@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -76,10 +73,6 @@ int power_modulus(int x, int y)
     }
 
 }
-int pow_good(int a, int b){
-    
-    return (int)round(pow(a, b));
-}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -98,9 +91,187 @@ int pow_good(int a, int b){
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int min_(int a, int b){
+    int ans; 
+    a < b ? ans = a : ans = b;
+    return ans;
+}
+
+void dfs(int node, int parent, int depth, vi &depth_map, vector<vector<pii>> &directions, const vector< vi> &adjacency_list){
+
+    // cout << "debug " << node << endl;
+
+    depth_map[node] = depth; 
+
+    // directions[node] = directions[parent];
+    loop(i, 0, sz(directions[parent])) directions[node].push_back(directions[parent][i]);
+
+    if(node != 1 and sz(adjacency_list[node]) == 1){
+
+        return;
+    }
+
+    
+    if(sz(adjacency_list[node]) == 2 and node != 1){
+        // linear chain 
+        int child;
+
+        adjacency_list[node][0] == parent ? child = adjacency_list[node][1] : child = adjacency_list[node][0];
+
+        dfs(child, node, depth+1, depth_map, directions, adjacency_list);
+
+    }
+
+    else{
+
+        loop(i, 0, sz(adjacency_list[node])){
+
+            if(adjacency_list[node][i] != parent){
+
+                int child = adjacency_list[node][i];
+
+                directions[child].push_back({node, i});
+
+                dfs(child, node, depth+1, depth_map, directions, adjacency_list);
+            }
+        }
+    }
+
+    return;
+}
+
 int32_t main(){
     FIO
-    
+    // time complexity = O(nlogn + klogn)
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        if(n == 1){
+            int q; cin >> q;
+
+            loop(i, 0, q){
+                int a; cin >> a; int t; cin >> t;
+            }
+
+            cout << "YES" << endl;
+
+            continue;
+        }
+
+        vector<vi> adjacency_list(n+1);
+
+        loop(i, 0, n-1)
+        {
+            int parent, child; cin >> parent >> child;
+
+            adjacency_list[parent].pb(child); adjacency_list[child].pb(parent);
+        }
+
+        vector<vector<pii>> directions(1+n);
+
+        directions[0] = {{0, 0}};
+
+        vi depth_map(n+1);
+
+        int q; cin >> q;
+
+        
+
+        dfs(1, 0, 0, depth_map, directions, adjacency_list);
+
+        // loop(i, 1, n+1){
+        //     cout << i << space << ":"  << endl;
+        //     loop(j, 0, sz(directions[i])){
+        //         cout << directions[i][j].first << space << directions[i][j].second << endl;
+        //     }
+        //     cout << endl;
+        // }
+
+        loop(i, 0, q){
+            
+            int a; cin >> a; 
+
+            // -----------------------------------------
+            if(a == 1 or a == 2){                      \
+                loop(i, 0, a){int t; cin >> t;}         \   
+                cout << "YES" << endl;                      \
+                continue;                                       \
+            }                                                       \
+            // -----------------------------------------
+
+            vector<pii> node_direction_parity(n+1, {-1, -1});
+
+            // multimap<int, int> node_direction_parity;
+
+            bool partition = false; 
+            
+            bool answer = true;
+
+            int dep_of_partition = -infinity;
+
+            int least_depth = infinity;
+
+            loop(j, 0, a){
+
+                int node; cin >> node;
+                
+                least_depth = min_(least_depth, depth_map[node]);
+
+                loop(i, 0, sz(directions[node])){
+
+                    int key, val;
+
+                    pii key_val = directions[node][i];
+
+                    key = key_val.first, val = key_val.second;
+
+                    // cout << "debug " << key << space << val << endl;
+
+                    if(node_direction_parity[key].first != -1){
+
+                        if(val != node_direction_parity[key].first and val != node_direction_parity[key].second){
+                            
+                            // partition spotted;
+                            if(!partition){
+                                
+                                partition = true;
+
+                                dep_of_partition = depth_map[key];
+
+                                node_direction_parity[key].second = val;
+                            }
+
+                            else answer = false;
+                        }
+
+                    }
+
+                    else{
+
+                        node_direction_parity[key] = {val, -1};
+                    }
+                }  
+            }
+            
+            if(answer){
+
+                if(least_depth >= dep_of_partition){
+                    
+                    cout << "YES" << endl;
+
+                }
+
+                else{
+                    // cout << "debug " << endl;
+                    cout << "NO" << endl;
+                }
+
+            }   
+
+            else cout << "NO" << endl;
+        }
+    }
     return 0;
 }
 

@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -99,8 +96,63 @@ int pow_good(int a, int b){
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
 int32_t main(){
+
     FIO
-    
+
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        int a = 0;
+
+        int b = 0;
+
+        vi first = {}, second = {};
+        
+        loop(i, 0, n){int t; cin >> t; a+=t; first.pb(t);}
+
+        loop(i, 0, n){int t; cin >> t; b+=t; second.pb(t);}
+
+        vector<int> answer1 = {};
+        vi answer2 = {};
+
+        if(a == b){
+
+            loop(i, 0, n){
+
+                int curr = first[i];
+
+                if(curr - second[i] > 0)
+                
+                loop(j, 0, curr - second[i]){
+
+                    answer1.push_back(i+1); first[i]--;
+                }
+            }
+
+            loop(i, 0, n){
+
+                int curr = second[i] - first[i];
+
+                loop(j, 0, curr){
+
+                    answer2.push_back(i + 1);
+                }
+            }
+
+            cout << sz(answer1) << endl;
+
+            // cout << "debug ";
+
+            // cout << sz(answer1) << space << sz(answer2) << endl;
+
+            loop(i, 0, sz(answer1)) cout << answer1[i] << space << answer2[i] << endl;
+
+            // loop(i, 0, sz(answer)/2){cout << answer[i].first << space << answer[sz(answer)/2 + i].second << endl;}
+        }
+
+        else cout << -1 << endl;
+    }
     return 0;
 }
 

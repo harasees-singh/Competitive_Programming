@@ -17,11 +17,7 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
-MOD_DEFINE
 typedef long long ll;
 template<typename T>
 void print(array<T,2> &arr);
@@ -57,29 +53,6 @@ int binomial_cofficient(int n, int r){
     if(r == 0) return 1;
     return n*binomial_cofficient(n-1, r-1)/r;
 }
-int power_modulus(int x, int y)
-{
-    if (y == 0)
-        return 1;
-
-    else if (y % 2 == 0)
-    {
-        int chloe = power_modulus(x, y/2);
-        
-        return (chloe*chloe)%MOD;
-    }
-    else
-    {
-        int mermaid = power_modulus(x, y/2);
-        
-        return (((mermaid*mermaid)%MOD)*x)%MOD;
-    }
-
-}
-int pow_good(int a, int b){
-    
-    return (int)round(pow(a, b));
-}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -100,7 +73,26 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+        int n, k; cin >> n >> k;
+        vi x64architecture(30);
+        loop(i, 0, n){
+            int temp; cin >> temp;
+            int count = 0;
+            while(temp){
+
+                if(temp&1) x64architecture[count]++;
+
+                count++; temp/=2;
+            }
+        }
+        int ans = 0;
+        
+        for(auto cheems:x64architecture){
+            ans += ceil(cheems/(float)k);
+        }
+        cout << ans << endl;
+    }
     return 0;
 }
 

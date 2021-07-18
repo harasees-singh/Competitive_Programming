@@ -101,6 +101,38 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    int n; cin >> n;
+
+    vector<pii> input; 
+
+    loop(i, 0, n){
+
+        int t; cin >> t; 
+
+        int alt; cin >> alt;
+
+        input.push_back({t, alt});
+    }
+
+    sort(all(input));
+
+    // loop(i, 0, n) cout << input[i].first << space << input[i].second << endl;
+
+    int last = -1;
+
+    for(auto p : input){
+
+        int alt = (p.second);
+
+        // cout << alt << endl;
+
+        if(alt >= last) last = alt;
+
+        else last = p.first;
+    }
+
+    cout << last << endl;
+
     return 0;
 }
 

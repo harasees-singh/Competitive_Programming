@@ -101,6 +101,12 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        cout << (int)ceil(sqrt(n)) << endl;
+    }
     return 0;
 }
 

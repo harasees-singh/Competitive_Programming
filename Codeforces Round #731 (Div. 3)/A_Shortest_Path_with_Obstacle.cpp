@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,35 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
+    test_cases_loop{
+
+        int xa, ya, xb, yb, xf, yf;
+        cin >> xa >> ya >> xb >> yb >> xf >> yf;
+
+        if(xa == xb and xa == xf){
+            if(yf > min(ya, yb) and yf < max(ya, yb)){
+
+                cout << abs(ya - yb) + 2 << endl;
     
+            }
+            else{
+
+                cout << abs(ya - yb) << endl;
+            }
+        }
+
+        else if(ya == yb and ya == yf){
+
+            if(xf > min(xa, xb) and xf < max(xa, xb)){
+
+                cout << abs(xa - xb) + 2 << endl;
+            }
+            
+            else cout << abs(xa - xb) << endl;
+        }
+
+        else cout << abs(ya - yb) + abs(xa - xb) << endl;
+    }
     return 0;
 }
 

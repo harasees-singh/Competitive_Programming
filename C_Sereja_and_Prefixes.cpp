@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,68 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
-    
+
+    int m; cin >> m;
+
+    map<int, int> input;
+
+    umii mod;
+
+    int last = 0;
+
+    loop(i, 0, m){
+
+        int t; cin >> t;
+
+        if(t == 1){
+
+            int p; cin >> p;
+
+            input[last + 1] = p;
+        }
+
+        else{
+
+            int len, copies; cin >> len >> copies;
+
+            int index = len*copies + last; //(*(--input.end())).first;
+
+            input[index] = -1;
+
+            mod[index] = len;
+        }
+
+        last = (*(--input.end())).first;
+    }
+
+    // for(auto p : input) cout << p.first << space << p.second << endl;
+
+    cout.flush();
+
+    int n; cin >> n;
+
+    loop(i, 0, n){
+
+        int t; cin >> t;
+
+        int find_ele = t;
+
+        mii::iterator pptr;
+
+        pptr = input.lower_bound(find_ele);
+
+        while((*pptr).second == -1){
+
+            find_ele = (find_ele - (*--pptr).first - 1)%mod[(*++pptr).first] + 1;
+            
+            pptr = input.lower_bound(find_ele);
+        }
+
+        cout << input[find_ele] << space;
+    }
+
+    cout << endl;
+
     return 0;
 }
 

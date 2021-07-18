@@ -101,6 +101,14 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    int r, x1, y1, x2, y2; cin >> r >> x1 >> y1 >> x2 >> y2;
+
+    double distance = sqrt(pow_good(x1 - x2, 2) + pow_good(y1 - y2, 2));
+
+    int distance_int = ceil(distance);
+
+    cout << (int) ceil(distance/(2 * r)) << endl;
+
     return 0;
 }
 

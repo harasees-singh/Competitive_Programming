@@ -101,6 +101,43 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    test_cases_loop{
+
+        int n, a, b; cin >> n >> a >> b;
+
+        string s; cin >> s;
+
+        if(b > 0){
+
+            cout << n*a + n*b << endl;
+        }
+        else{
+
+            int ones = 0, zeroes = 0;
+
+            int it = 0;
+
+            while(it < n){
+
+                if(s[it] == '0'){
+
+                    zeroes++;
+
+                    while(s[it] == '0' and it < n) it++;
+                }
+
+                else if(s[it] == '1'){
+
+                    ones++;
+
+                    while(s[it] == '1' and it < n) it++;
+                }
+            }
+            int ans = min(ones, zeroes) + 1;
+
+            cout << n*a + ans*b << endl;
+        }
+    }
     return 0;
 }
 

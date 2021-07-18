@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,55 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
+
+    // just need the init pos and final pos after sorting. if the dist b/2 them is even for all then it's possible else not
     
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vi input;
+
+        // vi places;
+        // multimap<int, int> element_position; 
+
+        vector<vi> element_parity(1e5 + 5, {0, 0});
+
+        int parity = 0;
+
+        loop(i, 0, n){
+            
+            int t; cin >> t; input.pb(t);
+
+            element_parity[t][parity]++ ;
+            
+            parity = parity^1;
+        }
+
+        vi copy(input);
+
+        sort(all(copy));
+
+        bool answer = true;
+
+        parity = 0;
+
+        for(auto p : copy){
+
+            // if(element_position.find({p, parity}) == element_position.end())
+
+            if(!(element_parity[p][parity])){ answer = false; break;}
+
+            element_parity[p][parity]--;
+
+            parity^=1; 
+        }
+
+        if(answer) cout << "YES" << endl;
+
+        else cout << "NO" << endl;
+    }
+
     return 0;
 }
 

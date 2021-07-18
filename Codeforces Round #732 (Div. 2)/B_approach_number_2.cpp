@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,64 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
+
+    MOD_DEFINE
     
+    test_cases_loop{
+
+        vector<string> strings;
+
+        int n, m; cin >> n >> m;
+
+        loop(i, 0, n){
+
+            string t; cin >> t;
+
+            strings.pb(t);
+        }
+
+        vector<string> bitwise_permuted;
+
+        loop(i, 0, n-1){
+
+            string t; cin >> t;
+
+            bitwise_permuted.pb(t);
+        }
+
+        loop(i, 0, m){
+            
+            vi alphabets(26, 0);
+
+            loop(j, 0, n){
+                
+                alphabets[strings[j][i] - 'a']^=1;
+
+            }
+
+            loop(j, 0, n-1){
+
+                alphabets[bitwise_permuted[j][i] - 'a']^=1;
+
+            }
+
+            // print<int>(alphabets);
+            loop(i, 0, 26){
+
+                
+                if(alphabets[i]){char temp = i + 'a' ;cout << temp; break;}
+
+                // cout << (char)(i + 'a');
+
+            }
+
+            // cout << "xor" << endl;
+            
+        }
+        cout << endl;
+
+    }
+
     return 0;
 }
 

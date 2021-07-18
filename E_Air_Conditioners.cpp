@@ -100,6 +100,59 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n, k; cin >> n >> k;
+
+        vi temperatur_array(n + 1, 0);
+
+        // temperatur_array[0] = infinity; temperatur_array[n] = infinity;
+
+        vi input;
+
+        loop(i, 0, k){
+            
+            int t; cin >> t;
+
+            input.pb(t);
+        }
+
+        loop(i, 0, k){
+
+            int t; cin >> t;
+
+            temperatur_array[input[i] - 1] = t;
+        }
+
+        vi pref_dp(n + 1);
+
+        pref_dp[0] = infinity;
+
+        vi suff_dp(n + 1);
+
+        suff_dp[n] = infinity;
+
+        if(temperatur_array[n - 1]) suff_dp[n] = temperatur_array[n - 1];
+
+        loop(i, 1, n+1){
+
+            if(temperatur_array[i - 1]) pref_dp[i] = min(pref_dp[i - 1] + 1, temperatur_array[i - 1]);
+
+            else pref_dp[i] = pref_dp[i - 1] + 1;
+        }
+
+        for(int i = n - 1; i > 0; i--){
+
+            if(temperatur_array[i - 1]) suff_dp[i] = min(suff_dp[i + 1] + 1, temperatur_array[i - 1]);
+
+            else suff_dp[i] = suff_dp[i + 1] + 1;
+        }
+
+        loop(i, 1, n + 1) cout << min(pref_dp[i], suff_dp[i]) << space;
+
+        cout << endl;
+    }
     
     return 0;
 }

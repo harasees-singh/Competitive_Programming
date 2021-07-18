@@ -3,7 +3,7 @@
 #define float long double
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
-#define MOD_DEFINE const int MOD = 1e9 + 7;
+#define MOD_DEFINE const int MOD = 998244353;
 #define And &&
 #define Or ||
 #define endl '\n'
@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -52,10 +49,18 @@ vector<int> divisors(ll n){
 	ans.pb(1);
 	return ans;
 }
+
 int binomial_cofficient(int n, int r){
+
+    if(r == 1) return n%998244353;
     
-    if(r == 0) return 1;
-    return n*binomial_cofficient(n-1, r-1)/r;
+    if(r == 0 or n == r) return 1;
+
+    return (((n*binomial_cofficient(n - 1, r - 1))%998244353) * modInverse<int>(r, 998244353))%998244353;
+
+    // mod inverse of r will return a value such that after multiplying it by n * binomial_coefficient(n - 1, r - 1) modulo m will give the same result as
+
+    // n * binomial_coefficient(n - 1, r - 1) / r (modulo m)
 }
 int power_modulus(int x, int y)
 {
@@ -100,7 +105,37 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
+
+    MOD_DEFINE
     
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        string s; cin >> s;
+
+        int total_ones = 0;
+
+        int pairs_of_ones = 0;
+
+        int parity = 0;
+
+        loop(i, 0, n){
+
+            if(s[i] == '1') parity++, total_ones++;
+
+            else parity = 0;
+
+            if(parity == 2) pairs_of_ones++, parity = 0;
+        }
+        // if(parity == 2) pairs_of_ones++;
+
+        int number_of_zeroes = n - total_ones + pairs_of_ones;
+
+        // cout << number_of_zeroes << space << pairs_of_ones << endl;
+
+        cout << binomial_cofficient(number_of_zeroes, pairs_of_ones) << endl;
+    }
     return 0;
 }
 

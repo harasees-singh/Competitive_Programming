@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,77 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+
+        int k, n, m; cin >> k >> n >> m;
+
+        int a[n]; int b[m];
+
+        loop(it, 0, n){int t; cin >> t; a[it] = t;}
+
+        loop(it, 0, m){int t; cin >> t; b[it] = t;}
+
+        int i = 0;
+
+        int j = 0;
+
+        vi answer;
+
+        while(i < n and j < m){
+
+            while(i < n and a[i] == 0){
+
+                k++; i++; answer.pb(0);
+            }
+
+            while(j < m and b[j] == 0){
+
+                k++; j++; answer.pb(0);
+            }
+            
+            if(i >= n or j >= m)break;
+            
+            int edit = min(a[i], b[j]);
+
+            if(edit > k){break;}
+
+            if(a[i] > b[j]){
+
+                answer.pb(b[j]); j++;
+            }
+
+            else answer.pb(a[i]), i++;
+
+        }
+        bool parity = true;
+        if(i < n){
+            
+            loop(it, i, n){
+                if(!a[it])k++;
+
+                if(a[it]>k){parity = false; break; }
+
+                answer.pb(a[it]);
+            }
+        }
+        if(j < m){
+
+            loop(it, j, m){
+                if(!b[it])k++;
+
+                if(b[it]>k){parity = false; break; }
+
+                answer.pb(b[it]);
+
+            }
+        }
+
+        if(parity){
+
+            print<int>(answer);
+        }
+        else cout << -1 << endl;
+    }
     return 0;
 }
 

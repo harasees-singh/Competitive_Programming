@@ -1,5 +1,5 @@
 #include<bits/stdc++.h>
-#define infinity 999999999999999999
+#define infinity 999999999999999999 
 #define float long double
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
@@ -17,11 +17,7 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
-MOD_DEFINE
 typedef long long ll;
 template<typename T>
 void print(array<T,2> &arr);
@@ -57,29 +53,6 @@ int binomial_cofficient(int n, int r){
     if(r == 0) return 1;
     return n*binomial_cofficient(n-1, r-1)/r;
 }
-int power_modulus(int x, int y)
-{
-    if (y == 0)
-        return 1;
-
-    else if (y % 2 == 0)
-    {
-        int chloe = power_modulus(x, y/2);
-        
-        return (chloe*chloe)%MOD;
-    }
-    else
-    {
-        int mermaid = power_modulus(x, y/2);
-        
-        return (((mermaid*mermaid)%MOD)*x)%MOD;
-    }
-
-}
-int pow_good(int a, int b){
-    
-    return (int)round(pow(a, b));
-}
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -100,7 +73,49 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+        int n; cin >> n;
+        int sum = 0;
+        vi input;
+        loop(i, 0, n){
+            int temp; cin >> temp;
+            input.pb(temp); sum+=temp;
+        }
+
+        if(n==1){cout << 1 << endl; continue;}
+
+        vi suff_gcd(n);
+        vi pref_gcd(n);
+        int curr = input[0];
+        loop(i, 0, n){
+            curr = _gcd(curr, input[i]); 
+            pref_gcd[i] = curr;
+        }
+
+        curr = input[n-1];
+
+        for(int i = n-1; i >= 0; i--){
+            curr = _gcd(input[i], curr);
+            suff_gcd[i] = curr;
+        }
+        int minma = infinity;
+        loop(i, 0, n){
+            int kids_remaining_sum = sum - input[i];
+            int gcd;
+            if(i and i!=n-1){
+                gcd = _gcd(pref_gcd[i-1], suff_gcd[i+1]);
+            }
+            else{
+                if(i) gcd = pref_gcd[n-2];
+
+                else gcd = suff_gcd[1];
+            }
+            int ans = (kids_remaining_sum + gcd)/gcd;
+
+            ans < minma ? minma = ans : minma = minma;
+        }
+        cout << minma << endl;
+    }
     return 0;
 }
 

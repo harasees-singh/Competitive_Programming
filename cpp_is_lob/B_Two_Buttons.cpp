@@ -98,9 +98,125 @@ int pow_good(int a, int b){
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+vi states(2e4 + 1, -1);
+
+vi visited(2e4 + 1, 0);
+
+int dfs(int curr, int target){
+    
+    if(curr == target){
+
+        return 0;
+    }
+
+    int firstanswer = infinity;
+
+    int secondanswer = infinity;
+
+    bool one = false, two = false;
+
+    if(curr < target){
+
+        if(states[2*curr] == -1 and !visited[2*curr])
+
+            visited[2*curr] = 1, secondanswer =  1 + dfs(2*curr, target), states[2*curr] = secondanswer - 1, one = true;
+
+         
+        // secondanswer = 1 + states[2*curr];
+    }
+
+    if(curr > 1){
+
+        if(states[curr - 1] == -1  and !visited[curr - 1])
+
+            visited[curr - 1] = 1, firstanswer = 1 + dfs(curr - 1, target), states[curr - 1] = firstanswer - 1, two = true;
+
+        
+
+        // else if(!visited[curr - 1]) firstanswer = 1 + states[curr - 1];
+
+    }
+
+    // if(min(firstanswer, secondanswer) != INT64_MAX) states[curr] = min(firstanswer, secondanswer);
+
+     
+    if(one or two){
+
+        states[curr] = min(firstanswer, secondanswer);
+    }
+    // cout << "curr " << curr << space;
+    // cout << states[curr] << endl;
+
+    return min(firstanswer, secondanswer);
+}
+
+int dfs_new(int curr, int parent, int target){
+
+
+    cout << "degbu g" << curr << endl;
+    if(curr == target) return 0;
+
+    int first__ = infinity, second__ = infinity;
+
+    if(curr > 1){
+
+        if(states[curr - 1] == -1 and curr - 1 != parent){
+
+            first__ = 1 + dfs_new(curr - 1, curr, target);
+
+            states[curr - 1] = (first__ - 1);
+        }
+
+        else if(curr - 1 != parent){
+
+            first__ = 1 + states[curr - 1];
+        }
+
+    }
+    if(curr < target){
+
+        if(states[2*curr] == -1 and 2*curr != parent){
+
+            second__ = 1 + dfs_new(2*curr, curr, target);
+
+            states[2*curr] = second__ - 1;
+        }
+
+        else if(2*curr != parent){
+
+            second__ = 1 + states[2*curr];
+        }
+    
+    }
+
+    states[curr] = min(first__, second__);
+
+    return states[curr];
+}
+
 int32_t main(){
     FIO
     
+    int n, m; cin >> n >> m;
+    
+    int count = 0;
+
+    if(m <= n){
+
+        cout << n - m << endl;
+    }
+
+    else{
+
+        while(m > n){
+
+            if(m%2) m++, count++;
+
+            m/=2, count++;
+        }
+
+        cout << count + (n - m) << endl;
+    }
     return 0;
 }
 

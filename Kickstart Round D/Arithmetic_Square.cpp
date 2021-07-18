@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,44 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
-    
+    int test = 0;
+    test_cases_loop{
+        test++;
+        int a, b, c, d, f, g, h, i;
+        // a b c
+        // d e f
+        // g h i
+        cin >> a >> b >> c >> d >> f >> g >> h >> i;
+
+        unordered_map<double, int> candidate_occurance;
+        int ans = 0;
+
+        if(f == (c + i)/2.0)ans++;
+
+        if(d == (a + g)/2.0)ans++;
+
+        if(b == (a + c)/2.0)ans++;
+
+        if(h == (g + i)/2.0)ans++;
+
+        candidate_occurance[(a+i)/2.0]++;
+        candidate_occurance[(g+c)/2.0]++;
+        candidate_occurance[(d+f)/2.0]++;
+        candidate_occurance[(b+h)/2.0]++;
+
+        int maxi = 0;
+
+        for(auto p : candidate_occurance){
+            // cout << "debug ";
+            // cout << p.first << endl;
+            if(p.second > maxi and p.first == (int)p.first){
+
+                maxi = p.second;
+            }
+        }
+
+        cout << "Case " << "#" << test << ": " <<maxi + ans << endl;
+    }
     return 0;
 }
 

@@ -101,6 +101,49 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    test_cases_loop{
+
+        int n, k; cin >> n >> k;
+
+        int last;
+
+        unordered_set<int> whatever;
+
+        // bool answer = true;
+
+        loop(i, 0, n){
+
+            cin >> last;
+
+            whatever.insert(last);
+
+            // if(last > k) answer = false;
+        }
+
+        if(sz(whatever) > k) {cout << -1 << endl; continue;}
+
+        vi answer;
+
+        for(auto P : whatever){
+
+            answer.pb(P);
+        }
+
+        while(sz(answer) < k){
+
+            answer.pb(1);
+        }
+
+        cout << 10000 << endl;
+
+        loop(i, 0, 100*100){
+
+            cout << answer[i%k] << space;
+        }
+
+        cout << endl;
+
+    }
     return 0;
 }
 

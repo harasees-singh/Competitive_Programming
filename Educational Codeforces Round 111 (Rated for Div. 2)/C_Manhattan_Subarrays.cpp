@@ -101,6 +101,54 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vi input;
+
+        loop(i, 0, n){
+
+            int t; cin >> t;
+
+            input.pb(t);
+        }
+
+        int ans = n + n - 1;
+
+        // we only need to check for len 3 and 4 as len 1 and 2 subarrays will always be part of the answer; and subarrays with len >= 5 will always have atleast one 
+        // non decreasing or non increasing subsequence so they will never be a part of our answer.
+
+        loop(i, 0, n - 2){
+
+            int start = input[i];
+
+            int mid = input[i + 1];
+
+            int end = input[i + 2];
+
+            if((mid < start and mid < end) or (mid > start and mid > end)){
+
+                ans++;
+            }
+        }
+
+        loop(i, 0, n - 3){
+
+            int mid1 = input[i + 1], mid2 = input[i + 2];
+
+            if(mid1 > input[i] and mid1 > input[i + 3] and mid1 > input[i + 2] and mid2 < input[i] and mid2 < input[i + 1] and mid2 < input[i + 3]){
+
+                ans++;
+            }
+            else if(mid1 < input[i] and mid1 < input[i + 3] and mid1 < input[i + 2] and mid2 > input[i] and mid2 > input[i + 1] and mid2 > input[i + 3]){
+
+                ans++;
+            } 
+        }
+        cout << ans << endl;
+    }
+
     return 0;
 }
 

@@ -96,11 +96,53 @@ int pow_good(int a, int b){
 // █░░█▀▄ █▀▀ █▀█ █░░░░█░▄░█ █ ▀█▀ █░█░░█ ▀█▀░█
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
-// ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+// ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀b
+vi prefix_sum = {0};
+
+bool good(int curr, int n , int k){
+
+    loop(i, 0, n - curr + 1){
+
+        if(prefix_sum[i + curr] - prefix_sum[i] <= k) return true;
+    }
+
+    return false;
+}
+
 
 int32_t main(){
     FIO
     
+    int n, t; cin >> n >> t;
+
+    for(int i = 0; i < n; i++){
+
+        int t; cin >> t;
+
+        prefix_sum.pb(prefix_sum[i] + t);
+
+    }
+
+    int left = 1, right = n;
+
+    while(left <= right){
+
+        // answer stored in right
+
+        int mid = (left + right) >> 1;
+
+        if(good(mid, n, t)){
+
+            left = mid + 1;
+
+        }
+
+        else right = mid - 1;
+
+    }
+
+    cout << right << endl;
+
     return 0;
 }
 

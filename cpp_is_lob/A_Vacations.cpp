@@ -101,6 +101,41 @@ int pow_good(int a, int b){
 int32_t main(){
     FIO
     
+    int n; cin >> n;
+
+    vi input;
+
+    loop(i, 0, n){
+
+        int t; cin >> t;
+
+        input.pb(t);
+    }
+
+    vector<vi> dp(n + 1, {0, 0, 0});
+
+    loop(i, 1, n + 1){
+
+        int situation = input[i - 1];
+
+        int contest = (situation&1);
+
+        int gym = (situation == 2 or situation == 3);
+
+        dp[i][0] = min(dp[i - 1][1], min(dp[i - 1][2], dp[i - 1][0])) + 1;
+
+        if(contest) dp[i][1] = min(dp[i - 1][2], dp[i - 1][0]);
+
+        else dp[i][1] = INT64_MAX;
+
+        if(gym) dp[i][2] = min(dp[i - 1][1], dp[i - 1][0]);
+
+        else dp[i][2] = INT64_MAX;
+
+    }
+
+    cout << min(dp[n][1], min(dp[n][0], dp[n][2])) << endl;
+
     return 0;
 }
 

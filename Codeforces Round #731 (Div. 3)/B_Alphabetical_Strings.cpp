@@ -17,9 +17,6 @@
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
-#define cout std::cout
-#define cin std::cin
-
 using namespace std;
 MOD_DEFINE
 typedef long long ll;
@@ -100,7 +97,52 @@ int pow_good(int a, int b){
 
 int32_t main(){
     FIO
-    
+    test_cases_loop{
+
+        string input; cin >> input;
+
+        int min;
+        int maxi = 'z'+1;
+        loop(i, 0, sz(input)){
+
+            if(input[i] < maxi){
+
+                min = i; maxi = input[i];
+            }
+        }
+
+        if(input[min] != 'a'){cout << "NO" << endl; continue;}
+
+        // now input[i] is the min char;
+        // use 2 ptr
+        int left_go = min;
+        int right_go = min;
+        char curr = 'a';
+        bool a = true, b = true;
+        while(b){
+            b = false;
+            while(left_go > 0 and input[left_go-1] - curr == 1){
+                // a = true;
+                left_go--; curr++;
+                // cout << left_go << endl;
+                // cout << curr;
+            }
+
+            while(right_go < sz(input)-1 and input[right_go + 1] - curr == 1){
+
+                b = true;
+                right_go++; curr++;
+
+                // cout << curr;
+            }
+        }
+
+        if(left_go == 0 and right_go == sz(input)-1){
+
+            cout << "YES" << endl;
+        }
+        else cout << "NO" << endl;
+    }
     return 0;
 }
 
