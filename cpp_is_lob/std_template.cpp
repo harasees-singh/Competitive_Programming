@@ -182,7 +182,6 @@ vector<T> sieve(T n){
 	}
 	return prime;
 }
- 
 template<typename T>
 T _gcd(T a, T b){
 	T temp1 = max(a,b), temp2 = min(a,b);
