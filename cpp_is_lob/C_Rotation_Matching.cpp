@@ -103,7 +103,7 @@ int32_t main(){
     
     int n; cin >> n;
 
-    umii element_index;
+    vi element_index(n + 1);
 
     loop(i, 0, n){
 
@@ -112,7 +112,7 @@ int32_t main(){
         element_index[t] = i;
     }
 
-    umii answer;
+    vi answer(n);
 
     loop(i, 0, n){
 
@@ -122,11 +122,11 @@ int32_t main(){
 
     }
 
-    int maxima = -infinity;
+    int maxima = 0;
 
     for(auto p : answer){
 
-        if(p.second > maxima) maxima = p.second;
+        maxima = max(maxima, p);
     }
 
     cout << maxima << endl;
