@@ -111,7 +111,7 @@ int32_t main(){
 
         int odd_primes = 0;
 
-        loop(i, 3, sqrt(n) + 1){
+        for(int i = 3; i <= sqrt(n); i += 2){
 
             while(!(n % i)) odd_primes++, n/=i;
         }

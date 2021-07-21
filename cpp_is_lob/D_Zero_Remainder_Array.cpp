@@ -19,7 +19,6 @@
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 #define cout std::cout
 #define cin std::cin
-#define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
 
 using namespace std;
 MOD_DEFINE
@@ -81,26 +80,6 @@ int pow_good(int a, int b){
     
     return (int)round(pow(a, b));
 }
-struct custom_hash {
-
-    static uint64_t splitmix64(uint64_t x) {
-
-        x += 0x9e3779b97f4a7c15;
-    
-        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
-    
-        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
-    
-        return x ^ (x >> 31);
-    }
-
-    size_t operator()(uint64_t x) const {
-    
-        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
-    
-        return splitmix64(x + FIXED_RANDOM);
-    }
-};
 // ░░░░░░░░░░░░▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄░░░░░░░░░░░░░
 // ░░░░░▄▄▄▄█▀▀▀░░░░░░░░░░░░▀▀██░░░░░░░░░░░
 // ░░▄███▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█▄▄▄░░░░░░░
@@ -118,10 +97,50 @@ struct custom_hash {
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+struct custom_hash {
+    static uint64_t splitmix64(uint64_t x) {
+        // http://xorshift.di.unimi.it/splitmix64.c
+        x += 0x9e3779b97f4a7c15;
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+        return x ^ (x >> 31);
+    }
 
+    size_t operator()(uint64_t x) const {
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+        return splitmix64(x + FIXED_RANDOM);
+    }
+};
 int32_t main(){
     FIO
+    
+    test_cases_loop{
 
+        int n, k; cin >> n >> k;
+
+        vi input; loop(i, 0, n) {int t; cin >> t; input.pb(t);}
+
+        sort(all(input));
+
+        unordered_map<int, int, custom_hash> remainder_pointer;
+
+        int ans = 0;
+
+        for(auto a : input){
+
+            int p = a%k;
+
+            if(p == 0) continue;
+
+            remainder_pointer[p]++;
+
+            ans = max(ans, k*remainder_pointer[p]- p);
+        }
+        
+        if(ans == 0){cout << 0 << endl; continue;}
+
+        cout << ans + 1 << endl;
+    }
     return 0;
 }
 
@@ -182,6 +201,7 @@ vector<T> sieve(T n){
 	}
 	return prime;
 }
+ 
 template<typename T>
 T _gcd(T a, T b){
 	T temp1 = max(a,b), temp2 = min(a,b);

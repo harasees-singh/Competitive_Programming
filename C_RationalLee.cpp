@@ -122,6 +122,57 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        int k; cin >> k;
+
+        vi gifts; loop(i, 0, n){int t; cin >> t; gifts.push_back(t);}
+
+        sort(all(gifts), greater<int>());
+
+        vi distribution;
+
+        loop(i, 0, k){
+
+            int t; cin >> t;
+
+            distribution.pb(t);
+        }
+
+        sort(all(distribution));
+
+        vector<vi> final_answer(k, vi({}));
+
+        loop(i, 0, k){
+
+            final_answer[i].pb(gifts[i]);
+        }
+
+        int ptr = k;
+
+        loop(i, 0, k){
+
+            int count = distribution[i] - 1;
+
+            while(count){
+
+                final_answer[i].pb(gifts[ptr]);
+
+                ptr++; count--;
+            }
+        }
+
+        int answer = 0;
+
+        loop(i, 0, k){
+            
+            answer += final_answer[i][0] + final_answer[i][sz(final_answer[i]) - 1];
+
+        }
+        cout << answer << endl;
+    }
     return 0;
 }
 

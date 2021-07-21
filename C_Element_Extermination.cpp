@@ -122,6 +122,23 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        int initial, final;
+
+        int t; cin >> t; initial = t;
+
+        loop(i, 0, n - 2){int t; cin >> t;}
+
+        int p; cin >> p; final = p;
+
+        if(initial < final) cout << "YES" << endl;
+
+        else cout << "NO" << endl;
+    }
+
     return 0;
 }
 

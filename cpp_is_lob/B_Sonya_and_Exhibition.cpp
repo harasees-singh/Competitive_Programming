@@ -122,6 +122,14 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    int n, m; cin >> n >> m;
+
+    loop(i, 0, m){int a, b; cin >> a >> b;}
+
+    int parity = 0;
+
+    loop(i, 0, n) cout << parity, parity^=1;
+
     return 0;
 }
 
