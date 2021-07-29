@@ -128,8 +128,6 @@ int32_t main(){
 
     int x = 0, y = 0;
 
-    int y_min = 1e6;
-
     int y_max = 0;
 
     vi sequence;
@@ -138,7 +136,7 @@ int32_t main(){
 
         int t1; cin >> t1;
 
-        x+=t1; y += t1*(i%2 ? -1 : 1);
+        x += t1; y += t1*(i%2 ? -1 : 1);
 
         y_max = max(y_max, y);
 
