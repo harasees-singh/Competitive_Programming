@@ -179,8 +179,6 @@ void fill_the_matrix(int n, int m, int k, vector<vector<char>>& mat){
                 fill = (fill == 'e') ? 'g' : 'h';
 
                 mat[i][j + 1] = mat[i + 1][j + 1] = fill;
-
-                it++;
             }
         }
         lawl++;
