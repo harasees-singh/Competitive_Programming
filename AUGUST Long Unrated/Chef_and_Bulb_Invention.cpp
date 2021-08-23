@@ -119,8 +119,22 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int backinbusiness(int n, int k, int p){
+
+    return p/k + (p%k)*(n/k) + 1;
+}
+
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n, p, k; cin >> n >> p >> k;
+
+        if(p > (n/k)*k) cout << backinbusiness(n - n%k, k, p) + n%k << endl; 
+
+        else cout << backinbusiness(n, k, p) << endl;
+    }
 
     return 0;
 }

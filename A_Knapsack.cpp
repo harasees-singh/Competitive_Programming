@@ -122,6 +122,55 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n, w; cin >> n >> w;
+
+        vector<pii> input;
+
+        loop(i, 0, n){
+
+            int t; cin >> t; input.pb(make_pair(t, i + 1));
+        }
+
+        sort(all(input));
+
+        // loop(i, 0, n)cout << input[i].first << endl;
+
+        int l = 0, r = n - 1;
+
+        while(l <= r){
+
+            int mid = (l + r) >> 1;
+
+            if(input[mid].first > w) r = mid - 1;
+
+            else l = mid + 1;
+        }
+
+        int ans_index = r;
+
+        if(ans_index == -1){cout << -1 << endl; continue;}
+
+        vi prinvector = {input[ans_index].second};
+
+        int summmand = input[ans_index].first; 
+
+        while(summmand < ceil(w/2.0) and ans_index){
+
+            ans_index--;
+
+            summmand += input[ans_index].first; prinvector.pb(input[ans_index].second);
+        }
+
+        if(summmand >= ceil(w/2.0)){
+
+            sort(all(prinvector)); cout << sz(prinvector) << endl; print<int>(prinvector);
+        }
+
+        else cout << -1 << endl;
+    }
+
     return 0;
 }
 

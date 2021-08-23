@@ -122,6 +122,39 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int a, b; cin >> a >> b;
+
+        string s; cin >> s;
+
+        while(s[sz(s) - 1] == '0') s.pop_back();
+
+        int pt = 0;
+
+        int ans = 0;
+
+        sz(s) ? ans = a : ans = 0;
+
+        while(pt < sz(s) and s[pt] == '0') pt++;
+
+        while(pt < sz(s)){
+
+            int count_zeroes = 0;
+
+            while(pt < sz(s) and s[pt] == '1') pt++;
+
+            while(pt < sz(s) and s[pt] == '0'){
+
+                count_zeroes++; pt++;
+            }
+
+            ans += min(a, count_zeroes*b);
+        }
+
+        cout << ans << endl;
+    }
+
     return 0;
 }
 

@@ -15,7 +15,7 @@
 #define mii map<int, int>
 #define umii unordered_map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
-#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 #define cout std::cout
 #define cin std::cin
@@ -121,6 +121,73 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n, k; cin >> n >> k;
+
+        vi input;
+
+        loop(i, 0, n){int t; cin >> t; input.pb(t);}
+
+        vi copy(input);
+
+        int last;
+
+        sort(all(input));
+
+        // print<int>(input);
+
+        vector<vi> answer(n + 1);
+
+        vi occurance_count(n + 1);
+
+        int ptr = 0;
+
+        loop(i, 0, n){
+
+            int curr = input[i];
+
+            if(ptr%k == 0 and n - i < k){answer[curr].pb(0); continue;}
+
+            if(occurance_count[curr] == k){
+
+                answer[curr].pb(0);
+            }
+
+            else{
+                if(ptr%k == 0) last = i;
+
+                occurance_count[curr]++;
+
+                answer[curr].pb(ptr%k + 1);
+                
+                ptr++;
+            }
+
+        }
+
+        if(ptr%k != 0){
+
+            for(int i = n - 1; i >= last; i--){
+
+                answer[input[i]].pop_back();
+
+            }
+        }
+
+
+        for(auto p : copy){
+
+            if(sz(answer[p]) == 0) cout << 0 << space;
+
+            else cout << answer[p][sz(answer[p]) - 1] << space, answer[p].pop_back();
+
+            
+        }
+
+        cout << endl;
+    }
 
     return 0;
 }

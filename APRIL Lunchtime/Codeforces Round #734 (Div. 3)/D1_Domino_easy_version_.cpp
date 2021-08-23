@@ -15,7 +15,7 @@
 #define mii map<int, int>
 #define umii unordered_map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
-#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 #define cout std::cout
 #define cin std::cin
@@ -121,6 +121,23 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n, m, k;
+
+        cin >> n >> m >>k;
+
+        int num = (n*m)/2;
+
+        if(m < 2*k) {cout << "NO" << endl; continue;}
+
+        if(n < 2*(num - k)){ cout << "NO" << endl; continue;}
+
+        if(k == 0 or k == num or (!(k%2) and !((num - k)%2))) cout << "YES" << endl;
+
+        else cout << "NO" << endl;
+    }
 
     return 0;
 }

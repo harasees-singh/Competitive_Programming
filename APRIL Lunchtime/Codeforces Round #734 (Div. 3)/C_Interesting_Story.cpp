@@ -15,7 +15,7 @@
 #define mii map<int, int>
 #define umii unordered_map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
-#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+#define FIO ios_base::sync_with_stdio(false); cin.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 #define cout std::cout
 #define cin std::cin
@@ -119,8 +119,210 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int count_characters(string &s, char a){
+
+    int ans = 0;
+
+    for(auto p : s) if(p == a) ans++;
+
+    return ans;
+}
+
+bool aaa_compare(string &a, string &b){
+
+    int count_1 = 0, count_2 = 0;
+
+    count_1 = 2*count_characters(a, 'a'); count_2 = 2*count_characters(b, 'a');
+
+    count_1 -= sz(a); count_2 -= sz(b);
+
+    return count_1 > count_2;
+}
+
+
+bool bbb_compare(string &a, string &b){
+
+    int count_1 = 0, count_2 = 0;
+
+    count_1 = 2*count_characters(a, 'b'); count_2 = 2*count_characters(b, 'b');
+
+    count_1 -= sz(a); count_2 -= sz(b);
+
+    return count_1 > count_2;
+}
+
+
+bool ccc_compare(string &a, string &b){
+
+    int count_1 = 0, count_2 = 0;
+
+    count_1 = 2*count_characters(a, 'c'); count_2 = 2*count_characters(b, 'c');
+
+    count_1 -= sz(a); count_2 -= sz(b);
+
+    return count_1 > count_2;
+}
+
+
+bool ddd_compare(string &a, string &b){
+
+    int count_1 = 0, count_2 = 0;
+
+    count_1 = 2*count_characters(a, 'd'); count_2 = 2*count_characters(b, 'd');
+
+    count_1 -= sz(a); count_2 -= sz(b);
+
+    // if(count_1 == count_2) return sz(a) < sz(b);
+
+    return count_1 > count_2;
+}
+
+
+bool eee_compare(string &a, string &b){
+
+    int count_1 = 0, count_2 = 0;
+
+    count_1 = 2*count_characters(a, 'e'); count_2 = 2*count_characters(b, 'e');
+
+    count_1 -= sz(a); count_2 -= sz(b);
+
+    return count_1 > count_2;
+}
+
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vector<string> input;
+
+        loop(i, 0, n){
+
+            string t; cin >> t;
+
+            input.pb(t);
+        }
+
+        int aginlo = 0, nona = 0;
+
+        
+        sort(all(input), aaa_compare);
+        
+
+        int maxima = 0;
+
+
+
+        int ans = n;
+
+        aginlo = 0; nona = 0;
+
+        
+
+        loop(i, 0, n){
+            
+            int temp = count_characters(input[i], 'a');
+
+            aginlo += temp;
+
+            nona += sz(input[i]) - temp;
+
+            if(aginlo <= nona) {ans = i; break;}
+        }
+
+        maxima = max(ans, maxima);
+
+        //---------------------------
+
+        ans = n;
+
+        aginlo = 0; nona = 0;
+
+        sort(all(input), bbb_compare);
+
+        
+
+        loop(i, 0, n){
+            
+            int temp = count_characters(input[i], 'b');
+
+            aginlo += temp;
+
+            nona += sz(input[i]) - temp;
+
+            if(aginlo <= nona) {ans = i; break;}
+        }
+
+        maxima = max(ans, maxima);
+
+
+        ans = n;
+
+        aginlo = 0; nona = 0;
+
+        sort(all(input), ccc_compare);
+
+        // for(auto p : input) cout << p << space;
+
+        loop(i, 0, n){
+            
+            int temp = count_characters(input[i], 'c');
+
+            aginlo += temp;
+
+            nona += sz(input[i]) - temp;
+
+            if(aginlo <= nona) {ans = i; break;}
+        }
+
+        maxima = max(ans, maxima);
+
+
+
+        ans = n;
+
+        aginlo = 0; nona = 0;
+
+        sort(all(input), ddd_compare);
+
+        // for(auto p : input) cout << p << space;
+
+        loop(i, 0, n){
+            
+            int temp = count_characters(input[i], 'd');
+
+            aginlo += temp;
+
+            nona += sz(input[i]) - temp;
+
+            if(aginlo <= nona) {ans = i; break;}
+        }
+
+        maxima = max(ans, maxima);
+
+        ans = n;
+
+        aginlo = 0; nona = 0;
+
+        sort(all(input), eee_compare);
+
+        loop(i, 0, n){
+            
+            int temp = count_characters(input[i], 'e');
+
+            aginlo += temp;
+
+            nona += sz(input[i]) - temp;
+
+            if(aginlo <= nona) {ans = i; break;}
+        }
+
+        maxima = max(ans, maxima);
+
+        cout << maxima << endl;
+    }
 
     return 0;
 }

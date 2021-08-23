@@ -122,6 +122,24 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    int ans = 0;
+
+    for(int i = 1; i <= n; i++) 
+        {
+            int val = i; 
+            
+            for(int j = i + 1; j <= n; j++){
+
+                while(i*i + j*j > val*val and val < n) val++;
+
+                if(val*val == i*i + j*j) ans++;
+            }
+        }
+
+    cout << ans << endl;
+
     return 0;
 }
 
