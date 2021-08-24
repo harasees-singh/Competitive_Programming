@@ -1,63 +1,35 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define vi vector<int>
-#define int long long int
+#include <bits/stdc++.h>
+
 #define pb push_back
-#define loop(i, a, b) for(int i=a; i<b; i++)
-#define loopb(i, a, b) for(int i=a; i>=b; i--)
-#define testcase int t; cin>>t; while(t--)
-#define pii pair<int, int>
-#define f first
-#define s second
-#define fastio ios_base::sync_with_stdio(false), cin.tie(0), cout.tie(0)
+#define F first
+#define S second
+#define all(x) x.begin(), x.end()
+#define debug(x) cerr << #x << " : " << x << '\n'
 
-int32_t main() {
-    fastio;
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
-    int n, m; cin>>n>>m;
-    vector<pii> data(m);
-    int available = 0;
-    loop(i, 0, m) {
-        cin>>data[i].f>>data[i].s;
-        available+=data[i].f;
-    }
+using namespace std;
 
+typedef long long ll;
+typedef long double ld;
+typedef string str;
+typedef pair<ll, ll> pll;
 
-    sort(data.begin(), data.end(), [](pii&a, pii&b) {
-        return a.s > b.s;
-    });
+const ll Mod = 1000000007LL;
+const int N = 2e5 + 10;
+const ll Inf = 2242545357980376863LL;
+const ll Log = 30;
 
-    int stolen = 0;
-    int matches = 0;
-
-    if(available>=n) {
-        loop(i, 0, m) {
-            if(stolen<n and data[i].f<=n-stolen) {
-                stolen+=data[i].f;
-                matches+=(data[i].f)*(data[i].s);
-            }
-            else if(stolen<n and data[i].f>n-stolen) {
-                int stolen_frm_here = n-stolen;
-                stolen+=n-stolen;
-                matches+=(stolen_frm_here*data[i].s);
-            }
-            else {
-                cout<<matches<<"\n";
-                break;
-            }
-            // cout<<"stolen: "<<stolen<<" "<<"matches: "<<matches<<endl;
-        }
-    }
-    else {
-        loop(i, 0, m) {
-            matches+=(data[i].f)*(data[i].s);
-        }
-        cout<<matches<<"\n";
-    }
-    
-    
-    return 0;
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	ll n;
+	cin >> n;
+	ll ans = 0;
+	for(int a = 1; a <= n; a++){
+	    int p = a;
+		for(int b = a + 1; b <= n; b++){
+			while(a*a + b*b > p*p) p++;
+			if(a*a + b*b == p*p && p <= n) ans ++;
+		}
+	}
+	cout << ans << '\n';
+	return 0;
 }
