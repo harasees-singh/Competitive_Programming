@@ -20,7 +20,6 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +121,48 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        string s, t, p; cin >> s >> t >> p;
+
+        // s must be a substr of t;
+
+        // remaining chars must be present in p;
+
+        bool parity = true;
+
+        int ptr = 0;
+
+        int i = 0, j = 0;
+
+        while(i < sz(s) and j < sz(t)){
+
+            if(s[i] == t[j]) i++, j++;
+
+            else j++;
+        }
+
+        if(i != sz(s)) parity = false;
+
+        if(!parity){ cout << "NO" << endl; continue;}
+
+        vi needs(26);
+
+        vi wants(26);
+
+        for(char a : t) needs[a - 'a']++;
+
+        for(char a : s) needs[a - 'a']--;
+
+        for(char a : p) wants[a - 'a']++;
+
+        bool answer = true;
+
+        loop(i, 0, 26){int g = needs[i]; if(g > wants[i]){answer = false; break;}}
+
+        if(answer) cout << "YES" << endl; else cout << "NO" << endl;
+    }
 
     return 0;
 }

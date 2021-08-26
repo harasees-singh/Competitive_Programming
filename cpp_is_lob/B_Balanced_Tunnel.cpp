@@ -144,7 +144,6 @@ int32_t main(){
 
         pt1++;
     }
-    // int answer = 0; int pt = 0; int it = 0; while(pt < n){ while(it < n and pt < n and leave[pt] != input[it]) answer++, pt++; it++; pt++;}
 
     cout << answer << endl;
 

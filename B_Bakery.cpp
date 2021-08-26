@@ -20,7 +20,6 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +121,47 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    int n, m, k; cin >> n >> m >> k;
+
+    vector<vector<pii>> adjacency(n + 1);
+
+    // p.ff will be node number p.ss will be weight
+
+    loop(i, 0, m){
+
+        int a, b, w;
+
+        cin >> a >> b >> w;
+
+        adjacency[a].push_back(make_pair(b, w)); adjacency[b].push_back(make_pair(a, w));
+    }
+
+    int answer = infinity;
+
+    vi warehouses; unordered_set<int, custom_hash> wareset;
+
+    loop(i, 0, k){
+
+        int t; cin >> t;
+
+        warehouses.pb(t); wareset.insert(t);
+    }
+
+    for(auto &goat : warehouses){
+
+        loop(i, 0, sz(adjacency[goat])){
+
+            pii hood = adjacency[goat][i];
+
+            if(wareset.find(hood.first) == wareset.end()){
+
+                answer = min(answer, hood.second);
+            }
+        }
+    }
+
+    if(answer != infinity) cout << answer << endl; else cout << -1 << endl;
 
     return 0;
 }

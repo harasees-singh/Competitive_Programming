@@ -20,7 +20,6 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +121,50 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    int n; cin >> n;
+
+    string s; cin >> s;
+
+    int sum = 0;
+
+    vi input; loop(i, 0, n){int ans; s[i] == ')' ? input.pb(-1) : input.pb(1); sum+=input[sz(input)-1];}
+
+    if(sum) {cout << -1 << endl; exit(0);}
+
+    int summand = 0;
+
+    int turns = 0;
+
+    int answer = 0;
+
+    int j = 0;
+
+    while(j < n){
+
+        if(summand = 0) answer += turns, turns = 0;
+
+        turns = 0;
+
+        bool parity = false;
+
+        summand += input[j]; j++;
+
+        if(summand < 0) parity = true;
+
+        turns++;
+
+        while(summand != 0){
+
+            summand += input[j];
+
+            j++; turns++;
+        }
+        
+        parity ? answer += turns : answer = answer;
+    }
+
+    cout << answer << endl;
 
     return 0;
 }
