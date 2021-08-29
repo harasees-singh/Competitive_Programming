@@ -40,6 +40,8 @@ int32_t main(){
 
 			bool bit;
 
+			if(((m>>i)^1) & ((n>>i)&1)){break;}		// keeping x bit 0 here will ensure that n^x is strictly greater than m+1 therefore x can have all zeres after this point.
+
 			bit = ((m>>i)&((n>>i)^1))&1;
 
 			x |= (bit<<i);
