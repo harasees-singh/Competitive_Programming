@@ -123,32 +123,28 @@ struct custom_hash {
 int32_t main(){
     FIO
 
-    int n, b, a; cin >> n >> b >> a;
+    test_cases_loop{
 
-    // vi input; loop(i, 0, n){int t; cin >> t; input.pb(t);}
+        string s; cin >> s;
 
-    int solar_reserve = 0;
+        int A = 0, B = 0;
 
-    int answer=-1;
+        for(auto a : s){
 
-    bool run=true;
+            if(a == 'A') A++;
 
-    loop(i, 0, n){
+            else{
 
-        int curr; cin >> curr;
+                if(A) A--;
 
-        if(a) a--;
+                else if(B) B--;
 
-        else if(solar_reserve) b--, solar_reserve--, a++;
+                else B++;
+            }
+        }
 
-        else if(b) b--, a+=curr, curr=0;
-
-        else if(run) answer=i, run=false;
-
-        solar_reserve+=curr;
+        cout << A + B << endl;
     }
-
-    cout << (answer==-1 ? n : answer) << endl;
 
     return 0;
 }
