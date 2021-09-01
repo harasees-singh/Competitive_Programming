@@ -125,32 +125,72 @@ int32_t main(){
 
     test_cases_loop{
 
-        int n, k;
+        int n; cin >> n;
 
-        cin >> n >> k;
+        int count = 0;
 
-        if(n==1){
+        vi store;
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
+        loop(i, 0, n){
+            int t; cin >> t; count+=!(t&1);
+
+            if(!(t&1)) {
+
+                // even
+
+                store.pb(i);
+
+            }  
         }
 
-        if(n&1){
+        int answer=0;
 
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
+        if(n==1) {cout << 0 << endl; continue;}
 
-            cout << ans << endl;
-        }
+        if(2*count != n and 2*count != n+1 and 2*count != n-1) cout << -1 << endl;
 
         else{
 
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
+            // int start = (2*count == n ? 1 : 0);
 
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
+            int way1=0, way2=0;
 
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
+            if(2*count==n){
 
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
+                // 2 ways
+
+                for(int j = 0; j<n; j+=2){
+
+                    way1 += abs(j - store[j/2]);
+                }
+
+                for(int j = 1; j<n; j+=2){
+
+                    way2 += abs(j-store[j/2]);
+                }
+
+                answer = min(way1, way2);
+            }
+
+            else{
+
+                if(2*count == n + 1)
+                    for(int j=0; j<n; j+=2){
+
+                        answer += abs(j-store[j/2]);
+                    }
+
+                else{
+
+                    for(int j = 1; j<n; j+=2){
+
+                        answer += abs(j-store[j/2]);
+                    }
+                }
+            }
+            cout << answer << endl;
         }
+
     }
 
     return 0;

@@ -119,40 +119,50 @@ struct custom_hash {
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+void swap__(int &a, int &b){
+
+    a = a + b;
+
+    b = a - b;
+
+    a = a - b;
+}
 
 int32_t main(){
     FIO
 
     test_cases_loop{
 
-        int n, k;
+        int n; cin >> n;
 
-        cin >> n >> k;
+        vi input; loop(i, 0, n){int t; cin >> t; input.pb(t);}
 
-        if(n==1){
+        int parity = 0;
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
+        int count = 0;
+
+        int swap = 0;
+
+        int noswap = 0;
+
+        for(int i = 0; i < n; i += 1){
+
+            bool swap = false;
+
+            for(int j = parity; j < n-1; j += 2){
+
+                if(input[j] > input[j + 1]) swap__(input[j], input[j + 1]), swap = true, noswap = 0;
+            }
+
+            parity ^= 1;
+
+            count++;
+
+            noswap += swap^1;
         }
 
-        if(n&1){
-
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
-
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
-        }
+        cout << count - noswap << endl;
     }
-
     return 0;
 }
 

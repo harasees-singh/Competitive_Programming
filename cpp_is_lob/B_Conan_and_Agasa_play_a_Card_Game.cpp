@@ -125,17 +125,17 @@ int32_t main(){
 
     int n; cin >> n;
 
-    vi input; loop(i, 0, n){int t; cin >> t; input.pb(t);}
+    vi input(1e5 + 1);
 
-    sort(all(input));
+    loop(i, 0, n){int t; cin >> t; input[t]++;}
+    
+    int parity = 0;
 
-    int count = 1;
+    for(auto &p : input)
 
-    int pt = n-1;
+        parity += p%2;
 
-    while(pt and input[pt] == input[pt-1]) count++, pt--;
-
-    cout << (n - count or (n&1) ? "Conan" : "Agasa") << endl;
+    cout << (parity ? "Conan" : "Agasa") << endl;
 
     return 0;
 }

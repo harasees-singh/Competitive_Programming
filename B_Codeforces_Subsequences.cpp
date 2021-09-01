@@ -123,35 +123,25 @@ struct custom_hash {
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    string s = "codeforces";
 
-        int n, k;
+    int n; cin >> n;
 
-        cin >> n >> k;
+    vi input(10, 1);
 
-        if(n==1){
+    int product=1;
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
-        }
+    while(product < n){
 
-        if(n&1){
+        loop(i, 0, 10){
+            
+            if(product >= n) break;
 
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
-
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
+            product/=input[i], input[i]++, product*=input[i];
         }
     }
+
+    loop(i, 0, 10) loop(j, 0, input[i]) cout << s[i]; 
 
     return 0;
 }

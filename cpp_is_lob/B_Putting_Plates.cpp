@@ -125,32 +125,35 @@ int32_t main(){
 
     test_cases_loop{
 
-        int n, k;
+        int h, w; cin >> h >> w;
 
-        cin >> n >> k;
+        // cout << 2*ceil(w/2.0) + 2*ceil(h/2.0) << endl;
 
-        if(n==1){
+        loop(i, 0, w){cout << (i&1 ? 0 : 1);} 
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
+        cout << endl;
+
+        cout << string(w, '0') << endl;
+        
+        for(int i=0; i<h-4; i++){
+
+            if(i&1) 
+                loop(i, 0, w) cout << 0;
+
+            else{
+
+                cout << 1; loop(t, 0, w-2) cout << 0; cout << 1;
+            }
+
+            cout << endl;
         }
 
-        if(n&1){
+        if(h-4>=0) cout << string(w, '0') << endl;
 
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
+        loop(i, 0, w){cout << (i&1 ? 0:1);} 
 
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
-        }
+        cout << endl;
+        cout << endl;
     }
 
     return 0;

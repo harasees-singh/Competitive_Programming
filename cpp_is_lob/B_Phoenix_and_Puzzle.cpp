@@ -119,38 +119,24 @@ struct custom_hash {
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+bool perfectSquare(int a){
 
+    return sqrt(a) == (int)sqrt(a);
+}
 int32_t main(){
     FIO
 
     test_cases_loop{
 
-        int n, k;
+        int n; cin >> n;
 
-        cin >> n >> k;
+        if(n%2) {cout << "NO" << endl; continue;}
 
-        if(n==1){
+        n/=2;   
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
-        }
+        if(perfectSquare(n) or n%2==0 and perfectSquare(n/2)) cout << "YES" << endl;
 
-        if(n&1){
-
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
-
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
-        }
+        else cout << "NO" << endl;
     }
 
     return 0;

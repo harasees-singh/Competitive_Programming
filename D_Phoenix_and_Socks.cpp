@@ -124,34 +124,57 @@ int32_t main(){
     FIO
 
     test_cases_loop{
+        
+        int n; cin >> n; int l, r; cin >> l >> r;
 
-        int n, k;
+        int cost = 0;
 
-        cin >> n >> k;
+        vi left(n+1, 0);
 
-        if(n==1){
+        vi right(n+1, 0);
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
+        loop(i, 0, l){
+
+            int t; cin >> t; (l > r ? left[t] : right[t])++;
         }
 
-        if(n&1){
+        loop(j, l, n){
 
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
-
-            cout << ans << endl;
+            int t; cin >> t; (l > r ? right[t] : left[t])++;
         }
 
-        else{
+        loop(i, 1, n+1){
 
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
+            int t = min(left[i], right[i]); right[i]-=t; left[i]-=t;
 
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
+            l -= t, r -= t;
         }
+
+        // left will have >= elements than right
+        int diff = abs(l - r);
+
+        // diff/=2;
+
+        int ptr = 0;
+
+        int i = 1;
+
+        while(ptr < diff and i < n + 1){
+
+            int temp = min((diff-ptr)/2, left[i]/2);
+
+            left[i] -= 2*temp, cost += temp; i++; ptr += 2*temp; (l > r ? l : r) -= 2*temp;
+        }        
+
+        // all diff colors remaining in left or l == r;
+
+        cost += max(l, r);
+
+        cout << cost << endl;
     }
+
+
+
 
     return 0;
 }

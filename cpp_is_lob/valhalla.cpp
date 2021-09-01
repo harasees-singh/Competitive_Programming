@@ -24,7 +24,7 @@
 using namespace std;
 MOD_DEFINE
 int32_t main(){
-  FIO
+    FIO
 
     int n, q; cin >> n >> q;
 
@@ -32,10 +32,9 @@ int32_t main(){
 
     loop(i, 0, n){int t; cin >> t; input.pb(t);}
 
-    vi copy(input);
     int sum = 0;
 
-    loop(i, 0, n){input[i] = sum + input[i]; sum+=input[i];}
+    loop(i, 0, n){sum+=input[i]; input[i] = sum;}
 
     int fall = 0;
 
@@ -43,26 +42,17 @@ int32_t main(){
 
     loop(i, 0, q){
         int t; 
-        if(fall == n){
-            fall=0; 
-        
-            // loop(i, 0, n){input[i]=copy[i];}
 
-            T=0;
-        
-        }
-        
         cin >> t;
+
         T+=t;
 
+        fall = (int)(lower_bound(input.begin(), input.end(), T + 1) - input.begin());
 
-        fall = (int)(lower_bound(input.begin()+fall, input.end(), T+1) - input.begin());
-
-        // input[fall]-=t;
+        if(fall == n) fall = 0, T=0;
 
         cout << n - fall << endl;
 
-        // curr += fall;
     }
 
   return 0;

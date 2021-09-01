@@ -125,32 +125,22 @@ int32_t main(){
 
     test_cases_loop{
 
-        int n, k;
+        int n, w; cin >> n >> w; int parity=0;
 
-        cin >> n >> k;
+        vi input(n); loop(i, 0, n){cin >> input[i]; parity += input[i];} if(parity == w){ cout << "NO" << endl; continue;}
 
-        if(n==1){
+        int sum = 0;
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
-        }
+        vi visited(n); vi answer;
 
-        if(n&1){
+        loop(i, 0, n){if(sum + input[i] != w) visited[i]=1, sum += input[i], answer.pb(input[i]);}
 
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
+        loop(i, 0, n){if(!visited[i]) answer.pb(input[i]);}
 
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
-        }
+        cout << "YES" << endl;
+        
+        print<int>(answer);
+        
     }
 
     return 0;

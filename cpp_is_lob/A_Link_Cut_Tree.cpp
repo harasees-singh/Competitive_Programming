@@ -123,35 +123,25 @@ struct custom_hash {
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    int l, r, k; cin >> l >> r >> k;
 
-        int n, k;
+    int curr = 1;
 
-        cin >> n >> k;
+    bool some = true;
 
-        if(n==1){
+    while(true){
 
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
-        }
+        if(curr >= l and curr <= r) cout << curr << space, some = false;
 
-        if(n&1){
+        if(curr > r)break;
 
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
+        if(1e18/curr >= k)
+            curr *= k;
 
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
-        }
+        else break; 
     }
+
+    if(some) cout << -1 << endl;
 
     return 0;
 }

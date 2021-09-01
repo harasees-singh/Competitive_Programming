@@ -123,35 +123,39 @@ struct custom_hash {
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    int n; cin >> n;
 
-        int n, k;
+    vi input; loop(i, 0, n){
 
-        cin >> n >> k;
+        int t; cin >> t;
 
-        if(n==1){
-
-            int ans=1; loop(i, 0, k){ans *= 2; ans%=MOD;} cout << ans << endl; continue;
-        }
-
-        if(n&1){
-
-            int ans = power_modulus(power_modulus(2, n-1) + 1, k);
-
-            cout << ans << endl;
-        }
-
-        else{
-
-            int separate_count = power_modulus(power_modulus(2, n-1) - 1, k);
-
-            int numerator = (power_modulus(2, n*k) + MOD - separate_count)%MOD;
-
-            int denominator = (power_modulus(2, n-1) + 1)%MOD;
-
-            cout << ((numerator*modInverse(denominator, MOD))%MOD + separate_count)%MOD << endl;
-        }
+        input.pb(t);
     }
+
+    int maxi = 0, store_index = 0;
+
+    vector<vi> answer(n, vi(n));
+
+    for(int i = 0; i < n; i++){
+
+        answer[i][i] = input[i];
+
+        int parity = input[i];
+
+        for(int j = i-1; j >= 0; j--){
+
+            answer[i][j] = min(answer[i][j + 1], input[j]); parity += answer[i][j];
+        }
+
+        for(int j = i + 1; j < n; j++){
+
+            answer[i][j] = min(answer[i][j-1], input[j]); parity += answer[i][j];
+        }
+
+        if(parity > maxi) maxi = parity, store_index = i;
+    }   
+    
+    print<int>(answer[store_index]);
 
     return 0;
 }
