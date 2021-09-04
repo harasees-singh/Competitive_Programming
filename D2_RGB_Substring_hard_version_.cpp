@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define fps(x,y)         fixed<<setprecision(y)<<x
+#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +122,42 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    unordered_map<int, char> F = {make_pair(0, 'R'), make_pair(1, 'G'), make_pair(2, 'B')};
+    
+    string standard = "";
+
+        loop(i, 0, 2*1e5)
+
+            standard.pb(F[i%3]);
+
+    test_cases_loop{
+
+        int n, k; cin >> n >> k;
+
+        string s; cin >> s;
+
+
+        int RGB = 0, GBR = 0, BRG = 0;
+
+        loop(i, 0, k){
+
+            RGB += F[i%3] != s[i]; GBR += F[(i+1)%3] != s[i]; BRG += F[(i+2)%3] != s[i];
+        }
+
+        int ans = min(RGB, min(GBR, BRG));
+
+        loop(i, 1, n - k + 1){
+
+            RGB -= (s[i-1] != F[(i - 1)%3]); GBR -= (s[i-1] != F[(i)%3]); BRG -= (s[i-1] != F[(i+1)%3]);
+
+            RGB += (s[i + k - 1] != F[(i + k - 1)%3]); GBR += (s[i + k - 1] != F[(i + k)%3]); BRG += (s[i + k - 1] != F[(i + 1 + k)%3]);
+
+            ans = min(min(RGB, ans), min(GBR, BRG));
+        }
+
+        cout << ans << endl;
+    }
 
     return 0;
 }

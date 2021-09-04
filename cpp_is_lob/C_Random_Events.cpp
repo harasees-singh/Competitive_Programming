@@ -21,6 +21,7 @@
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
 #define fps(x,y)         fixed<<setprecision(y)<<x
+// #define input_vector(n) vi input(n); for(int i=0; i<n; i++) cin >> input[i];
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +123,35 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n, m; cin >> n >> m;
+
+        vi input(n + 1);
+
+        loop(i, 0, n) cin >> input[i + 1];
+
+        int check = n + 1;
+
+        for(int i = n; i >= 1; i--){
+
+            if(input[i] != i){ check = i; break;}
+        }
+
+        long double p = (check == n + 1 ? 0 : 1);
+
+        loop(i, 0, m){
+
+            int index; long double probability;
+
+            cin >> index >> probability;
+
+            if(index >= check) p *= 1 - probability;
+        }
+
+        cout << fps((long double)1 - p, 6) << endl;
+    }
 
     return 0;
 }

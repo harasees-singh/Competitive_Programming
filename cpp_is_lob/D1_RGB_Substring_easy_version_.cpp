@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define fps(x,y)         fixed<<setprecision(y)<<x
+#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +122,55 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n, k; cin >> n >> k;
+
+        string s; cin >> s;
+
+        string standard = "";
+
+        unordered_map<int, char> F = {make_pair(0, 'R'), make_pair(1, 'G'), make_pair(2, 'B')};
+
+        loop(i, 0, 2005)
+
+            standard.pb(F[i%3]);
+
+        // cout << standard << endl;
+
+        int global_minima = infinity;
+
+        loop(i, 0, 3){
+
+            string compare = standard.substr(i, k);
+
+            // cout << compare << endl;
+
+            for(int ki=0; ki < n-k+1; ki++){
+
+                int count = 0;
+                
+                loop(j, ki, ki+k){
+
+                    // cout << s[j];
+
+                    // cout <<( compare[j-ki] != s[j] )<< endl;
+
+                    count += (compare[j-ki] != s[j]);
+                }
+
+                // cout << endl;
+
+                // cout << count << endl;
+                
+                global_minima = min(global_minima, count);
+            }
+
+        }
+
+        cout << global_minima << endl;
+    }
 
     return 0;
 }

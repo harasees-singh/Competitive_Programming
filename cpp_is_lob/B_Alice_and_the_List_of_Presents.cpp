@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define fps(x,y)         fixed<<setprecision(y)<<x
+#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -123,7 +123,15 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    int n, m; cin >> n >> m;
+
+    // (pow(2, n) - 1)**m;
+
+    cout << power_modulus((power_modulus(2, m) - 1 + MOD)%MOD, n) << endl;
+
+    
     return 0;
+
 }
 
 //          ▄              ▄    

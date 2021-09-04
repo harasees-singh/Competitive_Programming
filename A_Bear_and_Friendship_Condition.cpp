@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define fps(x,y)         fixed<<setprecision(y)<<x
+#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,8 +120,57 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+void dfs(int V, int &vertex, int &edge, vi &visited, vector<vi> &adjacencyList){
+
+    if(!visited[V]){
+
+        visited[V] = true;
+
+        vertex++;
+
+        edge += sz(adjacencyList[V]);
+
+        loop(i, 0, sz(adjacencyList[V])){
+
+            int curr = adjacencyList[V][i];
+
+            if(!visited[curr]) dfs(curr, vertex, edge, visited, adjacencyList);
+        }
+    }
+}
+
 int32_t main(){
     FIO
+
+    // a cluster must have the property E = (V)*(V - 1)/2;
+
+    // all independent cluster must have this property
+
+    int n, m; cin >> n >> m;
+
+    vector<vi> adjacencyList(n + 1);
+
+    loop(i, 0, m){
+
+        int a, b; cin >> a >> b;
+
+        adjacencyList[a].pb(b); adjacencyList[b].pb(a);
+    }
+
+    vi visited(n + 1, 0);
+
+    bool True = true;
+
+    loop(i, 1, n + 1){
+
+        int vertex = 0, edge = 0;
+
+        if(!visited[i]) dfs(i, vertex, edge, visited, adjacencyList);
+
+        if(vertex*(vertex - 1) != edge) {True = false; break;}
+    }
+
+    cout << (True ? "YES" : "NO") << endl;
 
     return 0;
 }

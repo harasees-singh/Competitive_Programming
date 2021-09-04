@@ -18,9 +18,11 @@
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define loop(var, initial, final) for(int var=initial; var < final; var++)
 #define cout std::cout
+#define double long double
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
 #define fps(x,y)         fixed<<setprecision(y)<<x
+
 
 using namespace std;
 MOD_DEFINE
@@ -122,6 +124,61 @@ struct custom_hash {
 
 int32_t main(){
     FIO
+
+    double a, d; cin >> a >> d;
+
+    double d__ = d;
+
+    int n; cin >> n;
+
+    vector<double> querylist;
+
+    double pushhhh = -4*a;
+
+    while(pushhhh <= 1e6) querylist.push_back(pushhhh + 4*a), pushhhh += 4*a; 
+
+    // print<double>(querylist);
+    auto ptr = lower_bound(all(querylist), d);
+    
+    if(*ptr > d) {ptr--;} 
+
+    double x = d - *ptr;
+
+    double std_addition = *ptr;
+
+    double propermultiple = *ptr;
+
+    loop(i, 0, n){
+
+        while(propermultiple + 4*a <= d) propermultiple += 4*a;
+
+        // x = d - propermultiple;
+
+        x = d - ((int)(d/(4*a)))*(4*a);
+
+        // double x = d - *ptr; //cout << "debug " << x << endl;
+
+        // cout << x << " debug "<< endl;
+
+        double X, Y;
+
+        if(x >= 3*a) X=0, Y = 4*a - x ;
+
+        else if(x > a and x < 2*a) X = a, Y = x - a;
+
+        else if(x >= 2*a and x < 3*a) X = a - x + 2*a, Y = a;
+
+        else X = x, Y = 0;
+
+        // fixed<<setprecision(4)<<X;
+        // cout << X << space << Y << endl;
+        cout << fps(X,4) << space << fps(Y,4) << endl;
+
+        d += d__;
+
+        propermultiple += std_addition;
+        // cout << "d " << d__ << endl;
+    }                                                                 
 
     return 0;
 }

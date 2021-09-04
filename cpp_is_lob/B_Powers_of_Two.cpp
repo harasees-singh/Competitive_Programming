@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define fps(x,y)         fixed<<setprecision(y)<<x
+#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -119,9 +119,51 @@ struct custom_hash {
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+int twopowers(vi &input){
+
+    int count=0;
+
+    loop(i, 0, sz(input)){
+
+        int curr = input[i];
+
+        count += isPowerof2(curr);
+    }
+
+    return count;
+}
 
 int32_t main(){
     FIO
+
+    int n; cin >> n;
+
+    unordered_map<int, int> F;
+
+    int maxima = 0;
+
+    vi input(n); loop(i, 0, n){ 
+        
+        cin >> input[i]; maxima = max(maxima, input[i]);
+
+        F[input[i]]++;
+    }
+
+    int answer = 0;
+
+    loop(i, 0, n){
+
+        loop(j, 0, 32){
+
+            int hashKardoMujhe = (1ll << j) - input[i];
+            
+            if(hashKardoMujhe > 0 and hashKardoMujhe <= maxima) 
+        
+                answer += F[hashKardoMujhe];
+        }
+    }
+
+    cout << (answer - twopowers(input))/2 << endl;
 
     return 0;
 }

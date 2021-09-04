@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define fps(x,y)         fixed<<setprecision(y)<<x
+#define ps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,8 +120,48 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int mult(int const &a, int const &b) {return (a*b)%MOD;}
+
+int add(int const &a, int const &b, int const &c) {return (a + b + c)%MOD;}
+
 int32_t main(){
     FIO
+
+    int n; cin >> n; 
+
+    int l, r; cin >> l >> r;
+
+    int one=0, two=0, zero=0;
+
+    // how many numbers are = 1(MOD) ?
+    // l <= 3*k + 1 <= r;
+    // k = ceil((l-1)/3) to floor((r-1)/3)
+
+    one = floor((r-1)/3.0) - ceil((l-1)/3.0) + 1;
+
+    two = floor((r-2)/3.0) - ceil((l-2)/3.0) + 1;
+
+    zero = floor((r)/3.0) - ceil((l)/3.0) + 1;
+
+    // one = (r-1)/3 - (l-1+2)/3; two = (r-2)/3 - (l-2+2)/3; zero = r/3 - (l+2)/3;  won't work in negative numbers
+    // one++, two++, zero++;
+    // floor(-1/2) is one but (-1)/2 (the usual way of flooring positive integers) gives zero.
+    
+    int f = 1LL, s = 0LL, t = 0LL;
+
+    int F, S, T;
+
+    loop(i, 0, n)
+
+        F = add(mult(f, zero), mult(s, two), mult(t, one)), 
+        
+        S = add(mult(f,one) , mult(t,two) , mult(s,zero)), 
+        
+        T = add(mult(f,two) , mult(t,zero) , mult(s,one)), 
+        
+        f = F, s = S, t = T;
+
+    cout << F << endl;
 
     return 0;
 }
