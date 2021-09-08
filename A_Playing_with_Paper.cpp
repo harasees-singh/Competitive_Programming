@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,32 +120,31 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+// if 1x2 is remaining
+// after removing a 1x1 square from it 
+// we areleft with 1x1 and its done
+
+int ans = 0;
+
+void rec(int a, int b){
+
+    if(!a) return;
+
+    int mini = min(a,b); int maxi = max(a, b);
+
+    ans += (maxi/mini);
+
+    rec(maxi%mini, mini);
+}
+
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    int a, b; cin >> a >> b;
 
-        int n, k; cin >> n >> k;
+    rec(a, b);
 
-        unordered_map<int, int> distinct;
-
-        loop(i, 0, n){
-
-            int t; cin >> t; distinct[t]++;
-        }
-
-        int count = 0;
-
-        for(auto a : distinct) count++;
-
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
-    }
+    cout << ans << endl;
 
     return 0;
 }

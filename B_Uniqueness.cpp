@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,32 +120,106 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+// can be done in n^2logn easily
+// binary search on the length of subsegment to consider and then simply
+// brute force to check if that is possible ornot 
+// if it is possible move to the right else left 
+
+// this is giving tle
+
+// need a new approach
+
+bool good(vi &input, int mid){
+
+    // unordered_map<int, int> iloveHashing;
+
+    bool ans = false;
+
+    for(int i = 0; i + mid - 1 < sz(input); i++){
+
+        unordered_map<int, int> iloveHashing;
+
+        bool True = true;
+
+        loop(j, 0, i){
+
+            if(iloveHashing[input[j]]){
+
+                True = false; break; 
+            }
+
+            iloveHashing[input[j]]++;
+        }
+
+        loop(j, i + mid, sz(input)){
+
+            if(iloveHashing[input[j]]){
+
+                True = false; break; 
+            }
+
+            iloveHashing[input[j]]++;
+        }
+        ans = ans or True;
+    }
+    return ans;
+}
+
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    int n; cin >> n;
 
-        int n, k; cin >> n >> k;
+    vi input(n);
 
-        unordered_map<int, int> distinct;
+    loop(i, 0, n){
 
-        loop(i, 0, n){
+        cin >> input[i];
+    }
 
-            int t; cin >> t; distinct[t]++;
+    if(n == 1) {cout << 0 << endl; exit(0);}
+
+    int ans = n;
+
+    unordered_set<int> something;
+
+    for(int i = n - 1; i >= 0; i--){
+
+        if(something.count(input[i])) break;
+
+        something.insert(input[i]);
+
+        ans = min(ans, i);
+    }
+
+    unordered_set<int> tokarna; 
+
+    for(int i = 0; i < n - 1; i++){
+
+        if(tokarna.count(input[i])) {break;}
+
+        // cout << input[i] << endl;
+
+        tokarna.insert(input[i]);
+
+        unordered_set<int> gadhe_aur_ghode_farak_hai;
+
+        int jadoo = n-1;
+
+        for(int j = n - 1; j >= i; j--){
+
+
+            if(gadhe_aur_ghode_farak_hai.count(input[j]) or tokarna.count(input[j])) {jadoo = j; break;}
+
+            gadhe_aur_ghode_farak_hai.insert(input[j]);
         }
 
-        int count = 0;
+        // cout << i << space << jadoo << endl;
 
-        for(auto a : distinct) count++;
-
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+        ans = min(ans, jadoo - i);
     }
+
+    cout << ans << endl;
 
     return 0;
 }

@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,32 +120,37 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+// 1, 2, 3, 4, 5, 6, 7
+
+// subsequence chahiye
+
+// remove elements sitting on decreasing or increasing slope
+
 int32_t main(){
     FIO
 
     test_cases_loop{
 
-        int n, k; cin >> n >> k;
+        int n; cin >> n;
 
-        unordered_map<int, int> distinct;
+        vi array(n); loop(i, 0, n) cin >> array[i];
 
-        loop(i, 0, n){
+        vi mark = {array[0]};
 
-            int t; cin >> t; distinct[t]++;
+        for(int i = 1; i < n-1; i++){
+
+            if((array[i] - array[i-1])*(array[i+1]-array[i]) <= 0) mark.pb(array[i]);           
         }
 
-        int count = 0;
+        mark.pb(array[n-1]);
 
-        for(auto a : distinct) count++;
+        cout << sz(mark) << endl;
 
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
+        print<int>(mark);
 
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
     }
+
+    
 
     return 0;
 }

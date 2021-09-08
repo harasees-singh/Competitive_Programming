@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -123,29 +123,37 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    vi xors(3e5 + 1, 0);
+
+    loop(i, 1, sz(xors)) xors[i] = xors[i-1]^i;
+
     test_cases_loop{
 
-        int n, k; cin >> n >> k;
+        int a, b; cin >> a >> b;
 
-        unordered_map<int, int> distinct;
+        int xor_till_nMinus1 = xors[a - 1];
 
-        loop(i, 0, n){
+        // cout << "xor" << a-1 << space <<  xor_till_nMinus1 << endl;
 
-            int t; cin >> t; distinct[t]++;
-        }
+        int ans;
 
-        int count = 0;
+        // cout << (xor_till_nMinus1^b) << space << a << endl;
 
-        for(auto a : distinct) count++;
+        // cout << (xor_till_nMinus1^b == a) << endl;
 
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
+        int parity = xor_till_nMinus1^b;
 
-        else if (k==1){ cout << 1 << endl; continue;}
+        if(parity == a){ ans = a + 2; }
 
-        count = max(count - k, 0ll); k--;
+        else if(xor_till_nMinus1 == b)
 
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+            ans = a;
+
+        else ans = a + 1;
+
+        cout << ans << endl;
     }
+
 
     return 0;
 }

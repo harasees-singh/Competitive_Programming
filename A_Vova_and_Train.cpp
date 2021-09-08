@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,31 +120,19 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+// can't see if l <= nv <= r
+// so range of n is ceil(l/v) to floor(r/v);
+
+
+
 int32_t main(){
     FIO
 
     test_cases_loop{
 
-        int n, k; cin >> n >> k;
+        int L, v, l, r; cin >> L >> v >> l >> r;
 
-        unordered_map<int, int> distinct;
-
-        loop(i, 0, n){
-
-            int t; cin >> t; distinct[t]++;
-        }
-
-        int count = 0;
-
-        for(auto a : distinct) count++;
-
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+        cout << L/v - (int)( - ceil(l/(double)v) + floor(r/(double)v) + 1) << endl; 
     }
 
     return 0;

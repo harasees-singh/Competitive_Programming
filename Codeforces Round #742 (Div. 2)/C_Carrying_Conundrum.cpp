@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -123,28 +123,31 @@ struct custom_hash {
 int32_t main(){
     FIO
 
+    // 12345 can be split 
+    // 135 and 24 
+    // ans is number of ways of forming 135 * number of ways of forming 24 - 2
+
     test_cases_loop{
 
-        int n, k; cin >> n >> k;
+        int n; cin >> n;
 
-        unordered_map<int, int> distinct;
+        string s = to_string(n);
 
-        loop(i, 0, n){
+        reverse(all(s));
 
-            int t; cin >> t; distinct[t]++;
-        }
+        string a, b;
 
-        int count = 0;
+        for(int i = 0; i < sz(s); i += 2) a += s[i];
 
-        for(auto a : distinct) count++;
+        for(int i = 1; i < sz(s); i += 2) b += s[i];
 
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
+        reverse(all(a)); reverse(all(b));
 
-        else if (k==1){ cout << 1 << endl; continue;}
+        if(b.empty()) b = "0";
 
-        count = max(count - k, 0ll); k--;
+        int case_A = stoi(a) + 1, case_B = stoi(b) + 1;
 
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+        cout << case_A*case_B - 2 << endl;
     }
 
     return 0;

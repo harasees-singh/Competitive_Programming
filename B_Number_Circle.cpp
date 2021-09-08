@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,32 +120,42 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+// 1, 2, 3, 4
+
+// sorted list
+
+// 1, 2, 3, 4, 4
+
+
+// 1, 4, 5, 6, 7, 8
+
+// 1, 4, 5, 6, 8, 7
+
+// 2, 4, 3
+
+// 
+
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    int n; cin >> n;
 
-        int n, k; cin >> n >> k;
+    vi in(n);
 
-        unordered_map<int, int> distinct;
+    loop(i, 0, n) cin >> in[i];
 
-        loop(i, 0, n){
+    sort(all(in));
 
-            int t; cin >> t; distinct[t]++;
-        }
+    if(in[n-1] < in[n-2] + in[n - 3]){
 
-        int count = 0;
+        cout << "YES" << endl;
 
-        for(auto a : distinct) count++;
+        swap(in[n-1], in[n-2]);
 
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+        print<int>(in);
     }
+
+    else cout << "NO" << endl;
 
     return 0;
 }

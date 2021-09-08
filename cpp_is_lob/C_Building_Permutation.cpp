@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -123,29 +123,23 @@ struct custom_hash {
 int32_t main(){
     FIO
 
-    test_cases_loop{
+    int n; cin >> n;
 
-        int n, k; cin >> n >> k;
+    vi input(n);
 
-        unordered_map<int, int> distinct;
+    loop(i, 0, n) cin >> input[i];
 
-        loop(i, 0, n){
+    sort(all(input));
 
-            int t; cin >> t; distinct[t]++;
-        }
+    int F = 0;
+    
+    loop(i, 1, n + 1){
 
-        int count = 0;
+        F += abs(i - input[i-1]);
 
-        for(auto a : distinct) count++;
-
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
     }
+
+    cout << F << endl;
 
     return 0;
 }

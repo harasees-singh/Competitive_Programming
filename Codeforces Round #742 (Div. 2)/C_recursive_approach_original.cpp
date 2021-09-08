@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,31 +120,59 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int without_carry(int n){
+
+    // for 2 there are 0,2 ; 2,0; 1,1 that is 3 ways or n + 1;
+
+    return n + 1;
+}
+
+int with_carry(int n){
+
+    // for 2 there are 3 + 9 , 4 + 8, ... 9 + 3;
+
+    return 9 - n;
+}
+
+int func_A(string &s, int index, bool carry){
+
+    if(carry and index >= sz(s)) return 0;
+
+    if(index >= sz(s)) return 1;
+
+    int curr = s[index] - '0';
+
+    if(carry) curr--;
+
+    // if curr becomes -1 it will still work.
+
+    int ans = 0;
+
+    // 1-0-00
+
+    if(index + 2 < sz(s)) ans += with_carry(curr)*func_A(s, index + 2, true);
+
+    ans += without_carry(curr)*func_A(s, index + 2, false);
+
+    return ans;
+}
+
 int32_t main(){
     FIO
 
     test_cases_loop{
 
-        int n, k; cin >> n >> k;
+        int n; cin >> n;
 
-        unordered_map<int, int> distinct;
+        string s = to_string(n);
 
-        loop(i, 0, n){
+        reverse(all(s));
 
-            int t; cin >> t; distinct[t]++;
-        }
+        int case_A = func_A(s, 1, false);
+ 
+        int case_B = func_A(s, 0, false);
 
-        int count = 0;
-
-        for(auto a : distinct) count++;
-
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+        cout << case_A*case_B - 2 << endl;
     }
 
     return 0;
@@ -248,4 +276,3 @@ ll nxt(){
 bool isPowerof2(ll x){
 	return !(x && (x & (x-1)));
 }
-

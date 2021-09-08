@@ -20,7 +20,7 @@
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
-#define ps(x,y)         fixed<<setprecision(y)<<x
+#define fps(x,y)         fixed<<setprecision(y)<<x
 
 using namespace std;
 MOD_DEFINE
@@ -120,31 +120,55 @@ struct custom_hash {
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
 
+int lengthOfNumber(int p){
+
+    int ans = 0;
+
+    while(p) p/=10, ans++;
+
+    return ans;
+}
+
 int32_t main(){
     FIO
 
+    vector<string> two_powers;
+
+    int curr = 1;
+
+    while(curr < 1e18){
+
+        two_powers.pb(to_string(curr)), curr*=2;
+    }
+
     test_cases_loop{
 
-        int n, k; cin >> n >> k;
+        string n; cin >> n;
 
-        unordered_map<int, int> distinct;
+        int minima = infinity;
 
-        loop(i, 0, n){
+        for(auto p : two_powers){
 
-            int t; cin >> t; distinct[t]++;
+            int count_subsequence_length = 0;
+
+            int ptr = 0;
+
+            int i = 0;
+
+            while(i < sz(p)){
+
+                while(ptr < sz(n) and p[i] != n[ptr]) ptr++;
+
+                if(ptr < sz(n) and p[i] == n[ptr]) count_subsequence_length++, ptr++;
+
+                i++;
+            }
+
+            minima = min(minima, sz(n) - count_subsequence_length + sz(p) - count_subsequence_length);
         }
 
-        int count = 0;
-
-        for(auto a : distinct) count++;
-
-        if(k==1 and count!=1) {cout << -1 << endl; continue;}
-
-        else if (k==1){ cout << 1 << endl; continue;}
-
-        count = max(count - k, 0ll); k--;
-
-        cout << (int)ceil(count/(float)k) + 1 << endl;
+        cout << minima << endl;
+        
     }
 
     return 0;
