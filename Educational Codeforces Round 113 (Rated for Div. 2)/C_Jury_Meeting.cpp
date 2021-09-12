@@ -3,7 +3,7 @@
 #define float long double
 #define sz(v) ((int)(v).size())
 #define all(v) (v).begin(),(v).end()
-#define MOD_DEFINE const int MOD = 1e9 + 7;
+#define MOD_DEFINE const int MOD = 998244353;
 #define And &&
 #define Or ||
 #define endl '\n'
@@ -16,7 +16,7 @@
 #define umii unordered_map<int, int>
 #define test_cases_loop int t; cin >> t; while(t--)
 #define FIO ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-#define loop(var, initial, final) for(int var=initial; var < final; var++)
+#define l(var, initial, final) for(int var=initial; var < final; var++)
 #define cout std::cout
 #define cin std::cin
 #define safe_unordered_map(int, T) unordered_map<int, T, custom_hash>
@@ -119,13 +119,75 @@ struct custom_hash {
 // █░░█░█ █▀▀ █▀█ █░░░░▀▄▀▄▀ █ ░█░ █▀█░░█ ░█░░█
 // █░░▀▀░ ▀▀▀ ▀░▀ ▀▀▀░░░▀░▀░ ▀ ░▀░ ▀░▀░░▀ ░▀░░█
 // ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+int f[(int)2e5 + 2];
+
+int nPr(int n, int r){
+
+    return (f[n]*modInverse(f[n - r], MOD))%MOD;
+}
 
 int32_t main(){
     FIO
 
+    
+        
+    f[0] = 1;
+
+    l(i, 1, 2e5 + 2){
+
+        f[i] = (f[i-1]*i)%MOD;
+    }
+
+    
+
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        map<int, int> I;
+
+        l(i, 0, n){
+            int t; cin >> t; I[-t]++;
+        }
+
+        if(sz(I) == 1) cout << f[n] << endl;
+
+        else{
+
+            int maxi = -(*I.begin()).first;
+
+            if((*I.begin()).second > 1) cout << f[n] << endl;
+
+            else{
+
+                if(-(*I.begin()).first + (*(++I.begin())).first > 1) cout << 0 << endl;
+
+                else{
+
+                    int ans = 0;
+
+                    int secondMaxCount = I[-maxi + 1];
+
+                    for(int b = 0; b <= n - 1 - secondMaxCount; b++){
+
+                        ans += (((nPr(n - 2 - secondMaxCount + 1, b)*f[n - b - 1])%MOD)*secondMaxCount)%MOD;
+
+                        ans%=MOD;
+                    }
+
+                    cout << ans << endl;
+                }
+            }
+        }
+    }
+
     return 0;
 }
+// 
 
+// 720 - 20x6
+
+// 600
 //          ▄              ▄    
 //         ▌▒█           ▄▀▒▌   
 //         ▌▒▒█        ▄▀▒▒▒▐   
