@@ -30,5 +30,10 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n, m, k; cin >> n >> m >> k;
+
+        cout << ((m - 1) + (n - 1)*m == k ? "YES" : "NO") << endl;    }
 
 }

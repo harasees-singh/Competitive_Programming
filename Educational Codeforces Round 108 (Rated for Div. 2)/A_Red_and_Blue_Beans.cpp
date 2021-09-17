@@ -30,5 +30,12 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
 
+        int r, b, d; cin >> r >> b >> d;
+
+        // yes if ceil(r/b) - 1 <= d;
+
+        cout << (ceil(max(r, b)/(double)(min(r, b))) - 1 <= d ? "YES" : "NO") << endl;
+    }
 }

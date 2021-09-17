@@ -1,11 +1,4 @@
 #include<bits/stdc++.h>
-
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
-
-using namespace __gnu_pbds;
-using namespace std;
-#define Set                             tree<int, null_type,less<int>, rb_tree_tag,tree_order_statistics_node_update>
 #define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
@@ -25,10 +18,11 @@ using namespace std;
 #define cin                             std::cin
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 
+using namespace std;
 MOD_DEFINE
 
 int32_t main(){
-    FIO
+    FIO 
 
-
+    return 0;
 }

@@ -15,7 +15,7 @@ using namespace std;
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
-#define pb(n)                           push_back((n))
+#define pb(n)                           push_back(n)
 #define mii                             map<int, int>
 #define umii                            unordered_map<int, int>
 #define test_cases_loop int t;          cin >> t; while(t--)
@@ -28,7 +28,23 @@ using namespace std;
 MOD_DEFINE
 
 int32_t main(){
-    FIO
+    FIO 
 
+    test_cases_loop{
 
+        int n; cin >> n;
+
+        vi I; 
+
+        l(i, 0, n){
+
+            int t; cin >> t; I.pb(t);
+        }
+
+        cout << n/2 << endl;
+
+        l(i, 0, n/2) cout << 2*i + 1 << space << 2*i + 2 << space<< min(I[2*i], I[2*i + 1]) << space << 1000000087 << endl;
+    }
+
+    return 0;
 }
