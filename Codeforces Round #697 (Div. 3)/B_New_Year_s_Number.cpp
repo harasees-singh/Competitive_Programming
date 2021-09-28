@@ -33,4 +33,14 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        bool hogya = false;
+
+        for(int i = 0; i <= n; i += 2020)
+                if((n - i)%2021 == 0) hogya = true;
+        cout << (hogya ? "YES" : "NO") << endl;
+    }
 }

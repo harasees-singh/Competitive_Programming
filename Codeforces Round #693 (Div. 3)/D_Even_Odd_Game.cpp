@@ -33,4 +33,58 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vi even, odd;
+
+        l(i, 0, n){
+
+            int t; cin >> t;
+
+            if(t%2)
+                    odd.pb(t);
+            else 
+                    even.pb(t);
+        }
+
+        sort(all(odd), greater<int>()), sort(all(even), greater<int>());     
+
+        odd.pb(-infinity), even.pb(-infinity);
+
+        // both arrays of non zero length
+
+        int pt1 = 0, pt2 = 0;
+
+        int bob = 0, alice = 0;
+
+        l(i, 0, n){
+
+            if(i%2){
+                // bob's turn
+
+                if(odd[pt2] > even[pt1])
+                        bob += odd[pt2], pt2++;
+                else      
+                        pt1++;
+            }   
+            else    
+                // alice
+                if(even[pt1] > odd[pt2])
+                        alice += even[pt1], pt1++;
+                else    
+                        pt2++;
+        }
+
+        if(alice == bob)
+        {
+            cout << "Tie" << endl; continue;
+        }
+
+        cout << (alice > bob ? "Alice" : "Bob") << endl;
+    }
+
+
+
 }

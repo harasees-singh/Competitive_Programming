@@ -33,4 +33,28 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        int n; cin >> n;
+
+        if(n > 45){
+                cout << -1 << endl; continue;
+        }
+
+        string ans; 
+
+        int pt = 9;
+
+        int sum = 0;
+
+        while(sum + pt < n)
+                ans.pb(pt + '0'), sum += pt, pt--;
+        ans.pb(n - sum + '0');
+
+        // ans.reserve();
+
+        reverse(all(ans));
+
+        cout << ans << endl;
+    }
+
 }

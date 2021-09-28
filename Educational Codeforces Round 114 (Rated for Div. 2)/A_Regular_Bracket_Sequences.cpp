@@ -30,7 +30,42 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+string image(string &ini){
+
+    string ret; 
+
+    for(int it = ini.size() - 1; it >= 0; it--){
+
+        char c = (ini[it] == '(' ? ')' : '(');
+
+        ret.pb(c);
+    }
+    return ret;
+}
+
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        string ini; 
+
+        l(i, 0, n)
+
+            ini.pb('('), ini.pb(')');
+
+        cout << ini << endl;
+
+        for(int i = 1; i < 2*n - 2; i += 2){
+
+            swap(ini[i], ini[i + 1]);
+
+            cout << ini << endl;
+        }
+    }
+
+    
 
 }

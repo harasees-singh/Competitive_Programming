@@ -33,4 +33,19 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int w, h, n; cin >> w >> h >> n;
+
+        int cnta = 1;
+        int cntb = 1;
+        while(w%2 == 0)
+                cnta *= 2, w >>= 1;
+        while(h%2 == 0)
+                cntb *= 2, h >>= 1;
+
+        // cout << cnt << endl;
+        cout << (cnta*cntb >= n  ? "YES" : "NO") << endl;
+    }
+
 }

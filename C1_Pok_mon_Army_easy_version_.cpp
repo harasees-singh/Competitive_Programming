@@ -33,4 +33,18 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        int n, q; 
+        cin >> n >> q;
+
+        vi I(n + 2);
+        l(i, 0, n)
+                cin >> I[i + 1];
+        int ans = 0;
+        for(int i = 1; i <= n; i++)
+                ans += (I[i] > I[i - 1] and I[i] > I[i + 1] ? I[i] : 0), 
+                ans -= (I[i] < I[i - 1] and I[i] < I[i + 1] ? I[i] : 0);
+        cout << ans << endl;
+    }
+
 }

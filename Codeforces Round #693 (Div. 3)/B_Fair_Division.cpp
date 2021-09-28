@@ -33,4 +33,26 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        int cnt1 = 0, cnt2 = 0;
+
+        l(i, 0, n){
+
+            int t; cin >> t;
+
+            cnt1 += (t == 1);
+            cnt2 += (t == 2);
+        }
+
+        bool yes = ((cnt1 + cnt2*2)%2 == 0);
+
+        if((cnt1 + cnt2*2)%4 != 0 and cnt1 < 2)
+                yes = false;
+
+        cout << (yes ? "YES" : "NO") << endl;
+    }
+
 }

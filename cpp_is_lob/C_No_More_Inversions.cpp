@@ -33,4 +33,24 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n, k; cin >> n >> k;
+
+        int rem = n%k;
+
+        int flip = rem + 1;
+
+        vi ans;
+
+        l(i, 1, k - flip + 1)
+                ans.pb(i);
+        
+        for(int i = k; i > k - flip; i--)
+                ans.pb(i);
+        
+        l(i, 0, k)
+                cout << ans[i] << space; cout << endl;
+    }
+
 }

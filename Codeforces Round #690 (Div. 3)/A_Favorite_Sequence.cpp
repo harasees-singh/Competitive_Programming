@@ -33,4 +33,27 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vi input(n); 
+
+        l(i, 0, n)
+                cin >> input[i];
+        
+        int one = 0, two = n - 1; 
+
+        vi ans; 
+
+        while(one <= two)
+                ans.pb(input[one]), one++, ans.pb(input[two]), two--;
+
+        if(n&1)
+                ans.pop_back();
+        
+        for(auto p : ans)
+                cout << p << ' '; cout << endl;
+    }
+
 }

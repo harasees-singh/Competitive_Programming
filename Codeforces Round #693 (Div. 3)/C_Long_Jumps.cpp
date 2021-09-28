@@ -33,4 +33,26 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vi I(n);
+
+        l(i, 0, n)
+                cin >> I[i];
+
+        vi ans(I);
+
+        for(int i = n -1; i >= 0; i--)
+                if(i + I[i] < n)
+                        ans[i] = ans[i + I[i]] + I[i];
+        
+        int maxima = 0;
+
+        for(auto p : ans)
+                maxima = max(maxima, p);
+        cout << maxima << endl;
+    }
+
 }

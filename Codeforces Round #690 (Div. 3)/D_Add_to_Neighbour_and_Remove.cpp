@@ -30,7 +30,62 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int func(vi &I, int summ, int start){
+
+    if(start == sz(I))
+            return 1; 
+    
+    int pt = start;
+
+    int cnt = 1;
+
+    int curr;
+
+    while(pt < sz(I)){
+
+        curr = 0;
+
+        while(pt < sz(I) and curr < summ)
+                curr += I[pt], pt++;
+
+        if(curr > summ)
+                return -infinity;
+        else 
+                cnt++;
+    }
+
+    if(curr < summ)
+            return -infinity;
+
+    return cnt; 
+}
+
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vi I(n);
+
+        l(i, 0, n)
+                cin >> I[i];
+        
+        int compare = 0;
+
+        int minima = infinity;
+
+        for(int i = 0; i < n; i++){
+                compare += I[i];
+                // func returns connected components cnt
+
+                int op = n - func(I, compare, i + 1);
+
+                minima = min(op, minima);
+        }
+
+        cout << minima <<  endl;
+    }
 
 }

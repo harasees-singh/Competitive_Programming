@@ -33,4 +33,45 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        // vi I(n); 
+
+        multiset<pii> I;
+
+        vi arr;
+
+        l(i, 0, n)
+        {
+            int t; cin >> t; I.insert({t, i});
+
+            arr.pb(t);
+        }
+
+        int gcd = (*(--I.end())).ff;
+
+        l(i, 0, n){
+
+            multiset<pii> T;
+
+            cout << arr[(*(--I.end())).ss] << space; 
+
+            int temp = (*(--I.end())).ff;
+
+            gcd = __gcd(temp, gcd);
+
+            I.erase(--I.end());
+
+            for(auto p : I)
+                    T.insert({__gcd(gcd, p.ff), p.ss});
+
+            I = T;
+        }
+
+        cout << endl;
+        
+    }
+
 }

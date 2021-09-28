@@ -33,4 +33,19 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, m, k; 
+    cin >> n >> m >> k;
+
+    vi I(m);
+    l(i, 0, m)
+        cin >> I[i];
+    
+    int N; cin >> N;
+    int cnt = 0;
+
+    for(auto p : I){
+        bitset<32> B(p^N);
+        cnt += (B.count() <= k);
+    }
+    cout << cnt << endl;
 }

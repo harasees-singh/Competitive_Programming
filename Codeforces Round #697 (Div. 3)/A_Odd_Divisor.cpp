@@ -29,8 +29,17 @@ typedef long long ll;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+bool isPowerof2(ll x){
+	return !(x && (x & (x-1)));
+}
 
 int32_t main(){
-    FIO
+    FIO 
 
+    test_cases_loop{
+
+        int n; cin >> n; 
+
+        cout << (isPowerof2(n) ? "NO" : "YES") << endl;
+    }
 }

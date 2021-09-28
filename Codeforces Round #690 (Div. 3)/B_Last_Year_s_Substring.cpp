@@ -33,4 +33,22 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        int n; cin >> n; 
+
+        string s; cin >> s;
+
+        // brute
+
+        bool ok = false;
+
+        l(i, 0, n + 1)
+                l(j, 0, n - i + 1)
+                        if(i + j == 4 and s.substr(0, i) + (j ? s.substr(n - j, j) : "") == "2020"){
+                                ok = true;
+                                break;
+                        }
+        cout << (ok ? "YES" : "NO") << endl;
+    }
+
 }

@@ -33,4 +33,41 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n; 
+
+        vector<pii> I;
+
+        vi Left, Right; 
+
+        l(i, 0, n){
+
+            int x, y; cin >> x >> y;
+
+            I.push_back({x, y});
+
+            Left.pb(x), Right.pb(y);
+        }
+
+        sort(all(Left)), sort(all(Right));
+
+        int minima = infinity;
+
+        for(auto p : I){
+
+            int left = p.ff, right = p.ss;
+
+            int remove = 0;
+
+            remove += lower_bound(all(Right), left) - Right.begin();
+
+            remove += n - (upper_bound(all(Left), right) - Left.begin());
+
+            minima = min(minima, remove);
+
+        }
+        cout << minima << endl;
+    }
+
 }

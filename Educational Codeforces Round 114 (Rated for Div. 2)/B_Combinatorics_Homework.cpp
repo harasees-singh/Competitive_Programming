@@ -29,8 +29,23 @@ typedef long long ll;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int combi(int a){
 
+    return a - 1;
+}
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int a, b, c, m; cin >> a >> b >> c >> m;
+
+        int maxi = max(a, max(b, c));
+
+        int minoccurance = maxi - (a + b + c - maxi) - 1;
+
+        int maxoccurance = combi(a) + combi(b) + combi(c);
+
+        cout << (m <= maxoccurance and m >= minoccurance ? "YES" : "NO") << endl;
+    }
 }

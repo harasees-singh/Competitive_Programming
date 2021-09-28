@@ -33,4 +33,35 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int a, b, k; cin >> a >> b >> k;
+
+        vi boys(k), gals(k);
+
+        l(i, 0, k)
+                cin >> boys[i];
+
+        l(i, 0, k)
+                cin >> gals[i];
+
+        int ans = 0;
+
+        unordered_map<int, int> bfreq;
+
+        unordered_map<int, int> gfreq;
+
+        for(auto p : boys)
+                bfreq[p]++;
+
+        for(auto p : gals)
+                gfreq[p]++;
+
+        for(int i = 0; i < k; i++)
+                ans += k - 1 - bfreq[boys[i]] + 1 - gfreq[gals[i]] + 1;
+        
+        cout << ans/2 << endl;
+
+    }
+
 }

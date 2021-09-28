@@ -33,4 +33,32 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        string s; cin >> s; 
+
+        int cnta = 0;
+
+        for(auto p : s)
+                cnta += (p == 'a');
+
+        if(cnta == sz(s))
+                cout << "NO" << endl;
+        else{
+
+                cout << "YES" << endl;
+                string temp = s + 'a';
+
+                bool ok = false;
+
+                for(int i = 0; i < sz(temp)/2; i++){
+                        if(temp[i] != temp[sz(temp) - i - 1]) ok = true;
+                }
+                if(ok) cout << temp << endl;
+                else{
+                    temp.pop_back();
+                    cout << 'a' + temp << endl;
+                }
+        }
+    }
+
 }

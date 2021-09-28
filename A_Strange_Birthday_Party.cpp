@@ -33,4 +33,27 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        int n, m; 
+
+        cin >> n >> m;
+
+        vi I(n);
+        l(i, 0, n)
+                cin >> I[i];
+        
+        sort(all(I));
+
+        vi gifts(m);
+        l(i, 0, m)
+                cin >> gifts[i];
+        
+        int pt = 0, ans = 0;
+
+        for(int i = n - 1 ; i >= 0; i--)
+                ans += min(gifts[pt], gifts[I[i] - 1]), pt = min(pt + 1, m - 1);
+            
+        cout << ans << endl;
+    }
+
 }

@@ -33,4 +33,32 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; 
+    cin >> n;
+
+    vector<pii> I;
+
+    int maxi = 0;
+
+    int leave = 0;
+
+    l(i, 0, n){
+            pii a; 
+
+            cin >> a.ff >> a.ss;
+
+            maxi = max(maxi, a.ff);
+
+            leave += a.ss;
+
+            I.pb(a);
+    }
+
+    
+    if(maxi == I[0].ff)
+            cout << leave << endl;
+    else
+            cout << max(I[0].ss, maxi - I[0].ff) + leave - I[0].ss << endl;
+    
+
 }

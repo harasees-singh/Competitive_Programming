@@ -33,4 +33,61 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        vector<vi> I(n, vi(3));
+
+        l(i, 0, n){
+
+            int a, b ; cin >> a >> b;
+
+            I[i][0] = max(a, b), I[i][1] = min(a, b);
+
+            I[i][2] = i + 1;
+        }
+
+        sort(all(I));
+
+        // sorted acc to heights
+
+        vector<int> ans(n);
+
+        int minwidth = infinity;
+
+        int index = I[0][2];
+
+        int pt = 0;
+
+        while(pt < n){
+
+            int curr = I[pt][0];
+
+            int blockminima = infinity;
+
+            int indexblock = pt;
+
+            while(pt < n and curr == I[pt][0]){
+
+                if(I[pt][1] < blockminima)
+                        blockminima = I[pt][1], indexblock = I[pt][2];
+
+                if(minwidth < I[pt][1])
+
+                    ans[I[pt][2] - 1] = index;
+                else 
+                    ans[I[pt][2] - 1] = -1;
+                
+                pt++;
+            }
+
+            if(minwidth > blockminima)
+                    index = indexblock, minwidth = blockminima;
+        }
+
+        l(i, 0, n)
+            cout << (ans[i]) << space; cout << endl;   
+    }
+
 }

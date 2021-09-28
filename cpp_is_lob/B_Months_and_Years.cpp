@@ -30,7 +30,39 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+bool equal(int a, int b){
+
+    if(a == b) return true;
+    // if a = 28, b = 29 it will return true and vice versa
+    if(a < 30 and b < 30) return true;
+
+    return false;    
+}
+
 int32_t main(){
     FIO
+    int standardchart[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    int n; cin >> n;
+    int months[n];
 
+    int cnt_29 = 0;
+
+    for(int i = 0; i < n; i++){
+            cin >> months[i];
+            cnt_29 += (months[i] == 29);
+    }
+
+    if(cnt_29 > 1){
+            cout << "No" << endl; return 0;
+    }    
+
+    bool match = true;
+    for(int i = 0; i < 12; i++){
+            match = true;
+            for(int j = 0; j < n; j++)
+                    match = match and equal(months[j], standardchart[(i + j)%12]);
+
+            if(match) break;
+    }
+    cout << (match ? "Yes" : "No") << endl;
 }

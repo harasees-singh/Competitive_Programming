@@ -33,4 +33,51 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        string s; cin >> s;
+
+        int cnt1 = 0, cnt0 = 0;
+
+        for(auto p : s)
+                cnt1 += (p == '1'), cnt0 += (p == '0');
+        
+        if(cnt1%2 or cnt0%2 or s[0] != '1' or s[n - 1] != '1') {
+                cout << "NO" << endl; 
+
+                continue;
+        }
+
+        string a, b; 
+
+        int count1 = 0, count0 = 0;
+
+        l(i, 0, n){
+            if(s[i] == '1'){
+
+                    char t = (count1 < cnt1/2 ? '(' : ')');
+
+                    a.pb(t), b.pb(t);
+
+                    count1++;
+            }
+            else{
+
+                    char t1 = (count0%2 ? '(' : ')');
+
+                    char t2 = (t1 == '(' ? ')' : '(');
+
+                    count0 ^= 1;
+
+                    a.pb(t1), b.pb(t2);
+
+            }
+        }
+
+        cout << "YES" << endl;
+        cout << a << endl << b << endl;
+    }
+
 }

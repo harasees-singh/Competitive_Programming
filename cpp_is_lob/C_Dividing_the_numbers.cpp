@@ -33,4 +33,40 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n;
+    cin >> n;
+
+        int rem = n%4;
+
+        if(rem == 0){
+                cout << 0 << endl;
+                cout << n/2 << space;
+                for(int i = 1; i < n/2; i += 2)
+                        cout << i << space << n - i + 1 << space; cout << endl;
+        }
+        if(rem == 1){
+                cout << 1 << endl;
+                cout << n/2 << space;
+                for(int i = 2; i <= n/2; i += 2)
+                        cout << i << space << n - i + 2 << space; cout << endl;
+        }
+        if(rem == 2){
+                cout << 1 << endl;
+                cout << n/2 << space;
+                for(int i = 1; i < n/2; i+= 2)
+                        cout << i << space << n - i + 1 << space;
+
+                cout << n/2 << endl;
+                        
+        }
+        if(rem == 3){
+                cout << 0 << endl;
+                cout << n/2 << space;
+
+                for(int i = 2; i < n/2; i += 2)
+                        cout << i << space << n - i + 2 << space;
+                cout << n/2 + 2 << endl;
+        }
+
+        return 0;
 }

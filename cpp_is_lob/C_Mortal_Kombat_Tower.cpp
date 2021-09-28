@@ -33,4 +33,28 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        int F[n + 2] = {0};
+
+        int S[n + 2] = {0};
+
+        F[0] = F[1] = infinity;
+
+        vi I = {0};
+
+        for(int i = 2; i < n + 2; i++){
+
+            int t; cin >> t;
+
+            I.pb(t);
+
+            F[i] = min(S[i - 2] + I[i - 2] + I[i - 1], S[i - 1] + I[i - 1]);
+
+            S[i] = min(F[i - 2], F[i - 1]);
+        }
+        cout << min(F[n + 1], S[n + 1]) << endl;
+    }
 }

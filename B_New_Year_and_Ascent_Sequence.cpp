@@ -30,7 +30,58 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+bool Ascent(vi &arr){
+
+    int mini = infinity;
+
+    for(auto p : arr){
+        if(p < mini)
+            mini = p;
+
+        if(p > mini) return true;
+    }
+    return false;
+}
+
 int32_t main(){
     FIO
+
+    int n; cin >> n;
+
+    vector<int> Maxx;
+
+    vector<int> Minn;
+
+    int reject = 0;
+
+    for(int i = 0; i < n; i++){
+        int t; cin >> t;
+
+        vi temp(t); 
+
+        l(j, 0, t)
+                cin >> temp[j];
+        
+        if(!Ascent(temp))
+                Maxx.push_back(*max_element(all(temp))), 
+                Minn.push_back(*min_element(all(temp)));
+    
+    }
+
+    sort(all(Maxx));
+    sort(all(Minn));
+
+    int pt = 0;
+
+    for(auto p : Minn){
+            int find = p;
+
+            while(pt < Maxx.size() and Maxx[pt] <= find)
+                    pt++;
+            
+            reject += pt;
+    }
+
+    cout << n*n - reject << endl;
 
 }

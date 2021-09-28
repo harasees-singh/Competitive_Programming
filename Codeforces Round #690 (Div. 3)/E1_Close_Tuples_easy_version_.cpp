@@ -30,7 +30,44 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int nCr(int n, int r){
+
+    if(n < r) return 0;
+    
+    if(r <= 0)
+            return 1; 
+    return n*(nCr(n - 1, r - 1))/r;
+}
+
 int32_t main(){
     FIO
+
+    test_cases_loop{
+
+        int n; cin >> n;
+
+        int k = 2, m = 3;
+
+        vi I(n);
+
+        l(i, 0, n)
+                cin >> I[i];
+        
+        sort(all(I));
+
+        int ans = 0;
+
+        for(int i = 0; i < n; i++){
+
+            int index = upper_bound(all(I),I[i] + k) - I.begin() - 1;
+
+            if(index - i < 0 or m - 1 < 0 or index - i < m - 1) continue;
+            
+            ans += nCr(index - i + 1 - 1, m - 1);
+
+        }
+
+        cout << ans << endl;
+    }
 
 }

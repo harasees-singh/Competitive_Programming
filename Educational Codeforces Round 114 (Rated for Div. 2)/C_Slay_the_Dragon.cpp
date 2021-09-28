@@ -33,4 +33,42 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    vi I(n); 
+
+    int summand = 0;
+
+    l(i, 0, n){
+            cin >> I[i]; summand += I[i];
+    }
+
+    // cout << summand << endl;
+
+    int m; cin >> m;
+
+    sort(all(I));
+
+    l(i, 0, m){
+
+        int x, y; cin >> x >> y;
+        
+        int index = lower_bound(all(I), x) - I.begin();
+
+
+        if(index == 0){
+
+            cout << max(0ll, y - (summand - I[0])) << endl; continue;
+        }
+
+        if(index == n){
+
+            cout << x - I[n - 1] + max(0ll, (y - (summand - I[n - 1]))) << endl;
+        }
+
+        else {
+
+            cout << min(max(0ll, y - (summand - I[index])), x - I[index - 1] + max(0ll, y - (summand - I[index - 1]))) << endl;
+        }
+    }
 }
