@@ -26,25 +26,40 @@ using namespace std;
 #define cin                             std::cin
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 typedef long long ll;
+typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
 int32_t main(){
     FIO
-
     test_cases_loop{
-        int n, q; 
-        cin >> n >> q;
+        set<int> order;
+        int n; cin >> n;
+        umii freq;
 
-        vi I(n + 2);
-        l(i, 0, n)
-                cin >> I[i + 1];
-        int ans = 0;
-        for(int i = 1; i <= n; i++)
-                ans += (I[i] > I[i - 1] and I[i] > I[i + 1] ? I[i] : 0), 
-                ans -= (I[i] < I[i - 1] and I[i] < I[i + 1] ? I[i] : 0);
-        cout << ans << endl;
+        // vi I(n);
+        l(i, 0, n){
+            int t; 
+            cin >> t;
+            freq[t]++;
+            order.insert(t);
+        }
+                // cin >> I[i];
+        // sort(all(I));
+
+        for(auto p : order){
+            cout << p << space;
+        }
+
+        for(auto p : freq){
+            int f, s;
+            tie(f, s) = p;
+            while(s - 1)
+                cout << f << space, s--;
+        }
+
+        cout << endl;
     }
 
 }

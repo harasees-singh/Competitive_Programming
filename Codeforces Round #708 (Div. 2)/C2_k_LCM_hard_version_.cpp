@@ -34,4 +34,21 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        int n, k; cin >> n >> k;
+        // if(n == 4){
+        //     cout << 1 << space << 1 << space << 2 << endl;
+        //     continue;    
+        // }
+
+        if(n%2)
+            cout << 1 << space << n/2 << space << n/2 << endl;
+        else 
+            if(n%4 == 0)
+                cout << n/2 << space << n/4 << space << n/4 << endl;
+            
+            else 
+                cout << 2 << space << (n - 2)/2 << space << (n - 2)/2 << endl;
+    }
+
 }

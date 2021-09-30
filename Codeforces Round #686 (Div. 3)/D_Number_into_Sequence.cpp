@@ -26,12 +26,56 @@ using namespace std;
 #define cin                             std::cin
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 typedef long long ll;
-typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
-
+template<typename T>
+T power(T x, T y, ll p) { 
+    T res = 1;     
+    x = x % p;  
+    while (y > 0) 
+    { 
+        if (y & 1) 
+            res = (res*x) % p; 
+  
+        y = y>>1; // y = y/2 
+        x = (x*x) % p; 
+    } 
+    return res; 
+} 
 int32_t main(){
     FIO
+    test_cases_loop{
+        int n; cin >> n;
+
+        int cpy = n;
+
+        umii primes;
+
+        for(int i = 2; i <= sqrt(n); i++)
+                while(n%i == 0)
+                        n/=i, primes[i]++;
+        if(n > 1)
+                primes[n]++;
+        
+        int maxi = 0;
+        int prime;
+
+        for(auto p : primes)
+                if(p.ss > maxi)
+                        maxi = p.ss, prime = p.ff;
+
+        cout << maxi << endl;
+        int pw = 1;
+
+        l(i, 0, maxi - 1)
+                pw *= prime;
+        
+        l(i, 0, maxi - 1)
+                cout << prime << space;
+        
+        cout << cpy/pw << endl;
+                
+    }
 
 }

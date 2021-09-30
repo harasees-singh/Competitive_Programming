@@ -34,4 +34,22 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    test_cases_loop{
+        int n, m; cin >> n >> m;
+        umii mod;
+
+        l(i, 0, n){
+            int t; cin >> t;
+            mod[t%m]++;
+        }
+        int cnt = 0;
+        l(i, 1, m/2 + 1){
+            // if(mod[i])
+                cnt += (mod[i] and mod[m - i]);
+                cnt += max(0ll, max(mod[i], mod[m - i]) - min(mod[i], mod[m - i]) - (mod[i] and mod[m - i]));
+        }
+        cnt += (bool)(mod[0]);
+        cout << cnt << endl;
+    }
+
 }

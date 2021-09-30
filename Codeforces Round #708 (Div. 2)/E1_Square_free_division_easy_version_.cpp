@@ -31,7 +31,58 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+ 
+template<typename T>
+vector<T> sieve(T n){
+	vector<int> prime(n+1, 1);
+	for(int i = 2; i*i<=n; i++){
+		if(prime[i]){
+			for(int j = 2; j*i<=n; j++){
+				prime[i*j] = 0;
+			}
+		}
+	}
+	vector<T> ans;
+	for(int i = 2; i<=n;i++){
+		if(prime[i]) ans.pb(i);
+	}
+	return ans;
+}
+
 int32_t main(){
     FIO
+
+    vi primeList = sieve((ll)3163);
+
+    test_cases_loop{
+        int n, k; cin >> n >> k;
+
+        unordered_set<int> store;
+
+        vi I(n); 
+
+        int ans = 0;
+
+        l(i, 0, n)
+            cin >> I[i];
+
+        l(j, 0, n){
+            int t = I[j];
+            
+            for(auto p : primeList){
+
+                    while(t%(p*p) == 0)
+                            t/=(p*p);
+                    if(p*p > t)
+                            break;
+            }
+
+            // now t is square free;
+            if(store.count(t))
+                    ans++, store.clear();
+            store.insert(t);
+        }
+        cout << ans + 1 << endl;
+    }
 
 }

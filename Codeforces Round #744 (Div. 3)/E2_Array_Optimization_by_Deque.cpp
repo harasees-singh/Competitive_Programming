@@ -26,12 +26,30 @@ using namespace std;
 #define cin                             std::cin
 #define fps(x,y)                        fixed<<setprecision(y)<<x
 typedef long long ll;
-typedef vector<pii> vpii;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
 int32_t main(){
     FIO
+
+    test_cases_loop{
+        int n; cin >> n;
+
+        pbds s;
+
+        int cnt = 0;    
+
+        l(i, 0, n){
+            int t; cin >> t;
+            
+            s.insert({t, i});
+
+            int pos = s.order_of_key({t, -1});
+            int other = s.order_of_key({t, i});
+            cnt += min(pos, i - other);
+        }
+        cout << cnt << endl;
+    }
 
 }
