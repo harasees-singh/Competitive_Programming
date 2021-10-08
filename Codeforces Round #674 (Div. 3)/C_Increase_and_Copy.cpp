@@ -36,4 +36,21 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+        int n; cin >> n;
+
+        int minima = infinity;
+
+        l(i, 0, 1e5){
+
+                if(i + 1 > sqrt(n) + 2)
+                        break;
+
+                minima = min(minima, i + (int)(ceil((n - (i + 1))/(1.00 + i))));
+        }
+
+        cout << minima << endl;
+    }
+
 }

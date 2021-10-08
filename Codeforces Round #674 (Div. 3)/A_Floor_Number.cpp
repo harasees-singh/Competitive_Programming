@@ -36,4 +36,21 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+        int n, x; cin >> n >> x;
+
+        if(x < 2){
+
+            if(n <= 2)  cout << 1 << endl;
+
+            else 
+                        cout << n - 1 << endl;
+
+            continue;
+        }
+
+        cout << (int)(ceil((n - 2)/(double)x)) + 1 << endl;
+    }
+
 }

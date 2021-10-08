@@ -36,4 +36,24 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+            int n; cin >> n;
+
+            vi I(n);
+
+            l(i, 0, n)
+                    cin >> I[i];
+
+            int pt = n - 1;
+
+            while(pt > 0 and I[pt - 1] >= I[pt])
+                    pt--;
+
+            while(pt > 0 and I[pt - 1] <= I[pt])
+                    pt--;
+
+            cout << pt << endl;
+    }
+
 }

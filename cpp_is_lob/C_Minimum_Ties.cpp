@@ -36,4 +36,28 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+            int n; cin >> n;
+
+            vi a;
+
+            l(i, 0, (n - 1)/2)
+                    a.pb(1);
+            if(n%2 == 0)
+                    a.pb(0);
+            l(i, 0, (n - 1)/2)
+                    a.pb(-1);
+
+            // for(auto p : a)
+            //         cout << p << ' '; cout << endl;
+
+            for(int i = n - 1; i >= 1; i--){
+                    
+                    l(j, 0, i)
+                            cout << a[j] << space;
+            }
+            cout << endl;
+    }
+
 }

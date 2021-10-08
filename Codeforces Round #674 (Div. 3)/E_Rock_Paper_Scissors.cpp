@@ -36,4 +36,22 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    int ar, as, ap, br, bs, bp; 
+
+    cin >> ar >> as >> ap >> br >> bs >> bp;
+
+    int maxima = min(ar, bs) + min(as, bp) + min(ap, br);
+
+    int minima = 0;
+
+    if(ar > bp + br)
+            minima = ar - bp - br;
+    if(as > bs + br)
+            minima = as - bs - br;
+    if(ap > bp + bs)
+            minima = ap - bp - bs;
+
+    cout << minima << space << maxima << endl;
 }

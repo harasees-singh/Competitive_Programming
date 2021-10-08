@@ -36,4 +36,34 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, m; cin >> n >> m;
+
+    vector<vi> mat(n + 1, vi(m + 1, 1e9 + 1));
+
+    vi prev(m + 1, 1e9 + 1);
+    l(r, 1, n + 1)
+            l(c, 1, m + 1){
+
+                    int t; cin >> t;
+
+                    mat[r][c] = (t >= prev[c] ? mat[r - 1][c] + 1 : 1);
+
+                    prev[c] = t;
+            }
+    // mat updated 
+    // hashed to represent sorted segments
+
+    vi RowMax(n + 1);
+
+    l(r, 1, n + 1)
+            RowMax[r] = *max_element(++mat[r].begin(), mat[r].end());
+            
+    int q; cin >> q;
+
+    l(i, 0, q){
+
+            int l, r; cin >> l >> r;
+
+            cout << (RowMax[r] >= r - l + 1 ? "Yes" : "No") << endl;
+    }
 }

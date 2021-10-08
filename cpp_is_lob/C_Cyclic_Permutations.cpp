@@ -33,7 +33,33 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+template<typename T>
+T power(T x, T y, ll p) { 
+    T res = 1;     
+  
+    x = x % p;  
+    while (y > 0) 
+    { 
+        if (y & 1) 
+            res = (res*x) % p; 
+  
+        y = y>>1;
+        x = (x*x) % p; 
+    } 
+    return res; 
+} 
+
+int F[1000000 + 1];
+
 int32_t main(){
     FIO
+    F[0] = 1;
+
+    l(i, 1, 1e6 + 1)
+            F[i] = (F[i - 1]*i)%MOD;
+
+    int n; cin >> n;
+
+    cout << (F[n] - power(2ll, n - 1, MOD) + MOD)%MOD << endl;
 
 }

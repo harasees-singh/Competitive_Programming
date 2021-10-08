@@ -36,4 +36,29 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+        int n, m; //mxm;
+        cin >> n >> m;
+
+        bool ok = 0;
+
+        map<pii, vpii> F;
+
+        l(i, 0, n){
+
+                int a, x, y, b; cin >> a >> x >> y >> b;
+
+                ok = ok or (x==y);
+
+                // for(auto p : F[make_pair(a, b)])
+                //         if(p.ff == y and p.ss == x)
+                //                 ok = true;
+
+                // F[make_pair(a, b)].push_back(make_pair(x, y));
+        }
+
+        cout << ((ok and (m%2==0)) ? "YES" : "NO") << endl;
+    }
+
 }

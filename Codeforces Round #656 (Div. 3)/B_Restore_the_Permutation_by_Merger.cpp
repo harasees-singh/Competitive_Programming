@@ -36,4 +36,19 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+            int n; cin >> n;
+
+            unordered_map<int, int> vis;
+
+            l(i, 0, 2*n){
+                    int t; cin >> t;
+
+                    if(!vis[t])
+                            cout << t << space, vis[t] =1;
+            }
+            cout << endl;
+    }
+
 }

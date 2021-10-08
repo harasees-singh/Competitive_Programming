@@ -36,4 +36,21 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, m; cin >> n >> m;
+
+    vi E(n + 1);
+
+    l(i, 0, n)
+            cin >> E[i + 1];
+    
+    int ans = 0;
+
+    l(i, 0, m){
+
+            int a, b; cin >> a >> b;
+
+            ans += min(E[a], E[b]);
+    }
+
+    cout << ans << endl;
 }

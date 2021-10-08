@@ -33,7 +33,33 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int rec(const  string &s, char curr){
+
+        if(sz(s) == 1)
+                return (s[0] != curr);
+
+        string first = s.substr(sz(s)/2);
+        string second = s.substr(0, sz(s)/2);
+
+        int c1 = sz(s)/2 - count(s.begin(), s.begin() + sz(s)/2, curr);
+        int c2 = sz(s)/2 - count(s.begin() + sz(s)/2, s.end(), curr);
+
+        int m1 = c1 + rec(first, curr + 1);
+        int m2 = c2 + rec(second, curr + 1);
+        
+        return min(m1, m2);
+}
+
 int32_t main(){
     FIO
+
+    w(t){
+
+            int n; cin >> n;
+
+            string s; cin >> s;
+
+            cout << rec(s, 'a') << endl;
+    }
 
 }

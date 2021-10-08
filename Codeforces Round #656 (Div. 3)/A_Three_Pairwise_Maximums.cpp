@@ -36,4 +36,25 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+            int x, y, z; 
+
+            cin >> x >> y >> z;
+
+            vi nums = {x, y, z};
+
+            int maxi = max(max(x, y), z);
+
+            int mini = min(min(x, y), z);
+
+            if(count(all(nums), maxi) > 1){
+                    cout << "YES" << endl;
+
+                    cout << maxi << space << 1 << space << mini << endl;
+            }
+            else 
+                    cout << "NO" << endl;
+    }
+
 }

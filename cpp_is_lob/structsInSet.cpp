@@ -3,8 +3,10 @@
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 
-using namespace __gnu_pbds;
 using namespace std;
+using namespace __gnu_pbds;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+
 #define ff                              first
 #define ss                              second
 #define infinity                        999999999999999999
@@ -16,10 +18,10 @@ using namespace std;
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
-#define pb(n)                           push_back((n))
+#define pb(n)                           push_back(n)
 #define mii                             map<int, int>
 #define umii                            unordered_map<int, int>
-#define w(t)                            int t; cin >> t; while(t--)
+#define test_cases_loop int t;          cin >> t; while(t--)
 #define FIO                             ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define l(var, initial, final)          for(int var=initial; var < final; var++)
 #define cout                            std::cout
@@ -27,13 +29,30 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-typedef long long ll;
-typedef vector<pii> vpii;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
-int32_t main(){
-    FIO
+struct INT{
+    int a;
+    INT(int x){
+            a = x;
+    }
+    bool operator<(INT other) const {
+		return a <= other.a;
+	}
+};
 
+int32_t main(){
+    FIO 
+
+    set<INT> F;
+
+    INT a(4); INT b(4);
+
+    F.insert(a), F.insert(b);
+
+    for(auto p : F)
+            cout << p.a << space; cout << endl;
+
+    return 0;
 }

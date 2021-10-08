@@ -36,4 +36,59 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
-}
+    int n; cin >> n;
+
+    vi I(n + 1);
+
+    l(i, 1, n + 1)
+            cin >> I[i];
+    
+    l(i, 1, n + 1)
+            I[i] = I[i - 1] + I[i];
+
+    vpii B;
+
+    // make bracket from l + 1 to r;
+
+    unordered_map<int, int> id;
+
+
+
+    l(i, 0, n + 1){
+
+            int curr = I[i];
+
+            if(id.count(curr)){
+
+                    B.push_back(make_pair(id[curr] + 1, i));
+
+                    id[curr] = i;
+            }
+
+            else 
+                    id[curr] = i;
+    } 
+    sort(all(B));
+
+    int cnt = 0;
+
+    int end = infinity;
+
+    for(auto p : B){
+
+            int l, r; 
+
+            tie(l, r) = p;
+
+            // cout << l << space << r << endl;
+
+            if(l >= end){
+                    // cout << l << endl;
+                    cnt++, end = r; continue;
+            }
+            
+            end = min(end, r);
+    }
+
+    cout << cnt + (bool)(sz(B)) << endl;
+}           
