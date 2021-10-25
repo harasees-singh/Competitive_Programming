@@ -3,10 +3,8 @@
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 
-using namespace std;
 using namespace __gnu_pbds;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
-
+using namespace std;
 #define ff                              first
 #define ss                              second
 #define infinity                        999999999999999999
@@ -18,10 +16,10 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
-#define pb(n)                           push_back(n)
+#define pb(n)                           push_back((n))
 #define mii                             map<int, int>
 #define umii                            unordered_map<int, int>
-#define test_cases_loop int t;          cin >> t; while(t--)
+#define w(t)                            int t; cin >> t; while(t--)
 #define FIO                             ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define l(var, initial, final)          for(int var=initial; var < final; var++)
 #define cout                            std::cout
@@ -29,58 +27,51 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
+typedef long long ll;
+typedef vector<pii> vpii;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
-struct DisjointSet{
-        int N = 1e5;
-
-		DisjointSet(){
-				MakeSet();
-		}
-
-        DisjointSet(int n){
-                N = n;
-                MakeSet();
-        }
-
-		int *Rank = new int[N + 1];
-
-        int *parent = new int[N + 1];
-
-        void MakeSet(){
-                for(int i = 1; i <= N; i++)
-                        parent[i] = i;
-        }
-
-        int findParent(int v){
-
-                if(parent[v] == v)
-                        return v;
-                
-                return parent[v] = findParent(parent[v]);
-        }
-
-        void Union(int u, int v){
-
-                u = findParent(u), v = findParent(v);
-
-                if(Rank[u] > Rank[v])
-                        parent[v] = u;
-                else if(Rank[u] < Rank[v])
-                        parent[u] = v;
-                else        
-                        parent[v] = u, Rank[u]++;
-        }
-};
 int32_t main(){
-	FIO 
+    FIO
 
-	DisjointSet a(5), b;
+    w(t){
 
-	a.Union(1, 4); 
+            int n, m; cin >> n >> m;
 
-	cout << a.findParent(4) << endl;
+            vi I(n);
 
-	return 0;
+            for(int &p : I)
+                    cin >> p;
+
+            vi p(m);
+
+            for(int &m : p)
+                    cin >> m;
+            
+            sort(all(p));
+
+            int left = p[0];
+
+            p.push_back(infinity);
+
+            l(i, 1, m + 1){
+
+                    if(p[i] - p[i - 1] > 1){
+                            
+                            sort(I.begin() + left - 1, I.begin() + p[i - 1] + 1);
+
+                            left = p[i];
+                    }
+            }   
+
+            bool ok = 1;
+
+            l(i, 1, n)
+                    ok &= (I[i - 1] <= I[i]);
+
+            cout << (ok ? "YES" : "NO") << endl;
+    }
+
 }

@@ -32,55 +32,16 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-struct DisjointSet{
-        int N = 1e5;
-
-		DisjointSet(){
-				MakeSet();
-		}
-
-        DisjointSet(int n){
-                N = n;
-                MakeSet();
-        }
-
-		int *Rank = new int[N + 1];
-
-        int *parent = new int[N + 1];
-
-        void MakeSet(){
-                for(int i = 1; i <= N; i++)
-                        parent[i] = i;
-        }
-
-        int findParent(int v){
-
-                if(parent[v] == v)
-                        return v;
-                
-                return parent[v] = findParent(parent[v]);
-        }
-
-        void Union(int u, int v){
-
-                u = findParent(u), v = findParent(v);
-
-                if(Rank[u] > Rank[v])
-                        parent[v] = u;
-                else if(Rank[u] < Rank[v])
-                        parent[u] = v;
-                else        
-                        parent[v] = u, Rank[u]++;
-        }
-};
 int32_t main(){
-	FIO 
+    FIO 
 
-	DisjointSet a(5), b;
+    umii Y; 
 
-	a.Union(1, 4); 
+    Y[1] = 1;
+    if(Y[2])
+        cout <<"EYS";
+    
+    cout << Y.size() << endl;
 
-	cout << a.findParent(4) << endl;
-
-	return 0;
+    return 0;
 }

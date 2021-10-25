@@ -3,10 +3,8 @@
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
 
-using namespace std;
 using namespace __gnu_pbds;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
-
+using namespace std;
 #define ff                              first
 #define ss                              second
 #define infinity                        999999999999999999
@@ -18,10 +16,10 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
-#define pb(n)                           push_back(n)
+#define pb(n)                           push_back((n))
 #define mii                             map<int, int>
 #define umii                            unordered_map<int, int>
-#define test_cases_loop int t;          cin >> t; while(t--)
+#define w(t)                            int t; cin >> t; while(t--)
 #define FIO                             ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define l(var, initial, final)          for(int var=initial; var < final; var++)
 #define cout                            std::cout
@@ -29,58 +27,57 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
+typedef long long ll;
+typedef vector<pii> vpii;
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+struct custom_hash {
 
-struct DisjointSet{
-        int N = 1e5;
+    static uint64_t splitmix64(uint64_t x) {
 
-		DisjointSet(){
-				MakeSet();
-		}
+        x += 0x9e3779b97f4a7c15;
+    
+        x = (x ^ (x >> 30)) * 0xbf58476d1ce4e5b9;
+    
+        x = (x ^ (x >> 27)) * 0x94d049bb133111eb;
+    
+        return x ^ (x >> 31);
+    }
 
-        DisjointSet(int n){
-                N = n;
-                MakeSet();
-        }
-
-		int *Rank = new int[N + 1];
-
-        int *parent = new int[N + 1];
-
-        void MakeSet(){
-                for(int i = 1; i <= N; i++)
-                        parent[i] = i;
-        }
-
-        int findParent(int v){
-
-                if(parent[v] == v)
-                        return v;
-                
-                return parent[v] = findParent(parent[v]);
-        }
-
-        void Union(int u, int v){
-
-                u = findParent(u), v = findParent(v);
-
-                if(Rank[u] > Rank[v])
-                        parent[v] = u;
-                else if(Rank[u] < Rank[v])
-                        parent[u] = v;
-                else        
-                        parent[v] = u, Rank[u]++;
-        }
+    size_t operator()(uint64_t x) const {
+    
+        static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
+    
+        return splitmix64(x + FIXED_RANDOM);
+    }
 };
 int32_t main(){
-	FIO 
+    FIO
 
-	DisjointSet a(5), b;
+    w(t){
 
-	a.Union(1, 4); 
+                int n; cin >> n;
 
-	cout << a.findParent(4) << endl;
+                unordered_map<int, int, custom_hash> freq;
+                int summ = 0;
+                vi I(n);
+                l(i, 0, n){
 
-	return 0;
+                        int t; cin >> t;
+                        I[i] = n*t;
+                        // freq[t*n]++;
+                        summ += t;
+                }
+
+                int cnt = 0;
+                for(auto p : I){
+                        cnt += freq[2*summ - p];
+
+                        freq[p]++; 
+                }
+
+                cout << cnt << endl;
+    }
+
 }
