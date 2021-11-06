@@ -38,11 +38,18 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int x, y; cin >> x >> y;
+
+            if(x <= y) {
+
+                cout << y - (y%x)/2 << endl;
+            }
+            else 
+                cout << (x + y) << endl;
+
+    }
+
+    return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

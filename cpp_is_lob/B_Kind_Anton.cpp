@@ -38,11 +38,32 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            vi a(n);
+
+            for(auto &p : a)
+                    cin >> p;
+            
+            int one = 0, negone = 0;
+
+            bool ok = 1;
+
+            l(i, 0, n){
+                    int t; cin >> t;
+
+                    if(t > a[i] and !one) ok = 0;
+
+                    if(t < a[i] and !negone) ok = 0;
+
+                    one += (a[i] == 1); 
+
+                    negone += (a[i] == -1);
+            }
+
+            cout << (ok ? "YES" : "NO") << endl;
+    }
+    return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

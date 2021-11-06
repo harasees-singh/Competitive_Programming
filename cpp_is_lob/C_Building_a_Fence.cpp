@@ -38,11 +38,28 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n,k; cin >> n >> k;
+
+            vi I(n);
+
+            for(auto &p : I) cin >> p;
+
+            bool ok = 1;
+
+            int mini = I[0], maxi = I[0];
+
+            l(i, 1, n){
+                    mini = max(I[i], mini - k + 1);
+
+                    maxi = min(maxi + k - 1, I[i] + k - 1);
+
+                    if(mini > I[i] + k - 1 or maxi < I[i]){
+                            ok = 0; break;
+                    }
+            }
+
+            cout << (ok and mini == I[n - 1] ? "YES" : "NO") << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

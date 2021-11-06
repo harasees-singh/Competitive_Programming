@@ -38,6 +38,23 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            int ans = 0;
+
+            int p = 1;
+            int i = 1;
+
+            while(p <= n){
+                    n -= p,  p = 2*p + (i + 1)*(i + 1); i = 2*i + 1;
+                    ans++;
+
+                    // cout << n << endl;
+            }
+            cout << ans << endl;
+    }
+
 }
 /*
 *think brute force first.

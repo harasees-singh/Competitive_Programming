@@ -27,8 +27,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -38,11 +36,40 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, m; cin >> n >> m;
+
+    vector<string> I;
+
+    l(i, 0, n){
+            string s; cin >> s;
+
+            I.push_back(s);
+    }
+
+    int F[m + 1] = {0};
+
+    l(i, 1, m){
+
+            bool ok = 0;
+
+            l(r, 1, n){
+
+                    if((I[r][i] == '.' or I[r][i] == 'X') and I[r][i - 1] == 'X' and I[r - 1][i] == 'X' ){
+                            ok = 1;
+                            break;
+                    }
+            }
+
+            F[i + 1] = F[i] + (int)ok;
+    }
+
+    int q; cin >> q;
+
+    l(i, 0, q){
+
+            int l, r; cin >> l >> r;
+
+            cout << (F[r] - F[l] ? "NO" : "YEs") << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

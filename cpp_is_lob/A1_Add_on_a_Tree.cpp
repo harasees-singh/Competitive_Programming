@@ -27,22 +27,33 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
+vector<vi> g;
+
 int32_t main(){
     FIO
 
+        int n; cin >> n;
+
+        g = vector<vi>(n + 1);
+
+        l(i, 0, n - 1){
+                int u, v; cin >> u >> v;
+
+                g[u].push_back(v);
+                g[v].push_back(u);
+        }
+
+        l(i, 1, n + 1){
+                if(g[i].size() == 2){
+                        cout << "NO" << endl; return 0;
+                }
+        }
+        cout << "YES" << endl; return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

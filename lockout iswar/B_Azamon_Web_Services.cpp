@@ -38,11 +38,24 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    l(k, 0, n){
+            string s, c; cin >> s >> c;
+
+            l(i, 0, sz(s)){
+					int id;
+					int mini = 'Z' + 1;
+					l(j, i + 1, sz(s)){
+
+							if(s[j] <= mini) mini = s[j], id = j;
+
+					}
+
+					if(mini < s[i]) {swap(s[i], s[id]); break;}
+			}
+
+			if(s < c) cout << s << endl; else cout << "---" << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

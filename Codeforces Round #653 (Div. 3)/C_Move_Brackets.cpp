@@ -38,11 +38,21 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+            string s; cin >> s;
+            
+            int cnt = 0;
+
+            int ans = 0;
+
+            l(i, 0, n){
+                    cnt += ((s[i] == '(') - (s[i] == ')'));
+
+                    if(cnt < 0) ans++, cnt = 0;
+            }
+
+            cout << ans << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

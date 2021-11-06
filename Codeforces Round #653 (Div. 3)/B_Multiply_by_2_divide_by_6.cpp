@@ -38,11 +38,21 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            int two(0), three(0);
+
+            while(n > 1 and n%2 == 0) n/=2, two++; 
+
+            while(n > 1 and n%3 == 0) n/=3, three++;
+
+            if(n > 1 or two > three){
+                    cout << -1 << endl; continue;
+            }
+
+            cout << 2*three - two << endl; 
+    }
+    return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

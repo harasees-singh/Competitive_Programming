@@ -38,11 +38,35 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    int cnt = 1;
+
+    int neg = 0;
+
+    vi ans;
+
+    int rep = 0;
+
+    l(i, 0, n){
+            int t; cin >> t;
+
+            rep++;
+
+            neg += (t < 0);
+
+            if(neg == 3){
+
+                    cnt++;
+                    neg = 1;
+                    ans.pb(rep - 1);
+                    rep = 1;
+            }
+    }
+    cout << cnt << endl;
+
+    for(auto p : ans) cout << p << space; 
+
+    cout << rep << endl;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

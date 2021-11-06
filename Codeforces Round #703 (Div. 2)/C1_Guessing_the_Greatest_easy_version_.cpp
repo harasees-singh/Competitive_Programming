@@ -27,22 +27,71 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
+// AC for C2 as well
+
+bool good(int idx, int mid, bool left){
+        int ql, qr;
+
+        ql = idx, qr = idx + mid;
+
+        if(left){
+
+                ql = idx - mid; qr = idx;
+        }
+
+        cout << "? " << ql << space << qr << endl; cout.flush();
+
+        int id; cin >> id;
+
+        if(id == idx)
+                return true;
+        return false;
+}
+
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    int idx;
+
+    cout << "? " <<  1 << space << n << endl; cout.flush();
+    
+    cin >> idx; // where 2nd largest at
+
+    int t = 0;
+
+    if(idx != 1){
+            cout << "? " << 1 << space << idx << endl; cout.flush();
+
+            cin >> t;
+    }
+    bool left = 0;
+
+    if(t == idx){
+            // largest lies in 1 to idx - 1;
+
+            left = 1;
+    }
+
+    int l = 1, r = n - idx;
+
+    if(left)
+            r = idx - 1;
+
+    while(l < r){
+            if(good(idx, (l + r) >> 1, left))
+                    r = (l + r) >> 1;
+            else        
+                    l = ((l + r) >> 1) + 1;
+    }
+
+    cout << "! " << (left ? idx - l : idx + l) << endl;
+    return 0;
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

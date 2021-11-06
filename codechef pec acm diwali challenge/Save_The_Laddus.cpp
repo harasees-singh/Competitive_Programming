@@ -38,11 +38,26 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n, k; cin >> n >> k;
+
+            vi I(k);
+
+            for(auto &p : I) cin >> p;
+
+            sort(all(I));
+
+            int x = 0;
+
+            int cnt = 0;
+
+            for(int i = k - 1; i >= 0; i--){
+                    if(x < I[i])
+                            x += n - I[i], cnt++;
+                    else
+                            break;
+
+            } cout << cnt << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

@@ -38,11 +38,24 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    string s; cin >> s;
+
+    int cnt = 0;
+
+    l(i, 0, n){
+            int hori = 0, vert = 0;
+
+            l(j, i, n){
+                    hori += ((s[j] == 'R') - (s[j] == 'L'));
+
+                    vert += ((s[j] == 'U') - (s[j] == 'D'));
+
+                    if(hori == 0 and vert == 0)
+                            cnt++;
+            }
+    }
+    cout << cnt << endl;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

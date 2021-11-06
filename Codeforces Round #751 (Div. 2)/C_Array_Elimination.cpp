@@ -27,8 +27,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -38,11 +36,52 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            vi I(n);
+
+            mii f;
+
+            l(i, 0, n){
+                    int t; cin >> t;
+
+                    int j = 0;
+
+                    while((1ll << j) <= t){
+                            if(t&(1ll << j))
+                                    f[j]++; 
+                        j++;
+                    }
+            }
+
+            if(!f.size()){
+                    l(i, 1, n + 1)
+                            cout << i << space; cout << endl; continue;
+            }
+
+            int gcd = (*f.begin()).ss;
+
+            for(auto p : f)
+                    gcd = __gcd(gcd, p.ss);
+
+            vi div;
+
+            for(int i = 1; i <= sqrt(gcd); i++){
+                    if(gcd%i == 0){
+                            if(i == sqrt(gcd))
+                                    div.pb(i);
+                            else    
+
+                                    div.pb(i), div.pb(gcd/i);
+                    }
+            }
+            sort(all(div));
+
+            // cout << sz(div) << endl;
+
+            for(auto p : div)
+                    cout <<  p << space; cout << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

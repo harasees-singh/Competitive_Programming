@@ -38,11 +38,50 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, k; cin >> n >> k;
+
+    vi I(n); 
+
+    for(auto &p : I) cin >> p;
+
+    int t = I[0];
+
+    int rep = I[0];
+    sort(all(I));
+
+    I.pb(1e18 + 1);
+
+    vi ans;
+
+    vi suff(n);
+
+    for(int i = n - 1; i >= 0; i--){
+            if(I[i] == I[i + 1] - 1)
+                    suff[i] = suff[i + 1] + 1;
+    }
+
+    
+
+    l(i, 0, k){
+            int q; cin >> q;
+
+            // if(q >= sz(ans)){
+            //         cout << ans[sz(ans) - 1] + 1 << endl; continue;
+            // }
+
+            int t = lower_bound(all(I), q) - I.begin();
+
+            if(I[t] == q){
+                    cout << q + t + suff[t] + 1 << endl; continue;
+            }
+
+            int find = q + t;
+
+            if(I[lower_bound(all(I), find)-I.begin()] == find)
+                    cout << q + t + suff[lower_bound(all(I), find)-I.begin()] << endl;
+            else 
+
+                    cout << q + t << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

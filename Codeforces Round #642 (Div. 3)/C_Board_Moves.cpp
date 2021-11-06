@@ -38,11 +38,15 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    vi F(5e5 + 1);
+
+    for(int i = 3; i <= 5e5; i += 2){
+            F[i] = F[i - 2] + (i*4 - 4)*(i/2);
+    }
+
+    // cout << F[3] << endl;
+
+    w(t){
+            int n; cin >> n; cout << F[n] << endl;
+    }
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

@@ -38,11 +38,24 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n, k; cin >> n >> k;
+
+            mii f;
+
+            l(i, 0, n){
+                    int t; cin >> t; f[t%k]++;
+            }
+
+            int maxi = 0;
+
+            for(auto p : f){
+                    if(p.ff == 0) continue;
+
+                    maxi = max(maxi, k - p.ff + (p.ss - 1)*k + 1);
+            }
+
+            cout << maxi << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

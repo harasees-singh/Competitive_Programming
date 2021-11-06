@@ -35,8 +35,20 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+bool equal(int i, int j, int l, int k){
+        return (i == j and j == l and l == k);
+}
+
 int32_t main(){
     FIO
+
+    vi I(25);
+
+    l(i, 1, 26) cin >> I[i];
+
+    if(equal(I[13], I[14], I[15], I[16]) and equal(I[17], I[18], I[19], I[20])){
+            
+    }
 
 }
 /*

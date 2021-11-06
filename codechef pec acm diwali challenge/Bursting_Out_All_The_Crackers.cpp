@@ -35,14 +35,59 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vi div(int g){
+
+        vi ans;
+
+        for(int i = 1; i*i <= g; i++){
+                if(g%i == 0)
+                        ans.push_back(i), ans.pb(g/i);
+
+                if(i*i == g)
+                        ans.pop_back();
+        }
+        return ans;
+}
+
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            vi I(n);
+
+            for(auto &p : I)
+                    cin >> p;
+
+            if(*max_element(all(I)) == 0){
+                    l(i, 1, n + 1) cout << i << space; cout << endl; continue;
+            }
+            
+            vi cnt(35);
+
+            for(auto p : I){
+
+                    int i = 0;
+
+                    while(p){
+                            cnt[i] += (p&1);
+                            i++;
+                            p/=2;
+                    }
+            }
+
+            int gcd = 0;
+
+            for(auto p : cnt) gcd = __gcd(gcd, p);
+
+            // cout << div(gcd) << endl;
+
+            vi k(div(gcd));
+
+            sort(all(k));
+
+            for(auto p : k)
+                    cout << p << space; cout << endl;
+    }
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

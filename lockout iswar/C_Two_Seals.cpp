@@ -38,11 +38,51 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, a, b; cin >> n >> a >> b;
+
+//     if(a > b){
+//             swap(a, b);
+//     }
+
+    vpii I(n);
+
+    l(i, 0, n){
+	    int l, b; cin >> l >> b;
+
+		// if(l > b) swap(l, b);
+
+	    I[i] = make_pair(l, b);
+    }
+
+    int maxi = 0;
+
+    l(i, 0, n){
+
+	    l(j, i + 1, n){
+
+		    if((I[i].ff + I[j].ff <= a and I[i].ss <= b and I[j].ss <= b) or (I[i].ss + I[j].ss <= b and I[i].ff <= a and I[j].ff <= a)) 
+
+				maxi = max(maxi, I[i].ff*I[i].ss + I[j].ff*I[j].ss);
+
+            swap(I[j].ff, I[j].ss);
+
+            if((I[i].ff + I[j].ff <= a and I[i].ss <= b and I[j].ss <= b) or (I[i].ss + I[j].ss <= b and I[i].ff <= a and I[j].ff <= a)) 
+
+				maxi = max(maxi, I[i].ff*I[i].ss + I[j].ff*I[j].ss);
+            
+            swap(I[j].ff, I[j].ss); swap(I[i].ff, I[i].ss);
+
+            if((I[i].ff + I[j].ff <= a and I[i].ss <= b and I[j].ss <= b) or (I[i].ss + I[j].ss <= b and I[i].ff <= a and I[j].ff <= a)) 
+
+				maxi = max(maxi, I[i].ff*I[i].ss + I[j].ff*I[j].ss);
+            
+            swap(I[j].ff, I[j].ss);
+
+            if((I[i].ff + I[j].ff <= a and I[i].ss <= b and I[j].ss <= b) or (I[i].ss + I[j].ss <= b and I[i].ff <= a and I[j].ff <= a)) 
+
+				maxi = max(maxi, I[i].ff*I[i].ss + I[j].ff*I[j].ss);
+	    }
+    }
+    cout << maxi << endl;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

@@ -35,14 +35,23 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+bool triangle(int i, int j, int k){
+        return (i + j > k and j + k > i and i + k > j);
+}
+
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    int cnt = 0;
+
+    l(i, 1, n + 1){
+            l(j, i, n + 1){
+                    if((i^j) <= n and (i^j) >= j and triangle(i, j, i^j)) cnt++;
+            }
+    }
+
+    cout << cnt << endl;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

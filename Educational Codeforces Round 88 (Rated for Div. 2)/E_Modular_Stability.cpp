@@ -27,22 +27,91 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
+// call these to initialize arrays 
+// O(1) time complexity 
+// use Binomial(n, r, p) all exceptions handled
+/*
+InverseofNumber(p);
+InverseofFactorial(p);
+factorial(p);
+*/
+
+ll p = 998244353;
+
+const int N = 500000 + 5;
+
+ll factorialNumInverse[N + 1];
+ 
+ll naturalNumInverse[N + 1];
+ 
+ll fact[N + 1];
+
+ 
+void InverseofNumber(ll p)
+{
+    naturalNumInverse[0] = naturalNumInverse[1] = 1;
+    for (int i = 2; i <= N; i++)
+        naturalNumInverse[i] = naturalNumInverse[p % i] * (p - p / i) % p;
+}
+void InverseofFactorial(ll p)
+{
+    factorialNumInverse[0] = factorialNumInverse[1] = 1;
+ 
+    for (int i = 2; i <= N; i++)
+        factorialNumInverse[i] = (naturalNumInverse[i] * factorialNumInverse[i - 1]) % p;
+}
+void factorial(ll p)
+{
+    fact[0] = 1;
+    for (int i = 1; i <= N; i++) {
+        fact[i] = (fact[i - 1] * i) % p;
+    }
+}
+ll Binomial(ll N, ll R, ll p)
+{
+	if(R > N or R < 0 or N < 0) return 0;
+    ll ans = ((fact[N] * factorialNumInverse[R])% p * factorialNumInverse[N - R])% p;
+    return ans;
+}
+
+
+
 int32_t main(){
     FIO
 
+    InverseofNumber(p);
+    InverseofFactorial(p);
+    factorial(p);
+
+    int n, k; cin>> n >> k;
+
+    if(n < k){
+            cout << 0 << endl;
+
+            return 0;
+    }
+    if(n == k){
+            cout << 1 << endl;
+            return 0;
+    }
+    int ans = 0;
+
+    l(i, 1, n + 1){
+            int P = n/i - 1;
+
+            int r = k - 1;
+
+            if(p >= r)
+                    ans += Binomial(P, r, p), ans %= p;
+            
+            else    
+                    break;
+    }
+    cout << ans << endl;
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

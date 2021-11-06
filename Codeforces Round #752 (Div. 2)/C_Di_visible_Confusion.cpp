@@ -38,11 +38,37 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            vi I(n);
+
+            for(auto &p : I){
+                    cin >> p;
+            }
+
+            // vi P(n);
+
+            int cnt = 0;
+            
+            bool ok = 1;
+
+            for(int i = 0; i < min(30ll, n); i++){
+                    int cur = I[i];
+
+                    int cpy = i;
+
+                    int drop = 0;
+
+                    while(cpy >= 0 and cur%(cpy + 2) == 0)
+                            cpy--, drop++;
+
+                    if(drop > i){
+                            ok = 0; break;
+                    }
+
+            }
+            cout << (ok ? "YES" : "NO") << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

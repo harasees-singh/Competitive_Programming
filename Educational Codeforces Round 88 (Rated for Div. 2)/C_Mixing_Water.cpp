@@ -27,22 +27,50 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int h, c, t;
+bool f(int p2, int p1){
+
+        int P = (2*p1 - 1)*(2*p2 - 1);
+
+        int x1 = (p2*h + (p2 - 1)*c)*(2*p1 - 1) - t*P;
+
+        int x2 = (p1*h + (p1 - 1)*c)*(2*p2 - 1) - t*P;
+
+        return abs(x1) < abs(x2);
+}
 
 int32_t main(){
     FIO
+    int T; cin >> T;
+
+    while(T--){
+
+            cin >> h >> c >> t;
+
+            if((h + c) >= 2*t)
+                    {cout << 2 << endl; continue;}
+            
+            if(t >= h){
+                    cout << 1 << endl; continue;
+            }
+
+            int p = (t - c)/(2*t - h - c);
+            
+            assert(p);
+
+            int p2 = p + 1;
+
+            if(f(p2, p))
+                    cout << 2*p2 - 1 << endl;
+            else
+                    cout << 2*p - 1 << endl;
+
+
+    }
 
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

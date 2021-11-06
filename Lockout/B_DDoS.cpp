@@ -35,8 +35,35 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int kadane(vi &I){
+        int maxi = 0;
+
+        l(i, 0, I.size()){
+                int cur = 0;
+
+                l(j, i, I.size()){
+                        cur += I[j];
+
+                        if(cur > 0) maxi = max(j - i + 1, maxi);
+                }
+                
+        }
+        return maxi;
+}
 int32_t main(){
     FIO
+
+    int n; cin >> n;
+
+    vi I(n, -100);
+
+    l(i, 0, n){
+            int t; cin >>t ;
+
+            I[i] += t;
+    }
+
+    cout << kadane(I) << endl;
 
 }
 /*

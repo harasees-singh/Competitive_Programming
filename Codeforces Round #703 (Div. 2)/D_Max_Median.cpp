@@ -27,22 +27,43 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+
+// approach is wrong because of the assumption that best median can be found out by solely considering k len subarrays
+// but infact a subarray of len greater than k can yeild better median
+// example 1 2 1 3 and k = 2, here max median of 2 len segments is 1
+// but median of the seg 2 1 3 is 2 > 1
 
 int32_t main(){
     FIO
 
+    int n, k; cin >> n >> k;
+
+    pbds s;
+
+    vi I(n);
+
+    for(auto &p : I)
+            cin >>  p;
+
+    l(i, 0, k)
+        s.insert(make_pair(I[i], i));
+
+    int maxi = 0;
+
+    l(i, 0, n - k + 1){
+
+            maxi = max(maxi, (*s.find_by_order((k - 1)/2)).ff);
+
+            s.erase(make_pair(I[i], i));
+            if(i < n - k)
+                    s.insert(make_pair(I[i + k], i + k));
+    }
+
+    cout << maxi << endl;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

@@ -38,11 +38,16 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n, m; cin >> n >> m;
+
+            if(n == 1){
+                    cout << 0 << endl; continue;
+            }
+            else if (n == 2){
+                    cout << m << endl; continue;
+            }
+            cout << 2*m  << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

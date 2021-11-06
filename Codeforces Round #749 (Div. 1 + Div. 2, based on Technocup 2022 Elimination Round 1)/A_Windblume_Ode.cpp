@@ -27,22 +27,58 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
+bool isPrime(int n){
+
+        bool ok = 1;
+
+        l(i, 2, sqrt(n) + 1){
+
+                ok = ok & (bool)(n%i);
+        }
+
+        return ok;
+}
+
 int32_t main(){
     FIO
 
+    w(t){
+
+            int n; cin >> n;
+
+            vi I(n);
+
+            for(auto &p : I)
+                    cin >> p;
+            
+            int S = accumulate(all(I), 0ll);
+
+            if(isPrime(S)){
+
+                    bool f = 1;
+
+                    cout << n - 1 << endl;
+
+                    for(int i = 1; i <= n; i++){
+                            int p = I[i - 1];
+                            if(f and p%2){
+                                    f = 0; continue;}
+                            cout << i << space;}
+                    cout << endl;
+            }
+            else{
+                    cout << n << endl;
+
+                    for(int i = 1; i <= n; i++)
+                            cout << i << space;
+                            cout << endl;
+            }
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

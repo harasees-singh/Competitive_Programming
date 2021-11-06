@@ -38,11 +38,24 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, k; cin >> n >> k;
+
+    vi I(n);
+    
+    for(auto &p : I) cin >> p;
+
+    vi diff;
+
+    l(i, 0, n - 1) diff.pb(I[i] - I[i + 1]);
+
+    sort(all(diff));
+
+    int ans = I[n - 1] - I[0];
+
+    l(i, 0, k - 1) ans += diff[i];
+
+    cout << ans << endl;
+
+    return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

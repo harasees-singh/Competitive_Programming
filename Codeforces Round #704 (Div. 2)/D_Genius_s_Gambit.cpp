@@ -27,8 +27,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -38,11 +36,41 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int a, b, k; cin >> a >> b >> k;
+
+    if(k == 0){
+
+            cout << "Yes" << endl;
+            l(i, 0, b) cout << '1'; l(i, 0, a) cout << '0'; cout << endl;
+            l(i, 0, b) cout << '1'; l(i, 0, a) cout << '0'; cout << endl;
+
+            return 0;
+    }
+
+    if(!a or b < 2 or a + b - 2 < k)
+            cout << "No" << endl;
+    
+    else{
+            cout << "Yes" << endl;
+
+            string one;
+
+            l(i, 0, b - 1) one.pb('1'); l(i, 0, a + 1) one.pb('0');
+
+			one[sz(one) - 1 - min(a, k)] = '1';
+
+			cout << one << endl;
+
+            int zero_pos = k - a;
+
+            if(min(a, k) == k){
+
+			        l(i, 0, b - 1) cout << '1'; l(i, 0, a) cout << '0'; cout << '1' << endl;
+            }
+            else{
+
+                    l(i, 0, b - 1 - zero_pos) cout << '1'; cout << '0'; l(i, 0, zero_pos) cout << '1'; l(i, 0, a - 1) cout << '0'; cout << '1' << endl;
+            }
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

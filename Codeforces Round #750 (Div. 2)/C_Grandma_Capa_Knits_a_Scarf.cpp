@@ -27,8 +27,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -38,11 +36,43 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            string s; cin >> s;
+
+            int ans = infinity;
+            l(i, 0, 26){
+
+                    int pt1 = 0, pt2 = s.size() - 1;
+
+
+                    bool ok = 1;
+
+                    int cnt(0);
+
+                    while(pt1 < pt2){
+                            if(s[pt1] != s[pt2] and s[pt1] != i + 'a' and s[pt2] != i + 'a')
+                                    {ok = 0; break;}
+                            
+                            if(s[pt1] == i + 'a' and s[pt2] == i + 'a'){
+                                    pt1++, pt2--; continue;
+                            }
+                            
+                            if(s[pt1] == i + 'a')
+                                    pt1++, cnt++;
+                            
+                            else if(s[pt2] == i + 'a')
+                                    pt2--, cnt++;
+                            
+                            else        
+                                    pt1++, pt2--;
+                    }
+
+                    if(ok)
+                            ans = min(ans, cnt);
+            }
+            cout << (ans == infinity ? -1 : ans) << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

@@ -37,12 +37,29 @@ MOD_DEFINE
 
 int32_t main(){
     FIO
+    w(t){
+            int n; cin >> n;
+
+            string s; cin >> s;
+
+            string mini(n, 'z');
+
+            int ans = 1;
+
+            l(i, 1, n + 1){
+
+                    string temp = s.substr(i - 1);
+
+                    string attach = s.substr(0, i - 1);
+
+                    if((n - i + 1)%2) reverse(all(attach));
+
+                    if(temp + attach < mini) mini = temp + attach, ans = i;
+            }
+            
+            cout << mini << endl;
+
+            cout << ans << endl;
+    }
 
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

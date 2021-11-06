@@ -35,14 +35,58 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+struct Pair{
+        int f, s; 
+        Pair(int a, int b){
+                f = a, s = b;
+        }
+        bool operator< (Pair p) const{
+                int one = s - f;
+                int two = p.s - p.f;
+
+                if(one == two)
+                        return (p.f < f);
+                return one < two;
+        }
+};
+
 int32_t main(){
     FIO
 
+        set<Pair> s;
+
+        // s.insert(Pair(2, 3));
+        // s.insert(Pair(3, 6));
+
+        // cout << (*s.begin()).f << endl;
+        
+        w(t){
+                int n; cin >> n;
+
+                set<Pair> s;
+
+                s.insert(Pair(1, n));
+
+                vi ans(n + 1);
+
+                l(i, 1, n + 1){
+                        
+                        Pair cur = (*prev(s.end()));
+
+                        ans[(cur.f + cur.s)/2] = i;
+
+                        int mean = cur.f + cur.s; mean/=2;
+
+                        Pair t1(cur.f, mean - 1);
+                        Pair t2(mean + 1, cur.s);
+
+                        s.erase(cur);
+
+                        if(t1.f <= t1.s) s.insert(t1);
+                        if(t2.f <= t2.s) s.insert(t2);
+                }
+                l(i, 1, n + 1) cout << ans[i] << space; cout << endl;
+
+        }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

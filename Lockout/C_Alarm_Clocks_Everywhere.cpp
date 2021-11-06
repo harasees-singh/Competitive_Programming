@@ -38,6 +38,30 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n, m; cin >> n >> m;
+
+    vi I(n); for(auto &p : I) cin >> p;
+
+    int sub = I[0];
+
+    for(auto &p : I) p-=sub;
+
+    vi op(m); for(auto &p : op) cin >> p;
+
+    int gcd = 0;
+
+    for(auto p : I) gcd = __gcd(gcd, p);
+
+    bool ok = 0;
+
+    for(int i = 0; i < m; i++){
+            int p = op[i];
+            if(gcd%p == 0){
+                    ok = 1; cout << "YES" << endl; cout << I[0] + sub << space << i+1 << endl; break;
+            }
+    }
+    if(!ok) cout << "NO" << endl;
+
 }
 /*
 *think brute force first.

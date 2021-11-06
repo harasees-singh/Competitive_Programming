@@ -27,8 +27,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -38,11 +36,34 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+
+            int n; cin >> n;
+
+            int m; cin >> m;
+
+            int vis[n + 1] = {0};
+
+            l(i, 0, m){
+                    int a, b, c; cin >> a >> b >> c;
+
+                    vis[b] = 1;
+            }
+
+            int root;
+
+            l(i, 1, n + 1)
+                    if(!vis[i])
+                            root = i;
+
+            l(i, 0, n){
+
+                    if(i + 1 == root)
+                            continue;
+
+                    cout << root << space << i + 1 << endl;
+            }
+    }
+    return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

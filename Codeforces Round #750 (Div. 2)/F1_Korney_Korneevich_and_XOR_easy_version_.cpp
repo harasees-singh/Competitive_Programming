@@ -27,8 +27,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -38,11 +36,49 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int i = 1;
+
+    while((1 << i) < 500) i++;
+
+    int n; cin >> n;
+
+    vector<vi> F((1 << i), vi(n + 1, -1));
+
+    F[0][0] = 0;
+
+    l(i, 1, n + 1){
+            int t; cin >> t;
+
+            l(j, 0, F.size())
+
+                F[j][i] = F[j][i - 1];
+
+            l(j, 0, F.size())
+
+                if(t > F[j][i - 1] and F[j][i - 1] != -1){
+
+                    if(F[j xor t][i] == -1)
+
+                            F[j xor t][i] = t;
+                    
+                    else 
+                            
+                            F[j xor t][i] = min(t, F[j xor t][i]);
+                }
+                
+    }
+
+    vi ans;
+
+    l(i, 0, F.size())
+
+        if(F[i][n] != -1)
+
+            ans.push_back(i);
+    
+    cout << ans.size() << endl;
+
+    for(auto p : ans)
+            cout << p << space; cout << endl;
+    
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

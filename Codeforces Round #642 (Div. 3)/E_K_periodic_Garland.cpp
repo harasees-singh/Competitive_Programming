@@ -35,14 +35,46 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int kadane(string &s){
+        
+        int cursum = 0;
+
+        int maxi = 0;
+
+        l(i, 0, sz(s)){
+                cursum = max(0ll, cursum);
+
+                cursum += ((s[i] == '1') - (s[i] == '0'));
+
+                maxi = max(maxi, cursum);
+        }
+        return maxi;
+}
+
 int32_t main(){
     FIO
 
+    w(t){
+            int n, k; cin >> n >> k;
+
+            string s; cin >> s;
+
+            int one = 0; 
+
+            for(auto p : s) one += (p == '1');
+            
+            int mini = infinity;
+
+            l(i, 0, k){
+                    
+                        string imodk;
+
+                        for(int j = i; j < n; j += k) imodk += s[j];
+
+                        mini = min(mini, one - kadane(imodk));
+            }
+
+            cout << mini << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

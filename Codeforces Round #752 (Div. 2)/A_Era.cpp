@@ -38,11 +38,27 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n; cin >> n;
+
+            vi I(n);
+
+            for(auto &p : I)
+                cin >> p;
+
+            int i = 1;
+
+            int cnt = 0;
+
+            for(auto p : I){
+                    if(p > i){
+                            cnt += p - i;
+
+                            i += p - i;        
+                    }
+                    i++;
+            }
+            cout << cnt << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

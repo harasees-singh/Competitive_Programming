@@ -38,6 +38,32 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    w(t){
+            int n, k; cin >> n >> k;
+
+            string s; cin >> s;
+
+            sort(all(s));
+
+            int pt = 0;
+
+			string ans = string(1, s[k - 1]);
+
+			if(s[k - 1] != s[0]){
+					cout << ans << endl; continue;
+			}
+
+			if(k < n and s[k] == s[n - 1]){
+					ans += string((n - k + k - 1)/k, s[k]);
+			}
+			
+			else{
+					ans += s.substr(k);
+			}
+			cout << ans << endl;
+
+    }
+
 }
 /*
 *think brute force first.

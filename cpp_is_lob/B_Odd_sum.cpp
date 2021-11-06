@@ -38,6 +38,26 @@ MOD_DEFINE
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    vi I(n); for(auto &p : I) cin >> p;
+
+    int sum = 0;
+
+    int minOdd = 1e4 + 2;
+
+    for(auto p : I){ 
+        
+            if(p > 0) sum += p;
+    
+            if(p&1){
+                
+                minOdd = min(minOdd, abs(p));
+            }
+    }
+    cout << sum - (sum%2 ? 0 : minOdd) << endl;
+
+    return 0;
 }
 /*
 *think brute force first.

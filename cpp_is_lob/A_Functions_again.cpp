@@ -35,14 +35,40 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int kadane(vi &I){
+        int cur = 0, maxi = -infinity;
+
+        l(i, 0, sz(I)){
+                cur = max(0ll, cur);
+                cur += I[i];
+                maxi = max(maxi, cur);
+        }
+        return maxi;
+}
+
+void fell(vi& I, vi&a, int i){
+        int parity = 0;
+        l(j, i, I.size() - 1){
+                if(parity){
+                        a.pb(-abs(I[j] - I[j + 1]));
+                }
+                else 
+                        a.pb(abs(I[j] - I[j + 1]));
+                
+                parity^=1;
+        }
+}
+
 int32_t main(){
     FIO
+    int n; cin >> n;
+
+    vi I(n); for(auto &p : I) cin >> p;
+
+    vi a, b;
+
+    fell(I, a, 0), fell(I, b, 1);
+
+    cout << max(kadane(a), kadane(b)) << endl;
 
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

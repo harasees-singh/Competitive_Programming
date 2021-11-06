@@ -27,22 +27,87 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x,y)                        fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
+vi g;
+vi order;
+vi vis;
+
+void dfs(int i){
+
+        if(!vis[g[i]] and g[i] != 0)
+
+                vis[g[i]] = 1, dfs(g[i]);
+        
+
+        order.push_back(i);
+}
+
 int32_t main(){
     FIO
 
+    int n; cin >> n;
+
+    vis = vi(n + 1);
+
+    g = vi(n + 1);
+
+    l(i, 1, n + 1){
+
+            cout << "? ";
+
+            l(j, 0, i - 1)
+                    cout << 1 << space;
+            
+            cout << 2 << space;
+
+            l(j, i, n)
+                    cout << 1 << space; cout << endl; cout.flush();
+
+            int id; cin >> id;
+
+            if(i != id and id != 0)
+                    g[i] = id;
+
+            cout << "? ";
+
+            l(j, 0, i - 1)
+                    cout << 2 << space;
+            
+            cout << 1 << space;
+
+            l(j, i, n)
+                    cout << 2 << space; cout << endl; cout.flush();
+
+            cin >> id;
+            
+            if(i != id and id != 0)
+                    g[id] = i;
+    }
+
+    l(i, 1, n + 1)
+            if(!vis[i])
+
+                    vis[i] = 1, dfs(i);
+
+    assert(sz(order) == n);
+
+    reverse(all(order));
+
+    vi ans(n + 1);
+
+    l(i, 0, n){
+
+            ans[order[i]] = i + 1;
+    }
+    cout << "! ";
+    l(i, 1, n + 1)
+            cout << ans[i] << space; cout << endl;
+    
+    return 0;
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/
