@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,19 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+        int a, b, c; cin >> a >> b >> c;
+
+        int x = abs(b + c - 2*a)%3;
+
+        int y = abs(a + c - 2*b)%3;
+
+        int z = abs(b + a - 2*c)%3;
+
+        cout << min(min(x, y), z) << endl;
+    }
 
 }
 /*

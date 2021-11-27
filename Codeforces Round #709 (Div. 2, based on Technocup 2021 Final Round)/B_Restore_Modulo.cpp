@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,56 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n; cin >> n;
+
+            vi I(n); for(auto &p : I) cin >> p;
+
+        //     if(n == 1){cout << 0 << endl; continue;}
+
+            int pos = -1, neg = 1;
+
+            bool ok = 1;
+
+            l(i, 1, n){
+                    int diff = I[i] - I[i - 1];
+                    
+                    if(diff > 0){
+                            if(pos == -1) pos = diff;
+
+                            else if(diff != pos) {ok = 0; break;}
+                    }
+                    else{
+                            if(neg == 1) neg = diff;
+
+                            else if(neg != diff) {ok = 0; break;}
+                    }
+            }
+            if(ok and (neg == 1 or pos == -1)){
+                    cout << 0 << endl; continue;
+            }
+            if(!ok){
+                    cout << -1 << endl; continue;
+            }
+            int mod = pos + abs(neg);
+
+            int cmodm = I[1] - I[0];
+
+            int cur = I[0];
+
+            l(i, 0, n){
+                    if(cur%mod != I[i]){ok = 0; break;}
+
+                    cur += cmodm + mod;
+            }
+
+            if(ok){
+                    cout << mod << space << (cmodm + mod)%mod << endl;
+            }
+            else cout << -1 << endl;
+    }
 
 }
 /*

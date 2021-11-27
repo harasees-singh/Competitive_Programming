@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,10 +35,37 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+int Max(int a, int b, int c){
+    return max(a + b, max(b + c, c + a));
+}
 
+int32_t main(){
+    FIO
+
+    int n; cin >> n;
+
+    vi I(n);
+
+    for(auto &p : I) cin >> p;
+
+    vi alternate;
+
+    for(int i = 0; i < n; i += 2) alternate.pb(I[i]);
+
+    for(int i = 1; i < n; i += 2) alternate.pb(I[i]);
+
+    for(int i = 0; i < n; i += 2) alternate.pb(I[i]);
+
+    int cur = accumulate(alternate.begin(), alternate.begin() + (n + 1)/2, 0ll);
+
+    int ans = cur;
+
+    for(int i = (n + 1)/2; i < sz(alternate); i++){
+        cur += alternate[i], cur -= alternate[i - (n + 1)/2];
+
+        ans = max(ans, cur);
+    }
+    cout << ans << endl;
 }
 /*
 *think brute force first.

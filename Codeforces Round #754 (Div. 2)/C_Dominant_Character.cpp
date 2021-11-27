@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,56 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+string s;
+
+int kadane(){
+    int len = infinity;
+
+    int cur = 0;
+
+    int curlen = 0;
+
+    l(i, 0, s.size()){
+        cur = max(0ll, cur);
+
+        cur += ((s[i] == 'a') - (s[i] == 'b') - (s[i] == 'c'));
+
+        if(cur >= 0) curlen++;
+
+        if(curlen >= 2 and cur > 0) len = min(len, curlen), curlen = 1, cur = 1;
+    }
+    return len;
+}
+
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+        int n; cin >> n;
+
+        cin >> s;
+
+        // int ans = kadane();
+
+        int ans = infinity;
+
+        l(i, 0, n - 1){
+            if(s[i] == s[i + 1] and s[i] == 'a'){
+                ans = 2; break;
+            }
+            if(s[i] == 'a' and i + 2 < n and s[i + 2] == 'a'){
+                ans = 3;
+            }
+            if(s[i] == 'a' and i + 3 < n and s[i + 3] == 'a' and s[i + 1] != s[i + 2]){
+                ans = min(ans, 4ll);
+            }
+            if(s[i] == 'a' and i + 3 < n and s[i + 3] == 'a' and i + 6 < n and s[i + 6] == 'a' and s[i + 1] != s[i + 4]){
+                ans = min(ans, 7ll);
+            }
+        }
+
+        cout << (ans == infinity ? -1 : ans) << endl;
+    }
 
 }
 /*

@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,26 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int a, b, c, d; cin >> a >> b >> c >> d;
+
+            bool deci = (b or c);
+
+            bool whole = (a or d);
+
+            if((a + b)%2){
+                    cout << (whole ? "Ya" : "Tidak") << space << (deci ? "Ya" : "Tidak") << space;
+
+                    cout << "Tidak" << ' ' << "Tidak" << endl;
+            }
+            else{
+                    cout << "Tidak" << ' ' << "Tidak" << space;
+
+                    cout << (deci ? "Ya" : "Tidak") << space << (whole ? "Ya" : "Tidak") << endl;
+            }
+    }
 
 }
 /*

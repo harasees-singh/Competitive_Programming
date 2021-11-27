@@ -37,9 +37,35 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vi in;
+
+vi ans;
+
+void fill(int i, int j, int d){
+    if(i > j) return;
+
+    int id = max_element(in.begin() + i, in.begin() + j + 1) - in.begin();
+
+    ans[id] = d;
+
+    fill(i, id - 1, d + 1); fill(id + 1, j, d + 1);
+}
+
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+        int n; cin >> n;
+
+        ans = vi(n);
+        in = vi(n);
+
+        for(auto &p : in) cin >> p;
+
+        fill(0, n - 1, 0);
+
+        for(auto p : ans) cout << p << space; cout << endl;
+    }
 
 }
 /*

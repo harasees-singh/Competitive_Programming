@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,14 +36,24 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            string alphabet; cin >> alphabet;
+            vi f(26);
+            l(i, 0, 26){
+                    f[alphabet[i] - 'a'] = i;
+            }
+
+            string s; cin >> s;
+
+            int cnt = 0;
+
+            l(i, 1, s.size()){
+                    cnt += abs(f[s[i] - 'a']- f[s[i - 1] - 'a']);
+            }
+
+            cout << cnt << endl;
+    }
 
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

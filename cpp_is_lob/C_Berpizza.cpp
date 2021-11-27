@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,47 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    int q; cin >> q;
+
+    set<pii> Money, Time;
+    int cust = 0;
+
+    l(i, 0, q){
+            int a; cin >> a;
+
+            if(a == 1){
+                    int m; cin >> m;
+
+                    Money.insert(make_pair(m, -cust));
+
+                    Time.insert(make_pair(cust, m));
+
+                    cust++;
+            }
+            else{
+                    if(a == 2){
+                            cout << (*Time.begin()).ff + 1 << space;
+
+                            pii t = *Time.begin();
+
+                            Time.erase(t);
+
+                            Money.erase(make_pair(t.ss, -t.ff));
+                    }
+                    else{
+                            cout << -(*--Money.end()).ss + 1 << space;
+
+                            pii t = *--Money.end();
+
+                            Time.erase(make_pair(-t.ss, t.ff));
+
+                            Money.erase(t);
+                    }
+            }
+    }
+    return 0;       
 
 }
 /*

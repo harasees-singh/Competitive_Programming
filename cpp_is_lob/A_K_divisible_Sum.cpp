@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -36,10 +34,19 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
-
+int k;
+int upperMultiple(int n){
+    if(n%k==0) return max(n, k);
+    return n + (k - (n%k));
+}
 int32_t main(){
+    FIO
+    w(t){
+        int n; cin >> n >> k;
         
-        FIO
+        k = upperMultiple(n);
+        cout << k/n + (bool)(k%n) << endl;
+    }
 
 }
 /*

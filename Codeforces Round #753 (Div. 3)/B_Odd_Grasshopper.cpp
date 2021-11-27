@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,14 +36,65 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+    w(t){
+            int x, n; cin >> x >> n;
+
+            if(n == 0){
+                    cout << x << endl; continue;
+            }
+
+            if(x%2){ 
+                    int pos = 1;
+
+                    n--;
+
+                    int rem = n%4; int plus4 = n/4;
+                    n++;
+
+                    pos += 4*plus4;
+
+                    if(rem == 1){
+                            pos -= n ; 
+                    }
+                    if(rem == 2){
+                            pos -= n + n - 1; 
+                    }
+                    if(rem == 3){
+                            pos += n - (n - 2 + n - 1);
+                    }
+
+                    cout << x + pos << endl;
+            }
+            else{
+                    int pos = -1;
+
+                    n--;
+                    int rem = n%4;
+
+                    // cout << rem << endl;
+
+                    int minus4 = n/4;
+                    n++;
+
+                    pos -= 4*minus4;
+
+                    // cout << pos << endl;
+
+                    if(rem == 1){
+                            pos += n;
+                    }
+                    if(rem == 2){
+                            pos += n + n - 1;
+                    }
+                    if(rem == 3){
+                            pos += n - 2 + n - 1 - n;
+                    }
+
+                    cout << x + pos << endl;
+                    
+            }
+    }
+    return 0;
 
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

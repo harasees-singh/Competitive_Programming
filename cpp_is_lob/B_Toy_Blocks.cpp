@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,30 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n; cin >> n;
+
+            vi I(n); for(auto &p : I) cin >> p; 
+
+            int mini = *min_element(all(I));
+            int maxi = *max_element(all(I));
+
+            int Sum = accumulate(all(I), 0ll) - mini;
+
+            int need = (n - 1)*maxi - Sum;
+
+            int ans = 0;
+
+            ans = (need - mini);
+
+            if(ans < 0){
+                    ans += ((abs(ans) + n - 2)/(n - 1))*(n - 1);
+            }
+
+            cout << ans << endl;
+    }
 
 }
 /*

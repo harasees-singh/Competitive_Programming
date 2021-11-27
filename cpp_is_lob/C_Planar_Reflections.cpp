@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,29 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
+int N, K;
+
+vector<vi> dp;
+
+int F(int n, int k){
+        if(n == 0 or k == 1) return dp[n][k] = 1;
+
+        if(dp[n][k] == -1)
+                dp[n][k] = (F(N - n, k - 1) + F(n - 1, k))%MOD;
         
-        FIO
+        return dp[n][k];
+}
+
+int32_t main(){
+    FIO
+
+    w(t){
+            cin >> N >> K;
+
+            dp = vector<vi>(N + 1, vi(K + 1, -1));
+
+            cout << F(N, K) << endl;
+    }
 
 }
 /*

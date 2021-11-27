@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -36,10 +34,33 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int d = 9;
 
+bool isdPresent(int a){
+    string s = to_string(a);
+    return count(all(s), '0' + d);
+}
+void solve(){
+    int n; cin >> n >> d;
+    l(i, 0, n){
+        int ai; cin >> ai;
+
+        string f = "NO";
+        while(ai > 0){
+            if(isdPresent(ai)){
+                    f = "YES"; break;
+            }
+            ai -= d;
+        }
+        cout << f << endl;
+    }
+}
 int32_t main(){
-        
-        FIO
+    FIO
+    // if ai >= 10*d then true always.
+    w(t){
+        solve();
+    }
 
 }
 /*

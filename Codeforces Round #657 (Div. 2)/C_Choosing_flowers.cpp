@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,55 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n, m; cin >> n >> m;
+
+            vpii I; 
+
+            vi primFlower(m);
+
+            
+            l(i, 0, m){
+                    int a, b; cin >> a >> b;
+
+                    primFlower[i] = a;
+
+                    I.pb(make_pair(a, b));
+            }
+            sort(all(primFlower));
+
+            vi suff(m);
+
+			suff[m - 1] = primFlower[m - 1];
+
+            for(int i = m - 2; i >= 0; i--){
+                    suff[i] = suff[i + 1] + primFlower[i];
+            }
+
+            int ans = suff[max(0ll, m - n)];
+
+            l(i, 0, m){
+                int a = I[i].ff, b = I[i].ss;
+
+                int summ = a + (n - 1)*b;
+
+                int idx = (lower_bound(all(primFlower), b) - primFlower.begin());
+
+                int remove = m - idx;
+                if(remove > n - 1){
+                    remove = n - 1; idx = m - (n - 1);
+                }
+                summ -= remove*(b);
+                if(remove){
+                        if(primFlower[idx] <= a) summ += b, summ -= a;
+                        summ += suff[idx];
+                }
+                ans = max(ans, summ);
+            }
+			cout << ans << endl;
+    }
 
 }
 /*

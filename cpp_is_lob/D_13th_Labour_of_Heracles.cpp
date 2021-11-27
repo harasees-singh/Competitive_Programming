@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,51 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
+    FIO
+
+    w(t){
+            int n; cin >> n;
         
-        FIO
+			vi I(n);
+			for(auto &p : I) cin >> p;
+
+			set<pii> weight;
+
+			vi deg(n);
+
+			l(i, 0, n - 1){
+					int u, v; cin >> u >> v;
+
+					deg[u - 1]++; deg[v - 1]++;
+
+			}
+			// for(auto p : deg) cout << p << space;
+			l(u, 0, n)
+				weight.insert(make_pair(I[u], u)); 
+
+			int ans = accumulate(all(I), 0ll);
+
+			auto it = --weight.end();
+			
+			// for(auto p : weight){
+			// 	cout << p.ff << space << p.ss << endl;
+			// }
+
+			l(i, 0, n - 1){
+				cout << ans << space;
+
+				if(i==n-2) break;
+
+				while(deg[(*it).ss] < 2)
+					it--;
+
+				deg[(*it).ss]--;
+
+				ans += (*it).ff;
+			}
+			cout << endl;
+    }
+	return 0;
 
 }
 /*

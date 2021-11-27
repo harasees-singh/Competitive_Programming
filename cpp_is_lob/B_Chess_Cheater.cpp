@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,72 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int compute(int n){
+    return (bool)n + 2*(n - 1)*(bool)n;
+}
+
 int32_t main(){
+    FIO
+
+    w(t){
+        int n, k; cin >> n >> k;
+
+        string s; cin >> s;
+
+        int init = 1 + (n - 1)*2;
+
+        int cur = count(all(s), 'L') - k;
+
+        if(count(all(s), 'L') == n){
+            cout << (1 + (min(n, k) - 1)*2)*(bool)k << endl;
+            continue;
+        }
+
+        int corner = 0;
+
         
-        FIO
+        int id = 0;
+
+        while(id < n and s[id] == 'L') id++, corner++;
+
+        s = s.substr(id);
+
+        id = sz(s) - 1;
+
+        while(id >= 0 and s[id] == 'L') id--, corner++;
+
+        if(id >= 0){
+            s = s.substr(0, id + 1);
+        }
+
+        while(corner and cur > 0){
+            corner--, init-=2; cur--;
+        }
+
+        int cnt = 0;
+        vi Lcount;
+        for(auto p : s){
+            if(p == 'W') Lcount.pb(cnt), cnt = 0;
+
+            else cnt++;
+        }
+
+        sort(all(Lcount), greater<int>());
+
+        int pt = 0;
+
+        while(cur > 0){
+            init -= 3;
+            cur--;
+            Lcount[pt]--;
+            int sub = min(cur, Lcount[pt]);
+
+            init -= sub*(2);
+
+            cur -= sub; pt++;
+        }
+        cout << init << endl;
+    }   
 
 }
 /*

@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,19 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
+    FIO
+
+    w(t){
+        int n, k; cin >>n >> k;
+
+        int i = 0;
+        int cnt = 0;
         
-        FIO
+        while((1ll << i) <= min(k, (1ll << (n - 1)))) cnt++, i++;
+
+        cout << cnt + ((1ll << n) - (1ll << (i)) + k - 1)/k << endl;
+
+    }
 
 }
 /*

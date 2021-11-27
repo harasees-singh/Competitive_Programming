@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,18 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    int n, s; cin >> n >> s;
+
+    if(s >= 2*n){
+            cout << "YES" << endl;
+
+            l(i, 0, n - 1) cout << 1 << space; cout << s - (n - 1) << endl; 
+
+            cout << n << endl;
+    }
+    else cout << "NO" << endl;
 
 }
 /*

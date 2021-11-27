@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,27 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n; cin >> n;
+
+            vi I(n);
+
+            for(auto &p : I) cin >> p;
+
+            int ans = max(abs(I[0] - I[1]), abs(I[n - 1] - I[n - 2]));
+
+            int Sum = 0;
+
+            l(i,1,n) Sum += abs(I[i] - I[i - 1]);
+
+            l(i, 1, n - 1){
+                    ans = max(ans, abs(I[i] - I[i - 1]) + abs(I[i] - I[i + 1]) - abs(I[i + 1] - I[i - 1]));
+            }
+
+            cout << Sum - ans << endl;
+    }
 
 }
 /*

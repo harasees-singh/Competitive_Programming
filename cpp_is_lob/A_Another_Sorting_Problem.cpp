@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,10 +35,36 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+bool cmp(string const &a, string const &b){
+    string aa = a;
+    string bb = b;
 
+    for(int i = 1; i < a.size(); i += 2){
+
+            aa[i] = 'Z' - (a[i] - 'A');
+
+            bb[i] = 'Z' - (b[i] - 'A');
+    }
+    return aa < bb;
+}
+
+int32_t main(){
+    FIO
+
+    int n, m; cin >> n >> m;
+    vector<string> in(n);
+    map<string, int> id;
+    
+    l(i, 1, n + 1){
+        string t; cin >> t;
+        in[i - 1] = t;
+        id[t] = i;
+    }
+
+
+    sort(all(in), cmp);
+
+    for(auto p : in) cout << id[p] << space;
 }
 /*
 *think brute force first.

@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,31 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int solve(int m, int n){
+    if(min(n, m) == 2){
+        if(n > m) swap(n, m);
+
+        // 2Xm types
+
+        return m%3 + 2*(m/3);
+    }
+
+    if(min(n, m) < 2){
+
+        return min((n*((m + 2)/3)), (m*(n + 2)/3));
+    }
+
+    return m*(n/3) + solve(m, n%3);
+}
+
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+        int n, m; cin >> n >> m;
+
+        cout << min(solve(m, n), solve(n, m)) << endl;
+    }
 
 }
 /*

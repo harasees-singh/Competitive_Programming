@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,37 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+bool Equal(string const &s, string const &t){
+    bool ret = true;
+
+    l(i, 0, sz(s)/2){
+        ret = ret and (s[i] == t[i] and s[i] != '.');
+    }
+    return ret;
+}
+
+bool isPallindrome(string const &s){
+    string t(s);
+
+    reverse(all(t));
+
+    return Equal(t, s);
+}
+
 int32_t main(){
+    FIO
+
+    w(t){
         
-        FIO
+        string s; cin >> s;
+        
+        l(i, 0, s.size()){
+            if(i > 0) if(isPallindrome(s.substr(i - 1, 2))) s[i] = '.';
+
+            if(i > 1) if(isPallindrome(s.substr(i - 2, 3))) s[i] = '.';
+        }
+        cout << count(all(s), '.') << endl;
+    }
 
 }
 /*

@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,9 +36,21 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
 
+    int n; cin >> n;
+
+    mii dyn;
+    bool ok = 1;
+    l(i, 0, n){
+        int a, b; cin >> a >> b;
+        int cur = dyn[b];
+
+        if(a < cur - 1) ok = 0;
+
+        dyn[b] = max(a, dyn[b]);
+    }
+    cout << (ok ? "YES": "NO") << endl;
 }
 /*
 *think brute force first.

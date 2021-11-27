@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,60 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+string S = "abacaba";
+
+int cnt(string &s){
+        int occ = 0;
+
+        l(i, 0, sz(s) - 6){
+                if(s.substr(i, 7) == S) occ++;
+        }
+        return (occ == 1);
+}
+
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n; cin >> n; string I; cin >> I;
+
+            if(cnt(I)){
+                    cout << "Yes" << endl;
+
+                    for(auto p : I) cout << (p == '?' ? 'z' : p);
+
+                    cout << endl;
+
+                    continue;
+            }
+            bool ok = 0;
+
+            l(i, 0, sz(I) - 6){
+                    vi idx;
+                    l(j, i, i + 7){
+                            if(I[j] == '?') idx.pb(j), I[j] = S[j - i];
+
+                            // cout << cnt(I) << endl;
+
+                            
+                    }
+                    if(cnt(I)){
+                            ok = 1;
+                            cout << "Yes" << endl; 
+
+                            for(auto p : I) cout << (p == '?' ? 'z' : p);
+
+                            cout << endl;
+                            break;
+
+                    }
+                    for(auto p : idx) I[p] = '?';
+            }
+
+            if(!ok){
+                    cout << "No" << endl;
+            }
+    }
 
 }
 /*

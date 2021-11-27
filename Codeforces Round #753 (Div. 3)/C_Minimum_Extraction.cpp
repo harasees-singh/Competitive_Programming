@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,14 +36,37 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n; cin >> n;
+
+            vi I(n);
+
+            for(auto &p : I) cin >> p;
+
+            vi process(I);
+
+            sort(all(process));
+
+            int sub = 0;
+
+            int ans = process[0];
+
+            l(i, 0, n - 1){
+
+                        int a = process[i] - sub, b = process[i + 1] - sub;
+
+                        int temp = process[i + 1] - process[i];
+
+                        sub = process[i], 
+                    
+                        ans = max(ans, temp);
+            }
+            cout << ans << endl;
+
+
+
+    }
 
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

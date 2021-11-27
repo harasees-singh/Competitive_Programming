@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -36,10 +34,31 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int d;
 
+bool isPrime(int a){
+    if(a==2)return 1;
+    if(a%2 == 0)return 0;
+    for(int i = 3; i*i <= a; i += 2){
+        if(a%i==0) return 0;
+    }
+    return 1;
+}
+
+int nxtPrime(int a){
+    for(int i = a; ; i++){
+        if(isPrime(i)) return i;
+    }
+
+}
 int32_t main(){
-        
-        FIO
+    FIO
+    w(t){
+        cin >> d;
+        int p1 = nxtPrime(1 + d);
+        int p2 = nxtPrime(p1 + d);
+        cout << p1*p2 << endl;
+    }
 
 }
 /*

@@ -37,10 +37,47 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+int cube(int n){
+    return n*n*n;
+}
 
+bool is_cube(int n){
+
+    if(n <= 0) return false;
+
+    int l = 1, r = 10000;
+
+    while(l <= r){
+        int mid = (l + r)/2;
+
+        if(cube(mid) > n) r = mid - 1;
+
+        else if(cube(mid) < n) l = mid + 1;
+
+        else return true;
+    }
+
+    return false;
+}
+
+void solve(int n){
+    l(i, 1, 1e4){
+
+            if(is_cube(n - cube(i))){
+                    cout << "YES" << endl; return;
+            }
+    }
+    cout << "NO" << endl; 
+}
+
+int32_t main(){
+    FIO
+
+    w(t){
+        int n; cin >> n;
+
+        solve(n);
+    }
 }
 /*
 *think brute force first.

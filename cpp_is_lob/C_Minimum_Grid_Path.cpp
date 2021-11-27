@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,9 +35,60 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
+vi Cost; int ans, n;
+
+set<int> even, odd;
+
+int Sum;
+
+void F(){
+        for(int i = 2; i < n; i += 1){
         
+                if(i%2){
+                        
+                        Sum -= (n - i/2)*(*odd.begin());
+
+                        odd.insert(Cost[i]);
+
+                        Sum += Cost[i];
+
+                        Sum += (n - i/2 - 1)*(*odd.begin());
+                }
+                else{
+                        Sum -= (n - i/2)*(*even.begin());
+
+                        even.insert(Cost[i]);
+
+                        Sum += Cost[i];
+
+                        Sum += (n - i/2 - 1)*(*even.begin());
+                }
+                ans = min(ans, Sum);
+        }  
+}
+
+int32_t main(){
         FIO
+
+        w(t){
+                cin >> n;
+
+                Cost = vi(n);
+
+                for(auto &p : Cost) cin >> p;
+
+                even.clear(); odd.clear();
+
+                even.insert(Cost[0]); odd.insert(Cost[1]);
+
+                ans = n*(Cost[0] + Cost[1]);
+
+                Sum = ans;
+
+                F();
+
+                cout << ans << endl;
+    }   
 
 }
 /*

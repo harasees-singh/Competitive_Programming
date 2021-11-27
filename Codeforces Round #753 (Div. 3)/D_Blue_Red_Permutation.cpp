@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,14 +36,49 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
         FIO
 
+        w(t){
+                int n; cin >> n;
+
+                vi I(n); for(auto &p : I) cin >> p;
+
+                string s; cin >> s;
+
+                vi blue(n), red(n);
+
+
+                bool ok = 1;
+
+                l(i, 0, n){
+                        if(s[i] == 'B' and I[i] <= 0) ok = 0;
+
+                        if(s[i] == 'R' and I[i] > n) ok = 0;
+                }
+                if(!ok){cout << "NO" << endl; continue;}
+
+                l(i, 0, n){
+                        if(s[i] == 'B') blue[min(I[i] - 1, n - 1)]++;
+                        
+                        else red[max(I[i] - 1, 0ll)]++;
+                }
+                int pt = 0;
+
+                l(i, 0, n){
+                        if(pt > i) {ok = 0; break;}
+
+                        pt += blue[i];
+                }
+
+                int pt2 = n - 1;
+
+                for(int i = n - 1; i >= 0; i--){
+                        if(pt2 < i) {ok = 0; break;}
+
+                        pt2 -= red[i];
+                }
+
+                cout << (ok ? "YES" : "NO") << endl;
+    }
+
 }
-/*
-*think brute force first.
-*try proving the algorithm on pen n paper first.
-*floating point precision errors ?
-*implementation too lengthy ? logic might be incorrect.
-*read the question again.
-*/

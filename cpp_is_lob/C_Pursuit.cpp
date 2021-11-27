@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,8 +36,56 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
+    FIO
+
+    w(t){
+        int n; cin >> n;
+
+        vi a(n), b(n);
+
+        for(auto &p : a) cin >> p;
+        for(auto &p : b) cin >> p;
+
+        sort(all(a));
+        sort(all(b));
+
+        int id = n/4;
+
+        int pta = id;
+        int ptb = id;
+        // pta = 0
+
+        int suma = 0;
+        l(i, pta, n) suma += a[i];
+
+        int sumb = 0;
+
+        l(i, ptb, n) sumb += b[i];
+
+        int cnt = 0;
+
+        if(suma >= sumb){
+            cout << 0 << endl;
+            continue;
+        }
         
-        FIO
+        int len = n + 1;
+        while(suma < sumb){
+            cnt++;
+            suma += 100;
+            if(len%4 == 0){
+                suma -= a[pta], pta++;
+                
+            }
+            else 
+                if(ptb > 0) sumb += b[ptb - 1], ptb--;
+
+            if(suma >= sumb) break;
+            len++;
+        }   
+        cout << cnt << endl;
+
+    }
 
 }
 /*

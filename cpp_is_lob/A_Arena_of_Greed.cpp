@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -36,10 +34,36 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+bool isPowerof2(long long x){
+	return !(x && (x & (x-1)));
+}
 
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+            int n; cin >> n;
+            int cnt = 0;
+
+            int parity = 1;
+            
+            while(n){
+                    int ans;
+
+                    if(n&1) n--, ans = 1;
+
+                    else if(n == 4) ans = 2, n = 2;
+
+                    else if(n%4 == 0) ans = 1, n--;
+
+                    else ans = n/2, n/=2;
+
+                    if(parity) cnt+=ans;
+
+                    parity^=1;
+            }
+            cout << cnt << endl;
+    }
 
 }
 /*

@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -38,9 +36,21 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
-
+    FIO
+    w(o){
+        int n; cin >> n;
+        string s; cin >> s;
+        string ans;
+        int cnt = count(all(s), '0');
+        if(sz(s)%2 and s[n/2]=='0'){
+            ans = (cnt > 1 ? "ALICE" : "BOB");
+        }
+        else{
+            ans = "BOB";
+        }
+        cout << ans << endl;
+    }
+    return 0;
 }
 /*
 *think brute force first.

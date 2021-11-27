@@ -37,9 +37,32 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int mx(){
+
+    int n; cin >> n;
+
+    int summ = 0;
+
+    int maxi = 0;
+
+    l(i, 0, n){
+        int t; cin >> t;
+
+        summ += t;
+
+        maxi = max(maxi, summ);
+    }    
+    return maxi;
+}
+
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+
+        cout << (mx() + mx()) << endl;
+
+    }
 
 }
 /*

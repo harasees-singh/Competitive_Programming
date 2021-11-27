@@ -37,9 +37,45 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vi in;
+int x;
+int mini;
+int x_cnt(int n){
+    int cnt = 0;
+
+    while(n%x == 0) n/=x, cnt++;
+
+    return cnt;
+}
+int Find(){
+
+    mini = infinity;
+    int id;
+
+    l(i, 0, sz(in)){
+
+            int t = x_cnt(in[i]);
+
+            if(t < mini) mini = t, id = i;
+    }
+    return id;
+}
+
 int32_t main(){
-        
-        FIO
+    FIO
+
+    w(t){
+        int n; cin >> n; cin >> x;
+
+        in = vi(n);
+
+        for(auto &p : in) cin >> p;
+
+        int id = Find();
+
+        cout << (mini + 1)*(accumulate(all(in), 0ll)) + (accumulate(in.begin(), in.begin() + id, 0ll)) << endl;
+
+    }
 
 }
 /*

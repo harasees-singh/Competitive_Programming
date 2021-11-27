@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -37,10 +35,36 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+int a,b,c,d;
 
+int cntZ(int summ){
+        // summ = x + y;
+
+        summ--;
+        if(summ < c) return 0;
+
+        else return min(summ, d) - c + 1;
+}
+
+int cnt[2000000];
+
+int32_t main(){
+    FIO
+
+    cin >> a >> b >> c >> d;
+
+    int ans = 0;
+
+    l(x, a, b + 1){
+
+            cnt[x + b]++;
+            cnt[x + c + 1]--;
+    }
+    l(i, 1, 2e6){
+            cnt[i] += cnt[i - 1];
+            ans += cnt[i]*cntZ(i);
+    }
+    cout << ans << endl;
 }
 /*
 *think brute force first.
