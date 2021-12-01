@@ -14,6 +14,7 @@ using namespace std;
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -36,9 +37,49 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vi in;
+
+int ans;
+
+int process(){
+        int gap = 0;
+        int it = 0;
+
+        for(; it < sz(in); it++){
+                if(in[it] == 0) continue;
+
+                int g = 0;
+
+                while(in[it%sz(in)]) it++, g++;
+
+                gap = max(gap, g);
+        }
+        return gap;
+}
+
 int32_t main(){
         
         FIO
+
+        w(t){
+                int n; cin >> n;
+
+                in = vi(n);
+
+                for(auto &p : in) cin >> p;
+
+                int extra = *min_element(all(in));
+
+                for(auto &p : in) p -= extra;
+
+                sort(all(in));
+
+                ans = 0;
+
+                ans += process();
+
+                cout << ans + extra*n << endl;
+        }
 
 }
 /*
