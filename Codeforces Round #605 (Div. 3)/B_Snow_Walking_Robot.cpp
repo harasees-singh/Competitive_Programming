@@ -40,6 +40,36 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int R = 0, U = 0;
+                string s; cin >> s;
+
+                int hori = 0, vert = 0;
+
+                for(auto &p : s){
+                        R += (p == 'R');
+                        hori += ((p == 'R') - (p == 'L'));
+                        U += (p == 'U');
+                        vert += ((p == 'U') - (p == 'D'));
+                }
+                R = min(R, R - hori);
+
+                U = min(U, U - vert);
+
+                if(!R or !U){
+                        cout << 2*((bool)max(R, U)) << endl;
+                        if(R) {cout << 'R'; cout << 'L';}
+                        if(U) {cout << 'U'; cout << 'D';} cout << endl;
+                        continue;
+                }
+
+                cout << (2*(R + U)) << endl;
+
+                l(i, 0, U) cout << "D"; l(i, 0, R) cout << "L";
+                l(i, 0, U) cout << "U"; l(i, 0, R) cout << "R"; cout << endl;
+
+        }       
+
         return 0;
 }
 /*

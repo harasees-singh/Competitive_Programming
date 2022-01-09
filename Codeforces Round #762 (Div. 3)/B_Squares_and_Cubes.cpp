@@ -40,6 +40,20 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+                set<int> num;
+                for(int i = 1; i < 1e5; i++){
+                        if(i*i <= n)
+                                num.insert(i*i);
+                        else break;
+
+                        if(i*i*i <= n)
+                                num.insert(i*i*i);
+                }
+                cout << num.size() << endl;
+        }
+
         return 0;
 }
 /*

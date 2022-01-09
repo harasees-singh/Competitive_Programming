@@ -14,7 +14,7 @@ using namespace std;
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
-#define int                             long long
+// #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -28,17 +28,48 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x, y)                       fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
 
+vector<vi> ans;
+
+int get(int l, int r){
+        int mini = 1e6;
+
+        for(auto &vec : ans){
+                mini = min(mini, vec[r] - vec[l - 1]);
+        }
+        return mini;
+}
+
 int32_t main(){
         
         FIO
+
+        int n, m; cin >> n >> m;
+
+        vector<string> ops = {"abc", "bca", "cab", "bac", "acb", "cba"};
+
+        ans = vector<vi> (6, vi(n + 1));
+
+        string s; cin >> s;
+
+        for(int i = 0; i < 6; i++){
+                string rep = ops[i];
+
+                for(int j = 1; j < n + 1; j++){
+                        ans[i][j] += (ans[i][j - 1] + (s[j - 1] != rep[j%3]));
+                }
+        }
+
+        for(int i = 0; i < m; i++){
+                int l, r; cin >> l >> r;
+
+                cout << get(l, r) << endl;
+        }
 
         return 0;
 }

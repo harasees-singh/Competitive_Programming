@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -36,11 +37,53 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+vi in;
 
-        return 0;
+bool kill(int k){
+        int p1 = 0, p2 = sz(in) - 1;
+        bool ret = 1;
+        while(p1 <= p2){
+                if(in[p1] != in[p2]){
+                        if(in[p1] == k) p1++;
+
+                        else if(in[p2] == k) p2--;
+
+                        else return false;
+                }
+                else p1++, p2--;
+        }
+        return true;
+}
+
+int32_t main(){
+    FIO
+
+    w(t){
+        int n; cin >> n;
+
+        in = vi(n);
+
+        for(auto &p : in) cin >> p;
+
+        int p1 = 0, p2 = n - 1;
+
+        bool ok = 1;
+
+        while(p1 < p2){
+
+                if(in[p1] == in[p2]) p1++, p2--;
+
+                else break;
+        }
+
+        if(p1 < p2){
+                ok = kill(in[p1]) or kill(in[p2]);
+                cout << (ok ? "YES" : "NO") << endl;
+        }
+        else cout << "YES" << endl;
+
+    }
+
 }
 /*
 *think brute force first.

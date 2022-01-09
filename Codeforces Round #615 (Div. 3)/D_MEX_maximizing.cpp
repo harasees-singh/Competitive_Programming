@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -36,11 +37,59 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+int cnt[4*100000 + 1] = {0};
 
-        return 0;
+struct Int{
+    int a;
+
+    Int(int a){
+        this->a = a;
+    }
+
+    bool operator<(Int u) const{
+        if(cnt[this->a] == cnt[u.a]) return this->a < u.a;
+        return cnt[this->a] <= cnt[u.a];
+    }
+}; 
+
+// struct comp{
+
+//     bool operator()(int a, int b){
+
+//         if(cnt[a] == cnt[b]) return a > b;
+
+//         return cnt[a] > cnt[b];
+//     }
+// };
+
+int32_t main(){
+    FIO
+
+    // priority_queue<int, vector<int>, comp> PQ;
+
+    int n, x; cin >> n >> x;
+
+    set<Int> Rem;
+
+    l(i, 0, x){
+        Int t(i);
+
+        Rem.insert(t);
+    }
+
+    l(i, 0, n){
+        int t; cin >> t;
+
+        Int u(t%x);
+
+        Rem.erase(Rem.find(u));
+
+        cnt[t%x]++;
+
+        Rem.insert(u);
+
+        cout << (*(Rem.begin())).a + cnt[(*Rem.begin()).a]*x  << endl;
+    }
 }
 /*
 *think brute force first.

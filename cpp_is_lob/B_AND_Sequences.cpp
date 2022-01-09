@@ -36,9 +36,46 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int nP2(int n){
+        if(n < 2)
+                return 0;
+        return ((n)*(n - 1))%MOD;
+}
+
+int fac[200000 + 1];
+
+
 int32_t main(){
         
         FIO
+
+        fac[0] = 1;
+
+        for(int i = 1; i < 200001; i++)
+                fac[i] = (i * fac[i - 1])%MOD;
+        
+        w(t){
+                int n; cin >> n;
+
+                vi in(n);
+
+                int ok = 1;
+
+                int AND = (1ll << 32) - 1;
+
+                for(auto &p : in){
+                        cin >> p;
+                        AND = (AND & p);
+                }
+                
+                int mini = *min_element(all(in));
+
+                ok = (AND == mini);
+
+                int cnt = count(all(in), mini);
+
+                cout << (nP2(cnt) * fac[n - 2] * ok)%MOD << endl;
+        }
 
         return 0;
 }

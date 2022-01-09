@@ -40,6 +40,29 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+
+                vector<pair<char, char>> in(n - 2);
+
+                l(i, 0, n - 2){
+                        pair<char, char> t; cin >> t.ff >> t.ss;
+
+                        in[i] = t;
+                }
+                char last = in[0].ff; 
+                string ans; 
+                for(auto p : in){
+                        if(p.ff == last) ans += p.ff, last = p.ss;
+
+                        else
+                                ans += last, ans += p.ff, last = p.ss;
+                }
+                ans += in[n - 3].ss;
+                
+                cout << (ans.size() == n ? ans : (ans + 'a')) << endl;
+        }
+
         return 0;
 }
 /*

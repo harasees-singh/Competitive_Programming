@@ -40,6 +40,36 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n, k; cin >> n >> k;
+
+                string s; cin >> s;
+
+                int i = 0;
+
+                while(i < n and s[i] == '0') i++;
+
+                int j = i + 1;
+
+                for(; i < n; i++){
+                        while(j < n and s[j]=='1') j++;
+
+                        if(j < n){
+                                int need = j - i;
+
+                                if(k < need){
+                                        swap(s[i + need - k], s[j]); break;
+                                }
+
+                                k -= need; swap(s[i], s[j]);
+
+                                j++;
+                        }
+                        else break;
+                }
+                cout << s << endl;
+        }
+
         return 0;
 }
 /*

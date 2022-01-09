@@ -40,6 +40,57 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n, ll, r, s; cin >> n >> ll >> r >> s;
+
+                vi vis(n + 1);
+
+                vi ans(n + 1);
+
+                l(i, ll, r + 1) ans[i] = i - ll + 1, vis[i - ll  + 1] = 1;
+
+                int cnt = r - ll + 1;
+
+                int cursum = (cnt*(cnt + 1))/2;
+
+                int need = s - cursum;
+
+                if(need < 0){
+                        cout << -1 << endl; continue;
+                }
+                int delta = n - cnt;
+                int id = r;
+                while(need and id >= ll){
+                        if(need > delta){
+                                vis[ans[id]] = 0;
+                                ans[id] += delta;
+                                need -= delta;
+                                
+                        }
+                        else{
+                                vis[ans[id]] = 0;
+                                ans[id] += need;
+                                need = 0;
+                        }
+                        vis[ans[id]] = 1;
+                        id--;
+                }
+                int pt = 1;
+                if(need){
+                        // cout << "hogya" << endl; cout.flush();
+                        cout << -1 << endl; continue;
+                }
+                else{
+                        
+                        for(int i = 1; i <= n; i++){
+                                while(pt <= n and ans[pt]) pt++;
+                                if(!vis[i] and pt <= n) ans[pt] = i;
+                        }
+                }
+                l(i, 1, n + 1) cout << ans[i] << ' '; cout << endl;
+
+        }
+
         return 0;
 }
 /*

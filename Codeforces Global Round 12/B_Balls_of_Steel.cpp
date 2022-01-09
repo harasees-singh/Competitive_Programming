@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -9,11 +7,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +26,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -35,12 +34,32 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
-
+int k;
+bool join(pii a, pii b){
+    return (abs(a.ff - b.ff) + abs(a.ss - b.ss) <= k);
+}
 int32_t main(){
+    w(t){
+        int n; cin >> n >> k;
+        vpii in(n);
         
-        FIO
-
-        return 0;
+        l(i, 0, n){
+            int x, y; cin >> x >> y;
+            in[i] = make_pair(x, y);
+        }
+        int f = -1;
+        l(i, 0, n){
+            bool ok = 1;
+            l(j, 0, n){
+                ok = ok and join(in[i], in[j]) ;
+            }
+            if(ok){
+                f = 1;
+                break;
+            }
+        }
+        cout << f << endl;
+    }   
 }
 /*
 *think brute force first.

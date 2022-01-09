@@ -40,6 +40,43 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+
+                vi in(n);
+
+                for(auto &p : in)
+                        cin >> p;
+
+                map<int, vi> pos;
+
+                l(i, 1, n + 1){
+                        pos[in[i - 1]].pb(i);
+                }
+
+                int ans = 0;
+
+                for(auto p : pos){
+                        vi positions = p.ss;
+
+                        vi opposite(sz(positions));
+
+                        l(i, 0, sz(positions))
+                                opposite[i] = n - positions[i] + 1;
+                        
+                        ans += accumulate(all(positions), 0ll) * accumulate(all(opposite), 0ll);
+
+                        int cursum = 0;
+
+                        l(i, 0, sz(positions)){
+                                cursum += opposite[i];
+
+                                ans -= cursum * positions[i];
+                        }
+                }
+                cout << ans << endl;
+        }
+
         return 0;
 }
 /*

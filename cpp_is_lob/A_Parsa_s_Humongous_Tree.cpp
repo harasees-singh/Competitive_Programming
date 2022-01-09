@@ -36,9 +36,55 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vector<vi> g;
+
+vector<pii> val;
+
+vector<pii> dp;
+
+void dfs(int i, int p){
+        if(i != 1 and sz(g[i]) == 1){
+                return;
+        }
+        for(auto q : g[i]){
+                if(q != p){
+                        dfs(q, i);
+                        dp[i].ff += max(dp[q].ff + abs(val[q].ff - val[i].ff), dp[q].ss + abs(val[q].ss - val[i].ff));
+                        dp[i].ss += max(dp[q].ff + abs(val[q].ff - val[i].ss), dp[q].ss + abs(val[q].ss - val[i].ss));
+                }
+        }
+}
+
 int32_t main(){
         
         FIO
+
+        w(t){
+                int n; cin >> n; 
+
+                val = vector<pii> (n + 1);
+
+                dp = vector<pii> (n + 1);
+
+                g = vector<vi> (n + 1);
+
+                l(i, 0, n){
+                        pii t; cin >> t.ff >> t.ss;
+
+                        val[i + 1] = t;
+                }
+
+                l(i, 0, n - 1){
+                        int u, v; cin >> u >> v;
+
+                        g[u].pb(v);
+                        g[v].pb(u);
+                }
+                dfs(1, 0);
+
+                cout << max(dp[1].ff, dp[1].ss) << endl;
+
+        }
 
         return 0;
 }

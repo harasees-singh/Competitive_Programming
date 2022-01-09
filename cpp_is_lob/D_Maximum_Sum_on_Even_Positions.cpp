@@ -35,11 +35,45 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int n; 
+vi in;
+int kadane(){
+        int cur = 0;
+        int mx = 0;
+        for(int i = 0; i + 1 < n; i += 2){
+                cur = max(cur, 0ll);
+
+                cur -= in[i]; cur += in[i + 1];
+
+                mx = max(mx, cur);
+        }
+        cur = 0;
+        
+        for(int i = n - 1 - (n&1 ? 0 : 1); i - 1 > -1; i -= 2){
+                cur = max(cur, 0ll);
+
+                cur -= in[i]; cur += in[i - 1];
+
+                mx = max(mx, cur);
+        }
+        
+        for(int i = 0; i < n; i += 2) mx += in[i];
+
+        return mx;
+}
 
 int32_t main(){
         
         FIO
+        w(t){
+                cin >> n;
 
+                in = vi(n);
+
+                for(auto &p : in) cin >> p;
+
+                cout << kadane() << endl;
+        }
         return 0;
 }
 /*

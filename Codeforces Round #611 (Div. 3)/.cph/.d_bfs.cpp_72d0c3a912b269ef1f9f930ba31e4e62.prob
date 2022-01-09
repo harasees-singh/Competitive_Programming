@@ -1,0 +1,1 @@
+{"name":"Local: d_bfs","url":"c:\\Users\\haras\\OneDrive\\Desktop\\Codeforces Round #611 (Div. 3)\\d_bfs.cpp","tests":[{"id":1637325805493,"input":"2 6\n1 5\n","output":"8\n-1 2 6 4 0 3 \n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\haras\\OneDrive\\Desktop\\Codeforces Round #611 (Div. 3)\\d_bfs.cpp","group":"local","local":true}

@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -37,10 +38,41 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 MOD_DEFINE
 
 int32_t main(){
-        
-        FIO
+    FIO
 
-        return 0;
+    w(o){
+        int n; cin >> n;
+
+        vpii in(n);
+
+        for(auto &p : in){
+            cin >> p.ff >> p.ss;
+        }
+        sort(all(in));
+
+        int x = 0, y = 0;
+
+        string ans;
+        bool ok = 1;
+
+        for(auto p : in){
+            int diff = p.ff - x;
+
+            l(i, 0, diff) ans += 'R', x++;
+
+            diff = p.ss - y;
+
+            if(diff < 0) {ok = 0; break;}
+
+            l(i, 0, diff) ans += 'U', y++;
+        }
+        if(ok){
+            cout << "YES" << endl;
+            cout << ans << endl;
+        }
+        else cout << "NO" << endl;
+    }
+
 }
 /*
 *think brute force first.

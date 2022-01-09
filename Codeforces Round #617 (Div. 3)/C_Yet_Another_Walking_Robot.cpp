@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -40,7 +41,46 @@ int32_t main(){
         
         FIO
 
-        return 0;
+        w(t){
+                map<pii, int> m;
+
+                int n; cin >> n;
+
+                string s; cin >> s;
+
+                vpii ans;
+
+                pii pos = {0, 0};
+
+                m[pos] = 0;
+
+                l(i, 0, n){
+                        char c = s[i];
+
+                        pos.ff += ((c == 'R') - (c == 'L'));
+
+                        pos.ss += ((c == 'U') - (c == 'D'));
+
+                        if(m.count(pos)){
+                                ans.pb(make_pair(m[pos] + 1, i + 1));
+                        }
+                        m[pos] = i + 1;
+                }
+                int mini = infinity;
+                pii a = {-1, -1};
+
+                for(auto p : ans){
+                        if(p.ss - p.ff < mini) 
+
+                                mini = p.ss - p.ff, a = p;
+                }
+                if(mini != infinity){
+                        cout << a.ff  << ' ' << a.ss  << endl;
+                }
+                else 
+                        cout << -1 << endl;
+        }
+
 }
 /*
 *think brute force first.

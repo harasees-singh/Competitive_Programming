@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -36,11 +37,62 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+vi primeFactors(int n){
+    vi P;
 
-        return 0;
+    int cur = 2;
+
+    int c(n);
+
+    for(int i = cur; i*i <= n; i++){
+        while(n%i == 0) P.pb(i), n/=i;
+    }
+
+    if(n > 1) P.pb(n);
+
+    return P;
+}
+
+int32_t main(){
+    FIO
+
+    w(t){
+        int n; cin >> n;
+
+        vi Primes = primeFactors(n);
+
+        int cnt = 0;
+
+        set<int> hogya;
+
+        int prod = 1;
+
+        l(i, 0, sz(Primes)){
+            prod *= Primes[i];
+
+            if(hogya.count(prod) == 0){
+
+                    cnt++; hogya.insert(prod); prod = 1;
+            }
+        }   
+
+        if(cnt > 2){
+            cout << "YES" << endl;
+
+            auto it = hogya.begin();
+            int done = 1;
+            l(i, 0, 2){
+                done *= (*it);
+                cout << *(it++) << space; 
+            }
+            cout << (n/done);
+            
+        }
+        else cout << "NO";
+
+        cout << endl;
+    }
+
 }
 /*
 *think brute force first.

@@ -40,6 +40,41 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                string a, s; cin >> a >> s;
+
+                while(sz(a) < sz(s)) a = "0" + a;
+                // cout << a << endl;
+                int i = sz(a) - 1, j = sz(s) - 1;
+                string ans;
+                bool ok = 1;
+
+                while(i > -1 and j > -1){
+                        int diff = s[j] - a[i];
+
+                        if(diff < 0){
+                                int val = s[j] - '0';
+                                j--;
+                                if(j > -1 and val + 10*(s[j] - '0') - (a[i] - '0') < 10 and val + 10*(s[j] - '0') - (a[i] - '0') > -1){
+                                        ans.push_back(val + 10*(s[j] - '0') - (a[i] - '0') + '0');
+                                }
+                                else{
+                                        ok = false; break;
+                                }
+                        }
+                        else{
+                                ans.pb(diff + '0');
+                        }
+                        i--, j--;
+                }
+                while(sz(ans) and ans.back() == '0') ans.pop_back();
+                reverse(all(ans));
+                // int val = stoi(ans);
+                l(j, 0, i + 1) ok = ok and (a[j] == '0');
+                ok = ok and (sz(ans));
+                cout << (ok and j == -1 ? ans : "-1") << endl;
+        }
+
         return 0;
 }
 /*

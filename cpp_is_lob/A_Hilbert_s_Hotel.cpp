@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -36,11 +36,48 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int findRem(int i, int n){
+        
+        return (i%n + n)%n;
+
+        // if(i < 0){
+        //         i = abs(i);
+
+        //         int rem = n - (i%n);
+
+        //         if(rem == n)
+        //                 return 0;
+        //         return rem;
+        // }
+        // return i%n;
+}
+
 int32_t main(){
         
         FIO
 
-        return 0;
+        w(t){
+                int n; cin >> n;
+
+                bool ok = 1;
+
+                vi rem(n);
+
+                l(i, 0, n){
+                        int t; cin >> t;
+
+                        int reduce = findRem(t + i, n);
+
+                        ok = ok and (!rem[reduce]);
+
+                        // cout << reduce << ' ';
+
+                        rem[reduce] = 1;
+                }
+                
+                cout << (ok ? "YES" : "NO") << endl;
+        }
+
 }
 /*
 *think brute force first.

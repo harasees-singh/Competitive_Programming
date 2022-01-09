@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -35,12 +35,43 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+// int n;
+void get(int rem, int n){
+        int start = n - rem - 3;
+        if(rem == 1){
+                cout << start + 1 << ' ' << start + 3 << ' ' << start << ' ' << start + 2 << ' ' << n << ' ';
+        }
+        else if(rem == 2){
+                cout << start + 1 << ' ' << n << ' ' << start + 3 << ' ' << start << ' ' << start + 2 << ' ' << n - 1 << ' ';
+        }
+        else if(rem == 3){
+                cout << start + 1 << ' ' << n - 1 << ' ' << start + 3 << ' ' << start << ' ' << start + 2 << ' ' << n - 2 << ' ' << n << ' ';
+        }
+        else{
+                cout << start + 1 << ' ' << start + 3 << ' ' << start << ' ' << start + 2 << ' ';
+        }
+        return;
+}
 
 int32_t main(){
         
         FIO
+        w(t){
+                int n; cin >> n;
 
-        return 0;
+                if(n < 4){
+                        cout << -1 << endl; continue;
+                }
+                int rep = n/4;
+
+                l(i, 1, rep){
+                        get(0, i*4);
+                }
+
+                get(n%4, n);
+                cout << endl;
+        }
+
 }
 /*
 *think brute force first.

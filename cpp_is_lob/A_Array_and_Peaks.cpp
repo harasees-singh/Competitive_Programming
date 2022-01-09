@@ -40,6 +40,26 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n, k; cin >> n >> k;
+
+                vi in(n);
+
+                for(int i = 0; i < n; i++) in[i] = i + 1;
+
+                if(2*k >= n){
+                        cout << -1 << endl; continue;
+                }
+
+                for(int i = 1, j = 0; j < k; i += 2, j++){
+                        swap(in[i], in[i + 1]);
+                }
+                for(auto p : in)
+                        cout << p << ' ';
+                        
+                cout << endl;
+        }
+
         return 0;
 }
 /*

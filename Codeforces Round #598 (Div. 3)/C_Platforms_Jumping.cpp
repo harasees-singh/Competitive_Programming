@@ -36,9 +36,79 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+void shift(int id, vi &in){
+        int pl = 1;
+
+        int color = in[id];
+
+        while(id > 1 and in[id - 1] == in[id]) id--, pl++;
+
+        in[id] = 0; in[id + pl] = color;
+
+}
+
+void get(vi &in, int d){
+        // bool ok = 0;
+        int n = sz(in) - 1;
+        l(it, 0, n){
+                l(i, 1, n){
+                        // if(in[i + 1] == 0){
+                                if(i + d > n) continue;
+                                bool nono = 1;
+                                l(k, i + 1, i + d + 1) nono = nono and !(in[k]);
+                                if(in[i] and nono){
+                                        int id = i;
+                                        while(id + d <= n and in[id + d] == 0){
+                                                shift(id, in); id++;
+                                        }
+                                }
+                                // else return;
+                        // }
+                }
+        }
+}
+
 int32_t main(){
         
         FIO
+
+        int n, m, d; cin >> n >> m >> d;
+
+        vi in(n + 1);
+
+        int j = 1;
+
+        l(i, 0, m){
+                int te; cin >> te;
+
+                while(te--) in[j++] = i + 1;
+        }
+
+        get(in ,d);
+        // for(auto p : in) cout << p <<' '; cout << endl;
+
+        bool ok = 1;
+
+        int cur = 0;
+
+        l(i, 1, n + 1){
+                // if(!in[i]) cur++;
+
+                if(in[i]){
+
+                        ok = ok and (i - cur <= d);
+
+                        while(i <= n and in[i]) i++;
+
+                        cur = --i;
+                }
+        }
+
+        if(ok and n + 1 - cur <= d){
+                cout << "YES" << endl;
+                l(i, 1, n + 1) cout << in[i] << ' '; cout << endl;
+        }
+        else cout << "NO" << endl;
 
         return 0;
 }

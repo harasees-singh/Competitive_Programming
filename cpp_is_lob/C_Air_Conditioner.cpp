@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -40,6 +40,35 @@ int32_t main(){
         
         FIO
 
+        w(z){
+                int n, T; cin >> n >> T;
+
+                int left = T, right = T;
+
+                bool ok = 1;
+
+                int time = 0;
+
+                l(i, 0, n){
+                        int t; cin >> t;
+
+                        int have = t - time; time = t;
+
+                        int l, r; cin >> l >> r;
+
+                        left -= have, right += have;
+
+                        if(l > right or r < left){
+                                ok = 0;
+                        }
+
+                        left = max(left, l);
+                        right = min(right, r);
+
+                        assert(have >= 0);
+                }
+                cout << (ok ? "YES" : "NO") << endl;
+        }
         return 0;
 }
 /*

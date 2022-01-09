@@ -40,6 +40,51 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+                
+                string s; cin >> s;
+
+                vi ans;
+
+                for(auto p : s){
+                        if(p == '*')
+                                ans.pb(0);
+                }
+                if(sz(ans) == 0){
+                        cout << 0 << endl; continue;
+                }
+
+                // find the sz(ans)/2 th star
+                int cnt = 0;
+                int j = 0;
+                l(i, 0, sz(ans)/2 + 1){
+                        while(s[j] != '*')
+                                j++;
+                        j++;
+                }
+                // j-- will have the pos of the mid sheep
+
+                int sheep = sz(ans)/2;
+                l(k, j, n){
+                        // assert(sheep < sz(ans) - 1);
+                        if(s[k] == '.')
+                                cnt++;
+                        else            
+                                ans[sheep + 1] = ans[sheep] + cnt, sheep++, cnt = 0;
+                }
+                cnt = 0;
+                sheep = sz(ans)/2;
+                for(int k = j - 2; k >= 0; k--){
+                        if(s[k] == '.')
+                                cnt++;
+                        else    
+                                ans[sheep - 1] = ans[sheep] + cnt, sheep--, cnt = 0;
+                }
+                cout << accumulate(all(ans), 0ll) << endl;
+
+        }
+
         return 0;
 }
 /*

@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -35,12 +35,41 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int cnt = 0;
+string s;
+void process(char r, int pos){
+        for(int i = max(0ll, pos - 3); i < pos; i++){
+                if(s.substr(i, 3) == "abc") cnt--;
+        }
+        s[pos - 1] = r;
+
+        for(int i = max(0ll, pos - 3); i < pos; i++){
+                if(s.substr(i, 3) == "abc") cnt++;
+        }
+}
 
 int32_t main(){
         
         FIO
 
-        return 0;
+        int n, q; cin >> n >> q;
+
+        cin >> s;
+
+        l(i, 0, n){
+                if(s.substr(i, 3) == "abc") cnt++;
+        }
+
+        l(i, 0, q){
+                int pos; cin >> pos; char r; cin >> r;
+
+                process(r, pos);
+
+                // cout << s << endl;
+
+                cout << max(0ll, cnt) << endl;
+        }
+
 }
 /*
 *think brute force first.

@@ -35,12 +35,44 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int n, h; 
+vi in;
+
+bool ok(int mid){
+        int damage = 0;
+        l(i, 0, n){
+                damage += min(in[i + 1] - in[i], mid);
+        }
+        return (damage >= h);
+}
 
 int32_t main(){
         
         FIO
+        cout << infinity << endl;
+        w(t){
+                cin >> n >> h;
 
-        return 0;
+                in = vi(n + 1);
+
+                l(i, 0, n){
+                        cin >> in[i];
+                }
+                in[n] = infinity;
+                
+                int l = 0, r = h;
+
+                while(l <= r){
+                        int mid = l + (r - l)/2;
+
+                        if(ok(mid))
+                                r = mid - 1;
+                        else 
+                                l = mid + 1;
+                }
+                cout << l << endl;
+        }
+
 }
 /*
 *think brute force first.

@@ -40,6 +40,12 @@ int32_t main(){
         
         FIO
 
+        int a, b, c; cin >> a >> b >> c;
+
+        string s; cin >> s;
+
+        cout << a + b + c << ' ' << s << endl;
+
         return 0;
 }
 /*

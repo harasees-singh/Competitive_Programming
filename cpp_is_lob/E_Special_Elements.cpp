@@ -9,12 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
-#define int                             long long
+// #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -40,7 +40,37 @@ int32_t main(){
         
         FIO
 
-        return 0;
+        w(t){
+                int n; cin >> n;
+
+                vi in(n + 1);
+
+                l(i, 1, n + 1){
+                        int t; cin >> t;
+                        in[i] = t;
+                }
+                int cnt = 0;
+                l(i, 1, n + 1){
+                        int cur = in[i];
+
+                        int l = 1, r = 1;
+
+                        int summ = 0;
+
+                        for(; r <= n; r++){
+                                summ += in[r];
+
+                                while(summ > cur) 
+                                        summ -= in[l],
+                                        l++;
+                                if(summ == cur and r - l >= 1){
+                                        cnt++;
+                                        break;
+                                }
+                        }
+                }
+                cout << cnt << endl;
+        }
 }
 /*
 *think brute force first.

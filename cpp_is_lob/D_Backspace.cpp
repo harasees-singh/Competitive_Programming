@@ -40,6 +40,19 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                string s, t; cin >> s >> t;
+
+                int j = sz(t) - 1;
+
+                for(int i = sz(s) - 1; i >= 0; i--){
+                        if(s[i] == t[j]) j--;
+
+                        else i--;
+                }
+                if(j < 0) cout << "YES" << endl; else cout << "NO" << endl;
+        }
+
         return 0;
 }
 /*

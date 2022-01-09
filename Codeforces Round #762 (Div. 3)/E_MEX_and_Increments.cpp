@@ -40,6 +40,56 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+
+                vi in(n);
+
+                for(auto &p : in) cin >> p;
+
+                sort(all(in));
+
+                vi f(n + 1);
+
+                for(auto p : in) f[p]++;
+
+                vector<pii> dp(n + 1);
+
+                dp[0].second = f[0];
+
+                cout << f[0] << ' ';
+
+                bool ok = 1;
+
+                int cursum = 0;
+
+                int need = 0;
+
+                l(i, 1, n + 1){
+                        if((i - 1 - in[i - 1]) < 0) ok = false;
+                        if(!ok){
+                                cout << -1 << ' '; continue;
+                        }
+                        cursum += in[i - 1];
+
+                        need += i - 1;
+                        // dp[i].ff += dp[i - 1].ff;
+
+                        int ans = 0;
+
+                        if(!f[i - 1]){
+                                ans = need - cursum;
+                        }
+
+                        dp[i].ss = f[i];
+
+
+
+                        cout << need - cursum + dp[i].ss << ' ';
+                }       
+                cout << endl;
+        }
+
         return 0;
 }
 /*

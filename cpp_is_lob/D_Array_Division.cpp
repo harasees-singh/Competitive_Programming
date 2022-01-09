@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -36,11 +36,42 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int r, l;
+
+multiset<int> R, L;
+
+bool ok(){
+        int one = r - l;
+        int two = l - r;
+
+        return (one%2 == 0 and R.count(one/2) or two%2 == 0 and L.count(two/2));
+}
+
 int32_t main(){
         
         FIO
 
-        return 0;
+        int n; cin >> n;
+
+        vi in(n);
+
+        for(auto &p : in) cin >> p;
+
+        r = accumulate(all(in), 0ll), l = 0;
+
+        for(auto p : in)
+                R.insert(p);
+        bool ans = 0;
+        for(auto p : in){
+                l += p, r -= p;
+
+                R.erase(R.find(p));
+
+                L.insert(p);
+
+                ans = ans or ok();
+        }
+        cout << (ans ? "YES" : "NO") << endl;
 }
 /*
 *think brute force first.

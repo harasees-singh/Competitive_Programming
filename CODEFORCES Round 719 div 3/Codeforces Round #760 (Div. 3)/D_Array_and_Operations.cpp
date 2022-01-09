@@ -40,6 +40,27 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n, k; cin >> n >> k;
+        
+                vi in(n);
+
+                for(auto &p : in)
+                        cin >> p;
+                
+                sort(all(in));
+
+                int i = n - 1;
+                int ans = 0;
+
+                for(int j = 0; j < k; i -= 1, j++){
+                        ans += in[i - k]/in[i];        
+                }
+                ans += accumulate(in.begin(), in.begin() + n - 2*k, 0ll);
+
+                cout << ans << endl;
+        }        
+                
         return 0;
 }
 /*

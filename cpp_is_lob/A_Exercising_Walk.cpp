@@ -36,10 +36,33 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+bool ok(int a, int b, int x, int x1, int x2){
+
+        if(a > b){
+                a -= b;
+
+                return (x - x1 >= a);
+        }
+        else if(b > a){
+
+                b -= a;
+
+                return (x2 - x >= b);
+        }
+        return (x1 != x2 or !(a + b));
+}
+
 int32_t main(){
         
         FIO
 
+        w(t){
+                int a, b, c, d, x, y, x1, y1, x2, y2; 
+
+                cin >> a >> b >> c >> d >> x >> y >> x1 >> y1 >> x2 >> y2;
+                
+                cout << ((ok(a, b, x, x1, x2) and ok(c, d, y, y1, y2)) ? "Yes" : "No") << endl;
+        }
         return 0;
 }
 /*

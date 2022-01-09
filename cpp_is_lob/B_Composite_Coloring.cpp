@@ -36,9 +36,61 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+map<int , vi> prime;
+
+void cheesegrater(int n, int id){
+        int cpy = n;
+        for(int i = 2; i * i <= n; i++){
+                if(n%i == 0){
+
+                        if(prime.count(i))
+                                prime[i].pb(id);
+                        else    
+                                prime[i] = {id};
+
+                        break;
+                }
+        }
+}
+
 int32_t main(){
         
         FIO
+
+        w(t){
+                int n; cin >> n;
+
+                prime.clear();
+
+                l(i, 1, n + 1){
+                        int t; cin >> t;
+
+                        cheesegrater(t, i);
+                }
+                int color = 0;
+                vi ans(n + 1);
+
+                for(auto &p : prime){
+                        // cout << p.ff << endl;
+                        auto vec = p.ss;
+                        assert(vec.size());
+                        color++;
+                        for(auto id : vec){
+                                // cout << id << ' '; cout.flush();
+                                assert(id < ans.size());
+                                ans[id] = color;
+                        }
+                        // cout << endl; cout.flush();
+                }
+                cout << prime.size() << endl;
+                cout.flush();
+                for(int i = 1; i <= n; i++){
+                        assert(i < sz(ans));
+                        cout << ans[i] << ' ';
+                        // cout << i << ' ';
+                }
+                cout << endl;
+        }
 
         return 0;
 }

@@ -40,6 +40,37 @@ int32_t main(){
         
         FIO
 
+        int n; cin >> n;
+
+        vi in(n);
+        
+        for(auto &p : in)
+                cin >> p;
+        
+        vector<vi> mat(n, vi(n));
+
+        int pos = 0;
+
+        for(auto p : in){
+                int r = pos, c = pos;
+                pos++;
+
+                for(int i = 0; i < p; i++){
+                        mat[r][c] = p;
+
+                        if(c and !mat[r][c - 1])
+                                c--;
+                        else    
+                                r++;
+                }
+        }
+        for(int i = 0; i < n; i++){
+                for(int j = 0; j < i + 1; j++){
+                        cout << mat[i][j] << ' ';
+                }
+                cout << endl;
+        }
+
         return 0;
 }
 /*

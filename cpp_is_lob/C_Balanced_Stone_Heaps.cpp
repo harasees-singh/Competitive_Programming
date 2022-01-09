@@ -35,10 +35,49 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+vi in;
+
+bool ok(int mid){
+        vi post_process(in);
+
+        for(int i = sz(in) - 1; i >= 2; i--){
+                int d = min(in[i], max(post_process[i] - mid, 0ll))/3;
+
+                post_process[i - 1] += d;
+                post_process[i - 2] += 2*d;
+                post_process[i] -= 3*d;
+        }
+        bool done = 1;
+
+        for(auto p : post_process)
+                done = done and (p >= mid);
+        return done;
+}
 
 int32_t main(){
         
         FIO
+
+        w(t){
+                int n; cin >> n;
+
+                in = vi(n);
+
+                for(auto &p : in)
+                        cin >> p;
+
+                int l = 1, r = 1e9;
+
+                while(l <= r){
+                        int mid = (l + r)/2;
+
+                        if(ok(mid))
+                                l = mid + 1;
+                        else    
+                                r = mid - 1;
+                }
+                cout << r << endl;
+        }
 
         return 0;
 }

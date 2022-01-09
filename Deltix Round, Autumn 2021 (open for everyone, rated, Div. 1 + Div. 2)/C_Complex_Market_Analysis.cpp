@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -35,12 +35,77 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int n;
+int k;
+vi in;
+vi primes;
+template<typename T>
+vector<T> sieve(T n){
+	vector<int> prime(n + 1, 1);
+	for(int i = 2; i*i<=n; i++){
+		if(prime[i]){
+			for(int j = 2; j*i<=n; j++){
+				prime[i*j] = 0;
+			}
+		}
+	}
+	vector<T> ans;
+	for(int i = 2; i<=n;i++){
+		if(prime[i]) ans.pb(i);
+	}
+        if(sz(prime) > 1) prime[1] = 0;
+	return prime;
+}
+bool isPrime(int i){
+        bool ok = 1;
 
+        if(i == 1)
+                return false;
+        
+        for(int j = 2; j*j <= i; j++)
+                ok = ok & (bool)(i%j);
+
+        return ok;
+}
+int calc(int pos){
+        int l = 0, r = 0;
+
+        for(int i = pos - k; i >= 0; i -= k){
+                if(in[i] == 1) 
+                        l++;
+
+                else 
+                        break;
+        }
+        for(int i = pos + k; i < n; i += k){
+                if(in[i] == 1) 
+                        r++;
+
+                else 
+                        break;
+        }
+        return (l + r + l*r);
+}
 int32_t main(){
         
         FIO
 
-        return 0;
+        primes = sieve((int)1e6);
+
+        w(t){
+                cin >> n >> k;
+
+                in = vi(n);
+
+                for(auto &p : in) cin >> p;
+                int ans = 0; 
+                l(i, 0, n){
+                        if(primes[in[i]])
+                                ans += calc(i);
+                }
+                cout << ans << endl;
+        }
+
 }
 /*
 *think brute force first.

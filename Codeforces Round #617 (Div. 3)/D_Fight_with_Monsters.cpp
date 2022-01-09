@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -35,12 +36,75 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int a, b;
+
+int mustGive(int n){
+        int s = a + b;
+
+        int rem;
+
+        if(n % s == 0){
+                rem = s;
+        }
+        else 
+                rem = n % s;
+
+        rem -= a;
+
+        int cnt = 0;
+
+        if(rem <= 0) 
+        
+                return 0;
+
+        else    
+                return (rem + a - 1)/a;
+}
 
 int32_t main(){
         
         FIO
 
-        return 0;
+        int n, k; cin >> n >> a >> b >> k;
+
+        vi options;
+        int ans(0);
+
+        l(i, 0, n){
+                int t; cin >> t;
+
+                int use = mustGive(t);
+
+                if(use == 0) 
+
+                        ans++;
+                else    
+                        options.pb(use);
+        }
+        sort(all(options));
+
+        // for(auto p : options) cout << p << space; cout << endl;
+
+        int s = 0;
+
+        int ex = sz(options);
+
+        l(i, 0, sz(options)){
+                s += options[i];
+                // cout << s << endl;
+
+                if(s > k) {
+
+                        // cout << k << endl;
+
+                        ex = i;
+
+                        break;
+                }
+        }
+        // cout << ans << space << ex << endl;
+
+        cout << ex + ans << endl;
 }
 /*
 *think brute force first.

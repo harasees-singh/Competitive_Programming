@@ -40,6 +40,29 @@ int32_t main(){
         
         FIO
 
+        // w(t){
+                int n;cin>> n;
+
+                vi in(n + 1);
+                l(i, 1, n + 1) cin >> in[i];
+
+                vi pref(n + 1, 1), suff(n + 2, 1);
+
+                pref[0] = 0; suff[n + 1] = 0;
+
+                l(i, 1, n +  1) if(in[i] > in[i - 1]) pref[i] += pref[i - 1];
+
+                for(int i = n; i >= 1; i--) if(in[i] < in[i + 1]) suff[i] += suff[i + 1];
+
+                int mx = *max_element(all(pref));
+                l(i, 1, n + 1){
+                        // remove ith id
+
+                        mx = max(mx, (in[i - 1] < in[i + 1] ? pref[i - 1] + suff[i + 1] : 0));
+                }
+                cout << mx << endl;
+        // }
+
         return 0;
 }
 /*

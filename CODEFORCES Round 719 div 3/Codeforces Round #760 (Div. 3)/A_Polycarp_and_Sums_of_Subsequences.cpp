@@ -40,6 +40,18 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                vi in(7);
+                for(auto &p : in) cin >> p;
+
+                if(in[0] + in[1] != in[2])
+                        for(int i = 0; i < 3; i++)
+                                cout << in[i] << ' ';
+                else    
+                        cout << in[0] << ' ' << in[1] << ' ' << in[3];
+                cout << endl;
+        }
+
         return 0;
 }
 /*

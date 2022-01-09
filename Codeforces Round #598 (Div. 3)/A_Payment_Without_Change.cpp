@@ -40,6 +40,16 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int a, b, n, s; cin >> a >> b >> n >> s;
+
+                int q = s/n;
+
+                s -= min(a, s/n)*n;
+
+                cout << (s <= b ? "YES" : "NO") << endl;
+        }
+
         return 0;
 }
 /*

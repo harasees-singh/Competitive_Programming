@@ -36,9 +36,33 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int get(int n){
+        return ((n)*(n + 1))/2;
+}
+
 int32_t main(){
         
         FIO
+
+        int n, k; cin >> n >> k;
+
+        string s; cin >> s;
+
+        set<char> avail;
+
+        l(i, 0, k) {
+                char t; cin >> t;
+
+                avail.insert(t);
+        }
+        int cnt = 0;
+        int ans = 0;
+        for(auto p : s){
+                if(avail.count(p)) cnt++;
+
+                else ans += get(cnt), cnt = 0; 
+        }
+        cout << ans + get(cnt) << endl;
 
         return 0;
 }

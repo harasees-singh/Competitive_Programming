@@ -40,6 +40,12 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                string a; cin >> a;
+
+                cout << (a.substr(0, sz(a)/2) == a.substr(sz(a)/2) ? "Yes" : "No") << endl;
+        }
+
         return 0;
 }
 /*

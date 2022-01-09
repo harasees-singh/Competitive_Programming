@@ -35,10 +35,52 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int n; 
+vi in;
+
+bool check(int i, int gcd){
+        bool ok = 1;
+        for(int j = i; j < n; j += 2){
+                ok = ok & (bool)(in[j]%gcd);
+        }
+        return ok;
+}
 
 int32_t main(){
         
         FIO
+
+        w(t){
+                cin >> n;
+
+                in = vi(n);
+                for(auto &p : in)
+                        cin >> p;
+                
+                int gcd = 0;
+
+                for(int i = 0; i < n; i += 2)
+                        gcd = __gcd(gcd, in[i]);
+                
+                if(check(1, gcd)){
+                        cout << gcd << endl;
+
+                        continue;
+                }
+
+                gcd = 0;
+
+                for(int i = 1; i < n; i += 2)
+                        gcd = __gcd(gcd, in[i]);
+
+                if(check(0, gcd)){
+                        cout << gcd << endl;
+
+                        continue;
+                }
+
+                cout << 0 << endl;
+        }
 
         return 0;
 }

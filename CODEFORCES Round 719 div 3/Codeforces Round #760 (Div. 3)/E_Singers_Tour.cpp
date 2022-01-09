@@ -35,10 +35,50 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+int ai_sum;
+vi in;
+int n;
+int get(int i){
+        return (ai_sum - (in[i] - in[(i - 1 + n)%n]))%n == 0 ? (ai_sum - (in[i] - in[(i - 1 + n)%n]))/n : -1;
+}
 
 int32_t main(){
         
         FIO
+
+        w(t){
+                cin >> n;
+                in = vi(n);
+                for(auto &p : in)
+                        cin >> p;
+                
+                int bi_sum = accumulate(all(in), 0ll);
+                // cout << bi_sum << endl;
+                int coeff = ((n)*(n + 1))/2;
+
+                if(bi_sum%coeff){
+                        cout << "NO" << endl;
+
+                        continue;
+                }
+                bool rem = false;
+
+                vi ans(n);
+
+                ai_sum = bi_sum/coeff;
+
+                l(i, 0, n)
+                        ans[i] = get(i);
+                for(auto p : ans)
+                        rem = rem or (p < 1);
+                if(rem){
+                        cout << "NO" << endl; continue;
+                }
+                cout << "YES" << endl;
+                for(auto p : ans)
+                        cout << p << ' '; 
+                cout << endl;
+        }
 
         return 0;
 }

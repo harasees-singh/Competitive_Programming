@@ -36,9 +36,49 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vector<vi> mat;
+
+bool good(int mid){
+        bool ok = 0;
+
+        l(i, 0, sz(mat)){
+                int cnt = 0;
+                for(auto p : mat[i]) cnt += (p >= mid);
+
+                ok = ok or (cnt >= 2);
+        }
+        for(int j = 0; j < sz(mat[0]); j++){
+                bool local = 0;
+
+                for(int i = 0; i < sz(mat); i++) local = local or (mat[i][j] >= mid);
+
+                ok = ok and (local);
+        }
+        return ok;
+}
+
 int32_t main(){
         
         FIO
+
+        w(t){
+                int m, n; cin >> m >> n;
+
+                mat = vector<vi> (m, vi(n));
+
+                l(i, 0, m){
+                        for(auto &p : mat[i]) cin >> p;
+                }
+                int l = 0, r = 1e9;
+
+                while(l <= r){
+                        int mid = (l + r)/2;
+
+                        if(good(mid)) l = mid + 1;
+                        else r = mid - 1;
+                }
+                cout << r << endl;
+        }
 
         return 0;
 }

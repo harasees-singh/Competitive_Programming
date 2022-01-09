@@ -40,6 +40,20 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+
+                vi in(n);
+
+                for(auto &p : in) cin >> p;
+                int cnt = n - 1;
+                int limit = n;
+                vi vis(n);
+                while(cnt and limit--) for(int i = n - 1; i > 0; i--) if(in[i] < in[i - 1] and !vis[i]) vis[i] = 1, swap(in[i], in[i - 1]), cnt--;
+
+                for(auto p : in) cout << p <<  ' '; cout << endl;
+        }
+
         return 0;
 }
 /*

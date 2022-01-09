@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -40,7 +41,24 @@ int32_t main(){
         
         FIO
 
-        return 0;
+        w(t){
+                int n, l, r, k;cin >> n >> l >> r >> k;
+
+                vi in(n);
+
+                for(auto &p : in) cin >> p;
+
+                sort(all(in));
+
+                int cnt = 0;
+                int summ = 0;
+
+                for(auto p : in){
+                        if(p >= l and p <= r and summ + p <= k) cnt++, summ += p;
+                }
+                cout << cnt << endl;
+        }
+
 }
 /*
 *think brute force first.

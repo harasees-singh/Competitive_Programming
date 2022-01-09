@@ -36,9 +36,26 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int get(int a, int b, int c){
+        return abs(a - b) + abs(b - c) + abs(c - a);
+}
+
 int32_t main(){
         
         FIO
+
+        w(t){
+                int x, y, z; cin >> x >> y >> z;
+                int mn = infinity;
+                for(int a = x - 1; a <= x + 1; a++){
+                        for(int b = y - 1; b <= y + 1; b++){
+                                for(int c = z - 1; c <= z + 1; c++){
+                                        mn = min(mn, get(a, b, c));
+                                }
+                        }
+                }
+                cout << mn << endl;
+        }
 
         return 0;
 }

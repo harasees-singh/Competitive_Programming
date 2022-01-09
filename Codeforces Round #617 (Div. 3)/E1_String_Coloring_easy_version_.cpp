@@ -9,11 +9,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +28,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -40,7 +41,29 @@ int32_t main(){
         
         FIO
 
-        return 0;
+        int n; cin >> n;
+
+        string s; cin >> s;
+
+        int mx1 = 'a' - 1, mx2 = 'a' - 1;
+
+        bool ok = 0;
+
+        int cnt = 0;
+
+        l(i, 0, n){
+                if(s[i] >= mx1) mx2 = 'a' - 1, mx1 = s[i];
+
+                else if(s[i] >= mx2) mx2 = s[i];
+
+                else ok = 1;
+        }
+
+        if(ok == 1){
+                cout << "NO\n";
+        }       
+        else    
+                cout << "YES\n";
 }
 /*
 *think brute force first.

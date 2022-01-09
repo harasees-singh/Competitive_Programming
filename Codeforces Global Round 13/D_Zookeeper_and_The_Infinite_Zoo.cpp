@@ -1,5 +1,3 @@
-// ਹਰਅਸੀਸ ਸਿੰਘ
-
 #include<bits/stdc++.h>
 
 #include<ext/pb_ds/assoc_container.hpp>
@@ -9,11 +7,12 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
+#define space                           " "
 #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
@@ -27,7 +26,7 @@ using namespace std;
 #define cin                             std::cin
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x, y)                       fixed<<setprecision(y)<<x
+#define fps(x,y)                        fixed<<setprecision(y)<<x
 #define float                           long double
 #define double                          long double
 typedef long long ll;
@@ -36,11 +35,37 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
-int32_t main(){
-        
-        FIO
+bool ok(int u, int v){
 
-        return 0;
+    if(u > v) return false;
+    string U, V;
+    while(u or v){
+            U.pb((u&1) + '0'); u/=2;
+            V.pb((v&1) + '0'); v/=2;
+    }
+
+    int pt = 0;
+
+    l(i, 0, sz(V)){
+
+        if(V[i] == '0') continue;
+
+        while(pt < sz(U) and U[pt] != '1') pt++;
+
+        if(pt == sz(U) or pt > i) return false;
+
+        pt++;
+    }
+    return true;
+}
+
+int32_t main(){
+    FIO
+
+    w(t){
+        int u, v; cin >> u >> v;
+        cout << (ok(u, v) ? "YES" : "NO") << endl;
+    }
 }
 /*
 *think brute force first.

@@ -36,10 +36,35 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vector<vector<int>> dp;
+
+int dfs(int x, int k){
+        if(k + x < 10 or k == 0) return 1;
+
+        if(x > 1) return (dfs(1, k - (10 - x)) + dfs(0, k - (10 - x)))%MOD;
+
+        if(dp[x][k] != -1) return dp[x][k];
+
+        return dp[x][k] = (dfs(1, k - (10 - x)) + dfs(0, k - (10 - x)))%MOD;
+}
+
 int32_t main(){
         
         FIO
+        dp = vector<vi>(2, vi(2e5 + 1, -1));
 
+        w(t){
+                int n, k; cin >> n >> k;
+
+
+                int cnt = 0;
+
+                while(n){
+                        cnt += dfs(n%10, k); n/=10;
+                        cnt%=MOD;
+                }
+                cout << cnt << endl;
+        }
         return 0;
 }
 /*

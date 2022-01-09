@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -35,11 +35,55 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 MOD_DEFINE
+vi ans;
+
+int complement(int n){
+        int cur = 0;    
+
+        int ret = 0;
+
+        while(n){       
+                if(!(n&1))
+        
+                       ret += (1ll << cur);
+                n /= 2;
+                cur++;
+        }       
+        return ret;
+}
+
+void go(int n){
+        if(n <= 0) return;
+
+        int l = complement(n);
+        int c(l);
+        while(l < n){
+                ans[l] = n;
+                ans[n] = l;
+                l++, n--;
+        }
+        
+        go(c - 1);
+}
 
 int32_t main(){
         
         FIO
 
+        int n; cin >> n;
+
+        ans = vi(n + 1);
+
+        int Xor = 0;
+        
+        go(n);
+
+        l(i, 0, n + 1){
+                Xor += (i ^ ans[i]);
+        }
+        cout << Xor << endl;
+        for(auto p : ans)
+                cout << p << ' ';
         return 0;
 }
 /*

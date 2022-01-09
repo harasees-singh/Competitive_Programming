@@ -40,6 +40,47 @@ int32_t main(){
         
         FIO
 
+        w(t){
+                int n; cin >> n;
+
+                vi in(n);
+                for(auto &p : in) cin >> p;
+
+                vi smallest(in);
+
+                vi vis(n + 1);
+
+                vi id_done(n);
+
+                l(i, 0, n){
+                        if(!vis[in[i]]){
+                                vis[in[i]] = 1;
+
+                                id_done[i] = 1;
+                        }
+                }
+                int put = 1;
+                l(i, 0, n){
+                        if(!id_done[i]){
+                                while(vis[put]) put++;
+                                smallest[i] = put; put++;
+                        }
+                }
+                pbds store;
+                l(i, 1, n + 1) 
+                        if(!vis[i]) 
+                                store.insert(i);
+
+                l(i, 0, n){
+                        if(!id_done[i]){
+                                in[i] = *store.find_by_order(store.order_of_key(in[i]) - 1);
+                                store.erase(store.find(in[i]));
+                        }
+                }
+                for(auto p : smallest) cout << p << ' '; cout << endl;
+                for(auto p : in) cout << p << ' '; cout << endl;
+        }
+
         return 0;
 }
 /*

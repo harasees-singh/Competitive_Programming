@@ -36,10 +36,48 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+int mx = 0;
+
+vi pref, suff, a, b;
+int n; 
+void propagate(int cur, int l, int r){
+        while(l >= 0 and r <= n + 1){
+                mx = max(mx, cur + pref[l] + suff[r]);
+
+                cur += a[l]*b[r] + b[l]*a[r];
+
+                l--; r++;
+        }
+}
+
 int32_t main(){
         
         FIO
 
+        cin >> n;
+
+        // vi a(n + 1), b(n + 1);
+        a = vi(n + 2); b = vi(n + 2);
+
+        l(i, 1, n + 1) cin >> a[i];
+        l(i, 1, n + 1) cin >> b[i];
+        
+        // vi pref(n + 1), suff(n + 1);
+        pref = vi(n + 1); suff = vi(n + 2);
+        suff[n] = a[n]*b[n];
+
+        l(i, 1, n + 1) pref[i] = pref[i - 1] + a[i]*b[i];
+
+        for(int i = n; i > 0; i--) suff[i] = suff[i + 1] + a[i]*b[i];
+
+        l(i, 1, n + 1){
+                propagate(a[i]*b[i], i - 1, i + 1);
+        }
+        l(i, 1, n){
+                propagate(a[i]*b[i + 1] + a[i + 1]*b[i], i - 1, i + 2);
+        }
+        cout << mx << endl;
+        
         return 0;
 }
 /*

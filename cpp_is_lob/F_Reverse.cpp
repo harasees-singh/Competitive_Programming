@@ -36,9 +36,64 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+// x should be substr of y
+// y should be of the form ..1111 x 1111..
+// 10000 -> 100001 case handle
+// 10100 -> 101 also handled
+
+string bits(int n){
+        string ret;
+
+        while(n){
+                ret += (n&1 ? '1' : '0');
+
+                n/=2;
+        }
+        reverse(all(ret));
+
+        return ret;
+}
+bool ok(string x, string y){
+        l(i, 0, y.size()){
+                if(y[i] == '0'){
+                        return false;
+                }
+                if(y.substr(i, x.size()) == x){
+                        int j;
+                        bool done = false;
+                        for(j = i + x.size(); j < y.size(); j++){
+                                done = true;
+                                if(y[j] == '0') return false;
+                        }
+                        return (x[x.size() - 1] == '1' or done);
+                } 
+        }
+        return false;
+}
 int32_t main(){
         
         FIO
+
+        int x, y; cin >> x >> y;
+        if(x == y){
+                cout << "YES" << endl; return 0;
+        }
+        int xpy = x;
+        while(xpy%2 == 0)
+                xpy/=2;
+        string X = bits(x);
+        string Y = bits(y);
+        bool yes = ok(X, Y);
+        reverse(all(X));
+        yes = yes or ok(X, Y);
+
+        string xx = bits(xpy);
+
+        yes = yes or ok(xx, Y);
+        reverse(all(xx));
+        yes = yes or ok(xx, Y);
+
+        cout << (yes ? "YES" : "NO") << endl;
 
         return 0;
 }

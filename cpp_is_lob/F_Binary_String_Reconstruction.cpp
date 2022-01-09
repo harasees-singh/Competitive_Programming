@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -39,8 +39,30 @@ MOD_DEFINE
 int32_t main(){
         
         FIO
+        w(t){
+                int n0, n1, n2; cin >> n0 >> n1 >> n2;
 
-        return 0;
+                string s;
+
+                if(n2){
+                        l(i, 0, n2 + 1) s += '1';
+                }
+                if(n0 or n1)
+                        s += '0';
+                l(i, 0, n0)
+
+                        s += '0';
+                
+                l(i, 0, n1 - (bool)n2){
+                        if(s.back() == '0') 
+                                s += '1';
+                        else 
+                                s += '0';
+                }
+                
+                cout << s << endl;
+        }
+
 }
 /*
 *think brute force first.

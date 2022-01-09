@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -36,10 +36,59 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 MOD_DEFINE
 
+vector<vi> g;
+vi dp; // stores the answer to each node considering it as the root and it's subtree as the whole tree.
+vi color;
+vi ans;
+
+int dfs(int i, int p){
+        dp[i] = (color[i] ? 1 : -1);
+        for(auto c : g[i])
+                if(c != p) // not parent
+                        dp[i] += max(0ll, dfs(c, i));
+
+        return dp[i];
+}
+
+void reRoot(int i, int p){
+        ans[i] = dp[i];
+
+        for(auto c : g[i])
+                if(c != p){ // not parent
+                        dp[i] -= max(0ll, dp[c]);
+                        dp[c] += max(0ll, dp[i]);
+                        reRoot(c, i);
+                        dp[c] -= max(0ll, dp[i]);
+                        dp[i] += max(0ll, dp[c]);
+                }       
+}
+
 int32_t main(){
         
         FIO
 
+        int n; cin >> n;
+
+        g = vector<vi> (n + 1);
+        dp = vi(n + 1);
+        color = vi(n + 1);
+        ans = vi(n + 1);
+
+        l(i, 0, n)
+                cin >> color[i + 1];
+
+        l(i, 0, n - 1){
+                int u, v; cin >> u >> v;
+
+                g[u].pb(v), g[v].pb(u);
+        }
+
+        dfs(1, 0);
+
+        reRoot(1, 0);
+
+        l(i, 1, n + 1)
+                cout << ans[i] << ' ';
         return 0;
 }
 /*
