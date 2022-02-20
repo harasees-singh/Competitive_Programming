@@ -28,8 +28,6 @@ using namespace std;
 #define pqb                             priority_queue<int>
 #define pqs                             priority_queue<int, vi, greater<int>>
 #define fps(x, y)                       fixed<<setprecision(y)<<x
-#define float                           long double
-#define double                          long double
 typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
@@ -43,50 +41,41 @@ int32_t main(){
         w(t){
                 int n; cin >> n;
 
-                vi in(n);
-
-                for(auto &p : in) cin >> p;
-
-                sort(all(in));
+                vi dp(n + 1); // dp[i] stores the number of changes made in order to obtain a permutation {0, 1, ...i - 1}
 
                 vi f(n + 1);
 
-                for(auto p : in) f[p]++;
+                l(i, 0, n){
+                        int t; cin >> t; f[t]++;
+                }
+                vi have; // have stores our inventory of 'smaller' numbers which we may increment in case i - 1 is not available while we try to make i the mex
 
-                vector<pii> dp(n + 1);
+                // int it = 0; // iterator over have
 
-                dp[0].second = f[0];
+                cout << f[0] << ' '; // trivial if mex needs to be zero;
 
-                cout << f[0] << ' ';
+                l(i, 0, f[0] - 1) have.pb(0); bool ok = 1;
 
-                bool ok = 1;
-
-                int cursum = 0;
-
-                int need = 0;
-
-                l(i, 1, n + 1){
-                        if((i - 1 - in[i - 1]) < 0) ok = false;
+                for(int mex = 1; mex <= n; mex++){
                         if(!ok){
                                 cout << -1 << ' '; continue;
                         }
-                        cursum += in[i - 1];
+                        dp[mex] = dp[mex - 1];
 
-                        need += i - 1;
-                        // dp[i].ff += dp[i - 1].ff;
+                        if(f[mex - 1]){
 
-                        int ans = 0;
-
-                        if(!f[i - 1]){
-                                ans = need - cursum;
+                                cout << dp[mex] + f[mex] << ' '; 
                         }
+                        else{
+                                if(sz(have)){
+                                        dp[mex] += mex - 1 - have.back(), have.pop_back();
 
-                        dp[i].ss = f[i];
-
-
-
-                        cout << need - cursum + dp[i].ss << ' ';
-                }       
+                                        cout << dp[mex] + f[mex] << ' ';
+                                }
+                                else cout << -1 << ' ', ok = 0;
+                        }
+                        l(i, 0, f[mex] - 1) have.pb(mex);
+                }
                 cout << endl;
         }
 

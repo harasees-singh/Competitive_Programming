@@ -1,86 +1,96 @@
-#include<bits/stdc++.h>
-
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
-
+#include <bits/stdc++.h>
 using namespace std;
-using namespace __gnu_pbds;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-#define ff                              first
-#define ss                              second
-#define infinity                        999999999999999999
-#define sz(v)                           ((int)(v).size())
-#define all(v)                          (v).begin(),(v).end()
-#define MOD_DEFINE                      const int MOD = 1e9 + 7;
-#define endl                            '\n'
-#define space                           " "
-#define int                             long long
-#define pii                             pair<int, int>
-#define vi                              vector<int>
-#define pb(n)                           push_back(n)
-#define mii                             map<int, int>
-#define umii                            unordered_map<int, int>
-#define test_cases_loop int t;          cin >> t; while(t--)
-#define FIO                             ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
-#define l(var, initial, final)          for(int var=initial; var < final; var++)
-#define cout                            std::cout
-#define cin                             std::cin
-#define pqb                             priority_queue<int>
-#define pqs                             priority_queue<int, vi, greater<int>>
-#define fps(x,y)                        fixed<<setprecision(y)<<x
+#define FIO ios_base::sync_with_stdio(false), cin.tie(NULL), cout.tie(0);
+#define all(a) ((a).begin()), ((a).end())
+#define printarr(v, start, end)for (int _i = (start); _i < (end); _i++) cout << (v[_i]) << " ";cout << "\n";
+#define log(v) for(auto __i = ((v).begin()); __i != ((v).end()); __i++) cout << *(__i) << " "; cout << "\n";
+#define print(args...){string _s = #args; replace(_s.begin(), _s.end(), ',', ' '); stringstream _ss(_s);istream_iterator<string> _it(_ss);err(_it, args);cout<<"\n";};
 
-MOD_DEFINE
+using vi = vector<int>;
+using vvi = vector<vector<int>>;
+using vll = vector<long long>;
+using ll = long long;
+using ld = long double;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
 
-struct DisjointSet{
-        int N = 1e5;
-
-		DisjointSet(){
-				MakeSet();
-		}
-
-        DisjointSet(int n){
-                N = n;
-                MakeSet();
-        }
-
-		int *Rank = new int[N + 1];
-
-        int *parent = new int[N + 1];
-
-        void MakeSet(){
-                for(int i = 1; i <= N; i++)
-                        parent[i] = i;
-        }
-
-        int findParent(int v){
-
-                if(parent[v] == v)
-                        return v;
-                
-                return parent[v] = findParent(parent[v]);
-        }
-
-        void Union(int u, int v){
-
-                u = findParent(u), v = findParent(v);
-
-                if(Rank[u] > Rank[v])
-                        parent[v] = u;
-                else if(Rank[u] < Rank[v])
-                        parent[u] = v;
-                else        
-                        parent[v] = u, Rank[u]++;
-        }
+void err(istream_iterator<string> it){};
+template <typename T, typename... Args>
+void err(istream_iterator<string> it, T a, Args... args)
+{
+    cout << a << " ";
+    err(++it, args...);
 };
-int32_t main(){
-	FIO 
 
-	DisjointSet a(5), b;
+bool valley(int i, vi &a)
+{
+	return (a[i] < a[i - 1]) and (a[i] < a[i + 1]);
+}
 
-	a.Union(1, 4); 
+bool hill(int i, vi &a)
+{
+	return (a[i] > a[i - 1]) and (a[i] > a[i + 1]);
+}
 
-	cout << a.findParent(4) << endl;
+bool extremaNow(int i, vi &a)
+{
+	return hill(i, a) or valley(i, a);
+}
 
-	return 0;
+void solve()
+{
+	int n; cin >> n;
+	
+	vi extrema(n), a(n);
+	
+	for(int i = 0; i < n; i++)
+		cin >> a[i];
+	
+	int s = 0;
+	
+	for(int i = 1; i < n - 1; i++)
+	{
+		if (a[i] > a[i - 1] and a[i] > a[i + 1])
+			extrema[i] = 1, s++;
+			
+		else if (a[i] < a[i - 1] and a[i] < a[i + 1])
+			extrema[i] = 1, s++;
+	}
+	
+	int ans = s;
+	
+	for(int i = 1; i < n - 1; i++)
+	{
+		int old_a = a[i];
+		
+		// Case-1 : change a[i] to a[i - 1]
+		a[i] = a[i - 1];
+		
+		int sub = extrema[i] + extrema[i - 1] + extrema[i + 1];
+		int add = extremaNow(i, a) + extremaNow(i - 1, a) + extremaNow(i + 1, a); 
+		
+		ans = min(ans, s - sub + add);
+		
+		// Case-2
+		a[i] = a[i + 1];
+		
+		add = extremaNow(i, a) + extremaNow(i - 1, a) + extremaNow(i + 1, a);
+		
+		ans = min(ans, s - sub + add);
+		
+		// undo the changes
+		a[i] = old_a;		 
+	}
+	
+	cout << ans << "\n";	
+}
+
+int main()
+{
+    FIO;
+    int t = 1;
+    cin >> t;
+    while(t--)
+        solve();
 }
