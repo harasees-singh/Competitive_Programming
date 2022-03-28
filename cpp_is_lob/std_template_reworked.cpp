@@ -20,7 +20,7 @@ using namespace std;
 #define pb(n)                           push_back((n))
 #define mii                             map<int, int>
 #define umii                            unordered_map<int, int>
-#define w(t)                            int t; cin >> t; while(t--)
+#define w(T)                            int T; cin >> T; while(T--)
 #define FIO                             ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define l(var, initial, final)          for(int var=initial; var < final; var++)
 #define cout                            std::cout
