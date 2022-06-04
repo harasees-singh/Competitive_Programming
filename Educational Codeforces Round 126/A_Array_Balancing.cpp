@@ -38,57 +38,28 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        w(T){
+            int n; cin >> n; 
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+            vi a(n), b(n); for(auto &p : a) cin >> p; for(auto &p : b) cin >> p;
 
-                roots[i] = 0;
+            vector<pii> dp(n);
+
+            for(int i = 1; i < n; i++){
+                // dp[i].ff is if i th is kept as it is 
+                // dp[i].ss is if i th is swapped
+
+                dp[i].ff = min(dp[i - 1].ss + abs(b[i - 1] - a[i]) + abs(b[i] - a[i - 1]), dp[i - 1].ff + abs(a[i - 1] - a[i]) + abs(b[i - 1] - b[i]));
+                dp[i].ss = min(dp[i - 1].ss + abs(b[i - 1] - b[i]) + abs(a[i] - a[i - 1]), dp[i - 1].ff + abs(a[i - 1] - b[i]) + abs(b[i - 1] - a[i]));
+
             }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
+            cout << min(dp[n - 1].ff, dp[n - 1].ss) << endl;
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }

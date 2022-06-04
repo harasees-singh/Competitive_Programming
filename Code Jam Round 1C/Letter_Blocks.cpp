@@ -38,57 +38,68 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        int test; cin >> test; 
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+        for(int T = 1; T <= test; T++){
+            cout << "Case #" << T << ": ";
 
-                roots[i] = 0;
+            int n; cin >> n; 
+
+            vector<string> in(n); for(auto &p : in) cin >> p;
+
+            vi vis(n);
+
+            vis[0] = 1;
+
+            deque<int> dq;
+            bool ok = 1;
+            dq.push_back(0);
+
+            for(int i = 0; i < n - 1; i++){
+                char start = in[dq.front()][0];
+                int idx = -1;
+                for(int it = 0; it < n; it++){
+                    if(not vis[it] and in[it].back() == start){
+                        idx = it;
+                        if(count(all(in[it]), in[it][0]) == sz(in[it])){
+                            break;
+                        }
+                    }
+                }
+                if(idx != -1){
+                    vis[idx] = 1;
+                    dq.push_front(idx);
+                }
+                else{
+                    char end = in[dq.back()].back();
+
+                    for(int it = 0; it < n; it++){
+                        if(not vis[it] and in[it][0] == end){
+                            idx = it;
+                            if(count(all(in[it]), in[it][0]) == sz(in[it])){
+                                break;
+                            }
+                        }
+                    }
+                    if(idx == -1){
+                        ok = 0; break;
+                    }
+                    dq.push_back(idx); vis[idx] = 1;
+                }
             }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
+            if(not ok){
+                cout << "IMPOSSIBLE" << endl; continue;
             }
+            while(dq.size()){
+                cout << in[dq.front()]; dq.pop_front();
+            }
+            cout << endl;
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }

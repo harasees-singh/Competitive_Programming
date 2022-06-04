@@ -38,57 +38,38 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        int n, x; cin >> n >> x; 
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+        queue<int> Q; Q.push(x);
 
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
+        map<int, bool> vis; vis[x] = 1;
+
+        for(int cnt = 0; Q.empty()==false; cnt++){
+            int len = sz(Q);
+
+            while(len--){
+                int top = Q.front();
+                Q.pop();
+
+                string temp = to_string(top);
+                if(sz(temp) == n){
+                    cout << cnt; return 0;
+                }
+                for(auto p : temp){
+                    int X = top * (p - '0');
+
+                    if(not vis[X]){
+                        Q.push(X); vis[X] = 1;
+                    }
+                }
             }
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
+        cout << -1;
 
         return 0;
 }

@@ -12,9 +12,9 @@ using namespace std;
 #define infinity                        8999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
-#define MOD_DEFINE                      const int MOD = 1e9 + 7;
+#define MOD_DEFINE                      const int MOD = 4
 #define endl                            '\n'
-#define int                             long long
+// #define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -37,58 +37,30 @@ template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, 
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
-MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
-
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
+MOD_DEFINE;
+int ans[40000];
+ 
+int dfs(int z){
+	if(ans[z % MOD] != -1){
+		return ans[z];
+	}
+	ans[z] = 1 + dfs((1 + z)%MOD);
+	amin(ans[z], 1 + dfs((z * 2)%MOD));
+	return ans[z];
 }
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        int n; cin >> n;
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+        memset(ans, -1, sizeof(ans));
 
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
+        ans[0] = 0; 
+
+        for(int i = 0; i < n; i++){
+            int t; cin >> t; cout << dfs(t) << ' ';
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }

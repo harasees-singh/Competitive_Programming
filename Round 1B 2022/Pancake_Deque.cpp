@@ -38,57 +38,53 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        int T; cin >> T; 
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+        for(int t = 1; t <= T; t++){
+            cout << "Case #" << t << ": ";
 
-                roots[i] = 0;
+            int n; cin >> n; 
+
+            vi in(n); for(auto &p : in) cin >> p;
+
+            int i = 0, j = n - 1; 
+            int cnt = 0;
+            int lst = 0;
+            for(; i <= j;){
+                if(max(in[i], in[j]) < lst){
+                    if(in[i] > in[j]) j--;
+
+                    else i++; 
+
+                    continue;
+                }
+
+                if(in[i] < in[j]){
+                    if(in[i] >= lst){
+                        cnt++;
+                    }
+                    // else{
+                        // lst = in[i++];
+                    amax(lst, in[i]); i++;
+                    // }
+                }
+                else{
+                    if(in[j] >= lst){
+                        cnt++;
+                    }
+                    // lst = in[j--];?
+                    
+                    amax(lst, in[j]); j--;
+                }
+                // cnt++;
             }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
+            cout << cnt << endl;
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }

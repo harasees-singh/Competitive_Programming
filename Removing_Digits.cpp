@@ -38,58 +38,26 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
+vi dp;
+int get(int i){
+    if(i == 0) return 0;
+    if(dp[i] != -1) return dp[i];
 
-    for(auto p : g[i]) ret += dfs(p);
+    vi X; for(int j = i; j; j/=10) X.pb(j%10);
+    int mn = infinity;
+    for(auto p : X) if(p) amin(mn, get(i - p));
 
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
+    return dp[i] = 1 + mn;
 }
 int32_t main(){
         
         FIO
+        dp = vi(1e6 + 1, -1); 
 
         int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
-
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
-        }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
-
+        cout << get(n);
         return 0;
 }
 /*

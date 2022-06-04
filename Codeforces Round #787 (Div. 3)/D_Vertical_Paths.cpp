@@ -38,57 +38,49 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
+vector<vi> paths; 
+vector<vi> g;
+void dfs(int i, vi &path){
+        path.push_back(i);
+        if(sz(g[i])==0){
+                paths.push_back(path); path.pop_back(); return;
+        }
+        int child = g[i][0];
 
-    int ret = 0; 
+        dfs(child, path);
 
-    for(auto p : g[i]) ret += dfs(p);
+        vi t;
 
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
+        for(int j = 1; j < sz(g[i]); j++)
+                dfs(g[i][j], t);
+        path.pop_back();
 }
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
-
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
-
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
+        w(T){
+                paths.clear();
+                int n; cin >> n; 
+                g = vector<vi> (n + 1);
+                int root = -1;
+                for(int i = 0; i < n; i++){
+                        int t; cin >> t; 
+                        if(i + 1==t){
+                                root=i + 1; continue;
+                        }
+                        g[t].pb(i + 1);
+                }
+                // for(auto p : g){ for(auto q : p) cout << q << ' '; cout << endl;}
+                assert(root!=-1);
+                // cout << "YES" << endl; cout.flush();
+                vi t;
+                dfs(root, t);
+                cout << sz(paths) << endl;
+                for(auto &p : paths){
+                        cout << sz(p) << endl; for(auto q : p) cout << q << ' '; cout << endl;
+                }
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }

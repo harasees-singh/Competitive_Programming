@@ -38,57 +38,44 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
-
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
+void print(vector<vi>& pos){
+    for(auto &p : pos){
+            for(int i= 0; i < sz(p); i += 2) cout << p[i] + 1 << ' ' << p[i + 1] + 1 << endl;
+        }
 }
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        int n; cin >> n;
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+        vector<string> in(2); for(auto &p : in) cin >> p;
 
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
+        vector<vi> pos(2); // a->b, b->a
+
+        for(int i=0; i < n; i++){
+            if(in[0][i] != in[1][i]){
+                if(in[0][i] == 'a') pos[0].pb(i);
+
+                else pos[1].pb(i);
             }
         }
-        reverse(all(topo));
+        if((sz(pos[0]) % 2) ^ (sz(pos[1]) % 2)){
+            cout << -1; return 0;
+        }
+        int ops = (sz(pos[0]) + sz(pos[1])) / 2;
+        if(sz(pos[0]) & 1){
+            ops++;
+            cout << ops << endl;
+            int t = pos[0].back();
+            cout << t + 1 << ' ' << t + 1 << endl;
+            pos[0].pop_back(); 
 
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
+            pos[1].push_back(t);
+        }
+        
+        else cout << ops << endl;
+        print(pos);
 
         return 0;
 }

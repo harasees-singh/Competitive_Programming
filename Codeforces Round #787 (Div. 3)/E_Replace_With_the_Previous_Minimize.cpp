@@ -38,57 +38,56 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        w(T){
+                // find the maximum char from left that can be reduced to 'a'
+                // default selection : char at idx 0
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+                // reduce all chars <= this char to max('a', char - k);
 
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
+                // repeat once again
+
+                int n, k; cin >> n >> k; 
+
+                string s; cin >> s; 
+
+                int id = 0;
+                char temp = 'a';
+
+                for(int i = 0; i < n; i++){
+                        if(s[i] - 'a' -  k <= 0){
+                                if(temp < s[i]) 
+                                        temp = s[i];
+                        }
+                        else 
+                                break;
+                        
+                }       
+                for(int i = 0; i < n; i++)
+                        if(s[i] <= temp) s[i]='a';
+
+                k = max(0ll, k - (temp - 'a'));
+                // cout << id << endl;
+                // cout << k << endl;
+                // now either all chars are 'a' or there is some char such dat char - k > 'a'.
+
+                for(int i = 0; i < n; i++){
+                        if(s[i] != 'a'){
+                                char put = s[i] - k;
+                                assert(s[i] > k + 'a');
+                                char temp = s[i];
+                                for(int j = i; j < n; j++){
+                                        if(s[j] <= temp) amin(s[j], put);
+                                }
+                                break;
+                        }
+                } 
+                cout << s << endl;
         }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }

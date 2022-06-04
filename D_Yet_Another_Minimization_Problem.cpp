@@ -38,58 +38,45 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
+        // expr reduces to (n - 2) * (sum a**2 + sum b**2) + (sum a)**2 + (sum b)**2;
+
+        // minimize sum a;
+        
+        w(T){
+
         int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        int overhead =0;
+        vi a(n); for(auto &p : a) cin >> p, overhead += p*p;
+        vi b(n); for(auto &p : b) cin >> p, overhead += p*p;
+        overhead *= (n - 2);
+        int A = accumulate(all(a), 0ll);
+        int B = accumulate(all(b), 0ll);
+        vector<bool> dp(1e4 + 1);
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+        dp[0] = 1;
 
-                roots[i] = 0;
-            }
-        } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
+        for(int i = 0; i < n; i++){
+            for(int j = 1e4; j >= 0; j--){
+                if(j + a[i] < sz(dp)) dp[j + a[i]] = dp[j] | dp[j + a[i]];
+                if(j + b[i] < sz(dp)) dp[j + b[i]] = dp[j] | dp[j + b[i]];
+
+                dp[j] = 0;
             }
         }
-        reverse(all(topo));
+        int mn = infinity;
 
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
-
+        for(int i = 0; i <= 1e4; i++){
+            if(dp[i]){
+                amin(mn, i*i + (A + B - i)*(A + B - i) + overhead);
+            }
+        }
+        cout << mn << endl;
+}
         return 0;
 }
 /*

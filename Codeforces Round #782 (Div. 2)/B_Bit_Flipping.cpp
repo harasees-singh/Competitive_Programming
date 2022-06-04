@@ -38,57 +38,37 @@ template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
 
 MOD_DEFINE
-vector<vi> g; 
-int ans = 0;
-vi topo, order; 
-vi a; 
-int dfs(int i){
-    ans += a[i - 1];
 
-    int ret = 0; 
-
-    for(auto p : g[i]) ret += dfs(p);
-
-    ans += ret;
-
-    ret += a[i - 1];
-
-    if(ret < 0){
-        topo.pb(i); return 0;
-    }
-    
-    order.pb(i); return ret; 
-}
 int32_t main(){
         
         FIO
 
-        int n; cin >> n; 
-        g = vector<vi> (n + 1);
-        vi b(n); 
-        a = vi(n);
+        w(T){
+                int n, k; cin >> n >> k;
 
-        for(auto &p : a) cin >> p; 
-        for(auto &p : b) cin >> p;
-        
-        vector<bool> roots(n + 1, 1);
-        
-        for(int i = 1; i <= n; i++){
-            if(b[i - 1] != -1){
-                // g[i].pb(b[i - 1]);
-                g[b[i - 1]].pb(i);
+                string s; cin >> s;
 
-                roots[i] = 0;
-            }
+                int parity = k % 2; vi ans(n);
+
+                for(int i=0; i < n - 1; i++){
+                        if(not ((s[i] - '0') ^ (parity))){
+                                if(k){
+                                        cout << '1'; k--; ans[i] = 1;
+                                }
+                                else cout << '0';
+                        }
+                        else cout << '1';
+                }
+                if((k&1) ^ parity){
+                        cout << (char)(((s.back() - '0') ^ 1)  + '0');
+                }
+                else cout << s.back(); cout << endl;
+                // cout << k << endl;
+
+                ans[n - 1] = k;
+
+                for(auto p : ans) cout << p << ' '; cout << endl;
         } 
-        for(int i = 1; i <= n; i++){
-            if(roots[i]){
-                dfs(i);
-            }
-        }
-        reverse(all(topo));
-
-        cout << ans << endl; for(auto p : order) cout << p << ' '; for(auto p : topo) cout << p << ' '; 
 
         return 0;
 }
