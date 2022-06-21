@@ -33,34 +33,76 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+vector<vi> g;
+vi in;
+bool ok=0;
+vi vis;
+vi dp; 
+void dfs(int i, int mx, int depth){
+    if(in[i] > mx) return;
+    if(vis[i]==2){
+        if(dp[i] > depth){
+            ok=1; 
+        }
+        return;
+    }
 
-void slv(){
+    if(depth==0 or vis[i]==1){
 
+        ok=1; return;
+    }
+    vis[i]=1;
+
+    for(auto p : g[i]){
+        
+        dfs(p, mx, depth - 1);
+        amax(dp[i], dp[p]);
+    }
+    dp[i]++;
+    vis[i]=2;
+}
+void solve(){
+    int n, m, k; cin >> n >> m >> k;
+
+    g = vector<vi> (n + 1);
+
+    in=vi(n + 1); for(int i=1; i <= n; i++) cin >> in[i];
+
+    for(int i=1; i <= m; i++){
+        int u, v; cin >> u >> v;
+
+        g[u].pb(v);
+    }
+    int l=0, r=1e9;
+
+    while(l <= r){
+        int mid = (l + r)/2;
+
+        vis = vi(n + 1);
+
+        dp = vi(n + 1);
+
+        ok = 0;
+
+        for(int i=1; i<=n; i++)
+            if(not ok)
+                dfs(i, mid, k-1);
+
+        if(ok) r = mid - 1;
+        else l = mid + 1;
+    }
+    cout << (l > 1e9 ? -1 : l) << endl;
 }
 
 int32_t main(){
         
         FIO
-
-        w(T) 
-                slv();
-        
+        solve();
         return 0;
 }
 /*

@@ -33,34 +33,86 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+bool oddZero(string s, int id){
+    s += '1';
 
-void slv(){
+    assert(id);
 
+    for(int i = id; i < sz(s) - 1; i++) 
+    
+        if(s[i] == '0' and s[i + 1] != '0') return true; 
+    
+        else if(s[i] == '0') i++;
+
+    return false;
+}
+string bin(int i){
+    string out;
+
+    while(i){
+        out += i%2 + '0'; i/=2;
+    }
+    reverse(all(out));
+    return out;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
-        
+        // if a number has a smaller number as a substring and has no odd zero in the latter part then remove it
+
+        int n, L; cin >> n >> L;
+        set<string> f;
+        vector<string> in(n);
+
+        for(int i=0;i < n; i++){
+            int t; cin >> t; 
+
+            in[i] = bin(t);
+
+            f.insert(in[i]);
+        }
+        sort(all(in));
+
+        // for(auto p : f) cout << p << ' '; cout << endl;
+
+        for(auto p : in){
+            // see if certain prefix of p is already in the set
+
+            for(int i=1; i < sz(p); i++){
+                if(f.count(p.substr(0, i))){
+                    
+                    if(oddZero(p, i) == false) {
+                        f.erase(p); break;
+                    }
+                }
+            }
+        }
+        // for(auto p : f) cout << p << ' '; cout << endl;
+        vi F(L + 1);
+
+        F[1] = F[0] = 1; F[2]= 2;
+
+        for(int i = 3; i <= L; i++){
+            F[i] = 2 * F[i - 2] + F[i - 3]; F[i] %= MOD;
+        }
+        for(int i = 1; i <= L; i++) 
+            F[i] += F[i - 1], F[i] %= MOD;
+        int ans = 0;
+
+        for(auto p : f){
+            int l = sz(p); if(l > L) continue;
+
+            ans += F[L - l]; ans %= MOD;
+        }
+        cout << ans << endl;
+
         return 0;
 }
 /*

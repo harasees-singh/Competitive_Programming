@@ -33,33 +33,66 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
 
 void slv(){
+    int n; cin >> n;
 
+    vi in(n); for(auto &p : in) cin >> p;
+
+    vi F(32);
+
+    for(auto p : in){
+        for(int i = 0; i < 32; i++){
+            if(p&1){
+                F[i]++;
+            }
+            p/=2;
+        }
+    }
+    int mx = 0;
+    int id = 0;
+    for(int it = 0; it < n; it++){
+        int p = in[it];
+        int temp = 0;
+        for(int i = 0; i < 32; i++){
+            if(p&1){
+                if(F[i]==1) temp += (1ll << i);
+            }
+            p/=2;
+        }
+        // cout << temp << ' ';
+        if(mx < temp){
+            mx = temp; id = it;
+        }
+    }
+    cout << endl;
+    cout << in[id] << ' ';
+
+    // id = 2;
+
+    int ans = in[id];
+
+    for(int i = 0; i < n; i++){
+        if(i == id) continue;
+
+        cout << in[i] << ' ';
+
+        ans -= (in[i] & ans);
+    }
+    cout << endl;
+    // cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

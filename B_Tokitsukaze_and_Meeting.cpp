@@ -33,34 +33,48 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+void solve(){
+    int n, m; cin >> n >> m; 
 
-void slv(){
+    string s; cin >> s;
 
+    vector<bool> C(m);
+
+    vector<int> f(m); // number of rows turned on in ith state
+    
+    s = string(m - 1, '0') + s;
+
+    int i=0, j=m-1;
+
+    int tot = 0;
+    int COL = 0;
+    for(; j < n*m + m - 1; j++, i++){
+        tot += (s[j] == '1'); 
+
+        if(tot) 
+            f[j % m]++;
+
+        tot -= (s[i] == '1');
+
+        if(s[j] == '1' and C[j % m] == false){
+            COL++; C[j % m] = true;
+        }
+        cout << COL + f[j % m] << ' '; 
+
+    }
+    cout << endl;
 }
-
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
-        
+        w(T) solve();
+
         return 0;
 }
 /*

@@ -33,34 +33,50 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+void solve(){
+        int n; cin >> n; 
+        vi in(n);
+        for(auto &p : in) cin >> p;
 
-void slv(){
+        vi ans(n); 
+        for(int i = 0; i < n; i++){
+                if(in[i]){
+                        ans[i] = 1; break;
+                }
+        }
+        int pt = -1;
 
+        for(int i=0; max(pt, i) < n; i++){
+                assert(pt+1 >= i);
+                int r = i + in[i];
+
+                if(ans[i]){
+                        r -= i;
+                }       
+                // cout << r << endl;       
+                while(++pt < r and pt < n)
+                        ans[pt] = 1;
+                
+                if(pt < n)
+                        ans[pt] = 0; // must be zero at ans[r]          
+        }
+        for(auto p : ans)
+                cout << p << ' ';
+        cout << endl;
 }
-
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
-        
+        w(T){
+                solve();
+        }
+
         return 0;
 }
 /*

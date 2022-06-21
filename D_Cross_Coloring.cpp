@@ -12,7 +12,7 @@ using namespace std;
 #define infinity                        8999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
-#define MOD_DEFINE                      const int MOD = 1e9 + 7;
+#define MOD_DEFINE                      const int MOD = 998244353;
 #define endl                            '\n'
 #define int                             long long
 #define pii                             pair<int, int>
@@ -33,34 +33,44 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+void solve(){
+    int n, m, k, q; cin>> n >> m >> k >> q;
 
-void slv(){
+    vector<bool> ROW(n + 1), COL(m + 1);
 
+    vector<pii> in(q); for(auto &p : in) cin >> p;
+    int distinct = q;
+
+    int row = 0;
+
+    int col = 0;
+
+    for(int i=q - 1; i >=0; i--){
+        auto p = in[i];
+
+        if(ROW[p.ff] and COL[p.ss] or row==n or col==m){
+            distinct--;
+        }
+        row += (ROW[p.ff]==0); col += (COL[p.ss]==0);
+
+        ROW[p.ff] = COL[p.ss] = 1;
+    }
+    // ans is k power distinct
+    int out = k;
+    for(int i=0; i < distinct - 1; i++){
+        out *= k; out %= MOD;
+    }   
+    cout << out << endl;
 }
-
 int32_t main(){
         
         FIO
-
-        w(T) 
-                slv();
-        
+        w(T) solve();
         return 0;
 }
 /*

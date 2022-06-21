@@ -33,32 +33,62 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
-
+int get(vi &in){
+    int cnt = 0;
+    for(int i = 1; i < sz(in); i++){
+        cnt += (in[i] != in[i - 1]);
+    }
+    return cnt;
+}
 void slv(){
+    int n; cin >> n; 
 
+    vi P(n);
+
+    vi hold;
+    for(int i = 0; i < n; i++){
+        int t; cin >> t; 
+
+        if(t%2) P[i] = 1;
+
+
+        else if(t and t%2 == 0) P[i] = 0;
+
+        else{
+            P[i] = 0;
+
+            hold.push_back(i);
+        }
+    }
+    int ONE = (n + 1)/2;
+
+    for(int i = 0; i < ONE - 1; i++){
+        P[hold[i]] = 1;
+    }
+    int j = 0, i = ONE - 1;
+
+    int mn = infinity;
+
+    for(; j < 2 * sz(hold); j++, i++){
+        P[hold[i % sz(hold)]] = 1; 
+
+        amin(mn, get(P));
+
+        P[hold[j % sz(hold)]] = 0;
+    }
+    cout << mn << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
+        // w(T) 
                 slv();
         
         return 0;

@@ -33,34 +33,92 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
-
-void slv(){
-
+vi in;
+bool ok(vi & in, vi & squareroot){
+    for(int i=1; i <= sz(in); i++){
+        if(in[i] != squareroot[squareroot[i]]) return false;        
+    }
+    return true;
 }
+void shift(vector<vi> &cycles){
+    vector<vi> ans;
+    for(auto &p : cycles){
+        if(sz(p)==1){
+            ans.pb(p); continue;
+        };
 
+        if(sz(p)%2){
+            vi q; 
+
+            for(int i=0; i < sz(p); i++){
+                q.pb(p[(i*2) % sz(p)]);
+            }
+            ans.pb(q);
+        }
+        else{
+            vi q, Q;
+            for(int i=0; i < sz(p); i+=2)
+                q.pb(p[i]);
+            for(int i=1; i < sz(p); i+=2)
+                Q.pb(p[i]);
+            ans.pb(q); 
+            ans.pb(Q);
+        }
+    }
+    cycles=ans;
+}
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
-        
+        int n; cin >> n;
+
+        in = vi(n + 1);
+        for(int i=1; i <= n; i++) 
+            cin >> in[i];
+
+        vector<vi> cycles;
+
+        vi vis(n + 1);
+
+        for(int i = 1; i <= n; i++){
+            if(vis[i])
+                continue;
+            vi cycle;
+            int j=i;
+            while(not vis[j]){
+                vis[j]=1;
+                cycle.pb(j); j = in[j]; 
+            }
+            cycles.pb(cycle);
+        }   
+        shift(cycles);
+        for(auto p : cycles){
+            for(auto q : p)
+                cout << q << ' ';
+                cout << endl;
+        }
+        // cout << "OK" << endl; cout.flush();
+        vi ans(n + 1);
+        int tot=0;
+        for(auto &p : cycles){
+            tot += sz(p);
+            for(int i=0; i <sz(p); i++){
+                ans[p[i]] = p[(i+1) % sz(p)];
+            }
+        }
+        // for(auto p : ans) cout << p << ' ';
+        assert(tot==n);
+        if(ok(in, ans)){
+            for(int i=1; i<=n; i++)cout << ans[i] << ' ';
+        }
+        else cout << -1;
+
         return 0;
 }
 /*

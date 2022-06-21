@@ -33,34 +33,51 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+void solve(){
+    int n; cin >> n; 
 
-void slv(){
+    string s; cin >> s; 
 
-}
+    int R = count(all(s), 'R'), D = count(all(s), 'D');
+    int cnt = 0;
+
+    int limitR = n - R - 1;
+    int limitD = n - D - 1;
+
+    int r = n;
+
+    for(int i = 0; i < sz(s); i++){
+        if(s[i] == 'R') {r = i; break;}
+    }
+    cnt += ((bool) R) * limitR;
+    cnt += (R and D) * (n - r - 1) * limitR;
+
+    int d = n;
+
+    for(int i = 0; i < sz(s); i++){
+        if(s[i] == 'D') {d = i; break;}
+    }
+    cnt += ((bool) D) * limitD;
+    cnt += (R and D) * (n - d - 1) * limitD;
+
+    int ans = sz(s) + cnt + 1;
+
+    auto lst = {D, R};
+
+    int overlap = (n - D - 1) * (n - R - 1) * (R and D);
+
+    cout << ans - overlap << endl; 
+}   
 
 int32_t main(){
         
         FIO
-
-        w(T) 
-                slv();
-        
+        w(T) solve();
         return 0;
 }
 /*

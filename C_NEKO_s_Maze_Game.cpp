@@ -33,32 +33,91 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
 
 void slv(){
+    int n, q; cin >> n >> q; 
 
+    set<pii> block;
+    vector<vector<bool>> mat(3 , vector<bool> (n + 1, false));
+    for(int i = 0; i< q; i++){
+        int r, c; cin >> r >> c; 
+
+        if(mat[r][c]){
+            if(c > 1){
+                if(r == 1){
+                    if(mat[2][c - 1])
+                        block.erase({c, c - 1});
+                }
+                else{
+                    if(mat[1][c - 1])
+                        block.erase({c - 1, c});
+                }
+            }
+            if(c < n){
+                if(r == 1){
+                    if(mat[2][c + 1])
+                        block.erase({c, c + 1});
+                }
+                else{
+                    if(mat[1][c + 1])
+                        block.erase({c + 1, c});
+                }
+            }
+            if(r == 1){
+                if(mat[2][c])
+                    block.erase({c, c});
+            }
+            else{
+                if(mat[1][c])
+                    block.erase({c, c});
+            }
+        }
+        else{
+            if(c > 1){
+                if(r == 1){
+                    if(mat[2][c - 1])
+                        block.insert({c, c - 1});
+                }
+                else{
+                    if(mat[1][c - 1])
+                        block.insert({c - 1, c});
+                }
+            }
+            if(c < n){
+                if(r == 1){
+                    if(mat[2][c + 1])
+                        block.insert({c, c + 1});
+                }
+                else{
+                    if(mat[1][c + 1])
+                        block.insert({c + 1, c});
+                }
+            }
+            if(r == 1){
+                if(mat[2][c])
+                    block.insert({c, c});
+            }
+            else{
+                if(mat[1][c])
+                    block.insert({c, c});
+            }
+        }
+        mat[r][c] = (mat[r][c]) ^ 1;
+
+        cout << ((sz(block) == 0) ? "Yes" : "No") << endl;
+    }
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
+        // w(T) 
                 slv();
         
         return 0;

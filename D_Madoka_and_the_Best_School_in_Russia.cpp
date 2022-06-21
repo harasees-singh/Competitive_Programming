@@ -33,34 +33,93 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+int primeCnt(int j){
+    int cpy(j);
 
-void slv(){
+    int cnt = 0;
+    for(int i=2; i * i <= cpy; i++){
+        while(j % i == 0) 
+            j /= i, cnt++;
 
+    }
+    return cnt + (j > 1);
 }
+void solve(){
+    int n, d; cin >> n >> d; 
 
+    if(n % (d*d)){
+        cout << "NO" << endl; return;
+    }
+    int cnt=0;
+    while(n % (d * d)==0){
+        n /= d;
+        cnt++;
+    }
+    if(cnt < 2){
+        // d , d * R
+
+        // R % d != 0
+
+        int R = n / (d);
+
+        int have = primeCnt(R);
+
+        if(have > 1){
+            cout << "YES" << endl; return;
+        }
+        cout << "NO" << endl; return;
+    }
+    // d, d...., d * R
+    
+    int R = n/d;
+
+    // cout << R << endl;
+
+    if(primeCnt(R) > 1){
+        cout << "YES" << endl; return;
+    }
+    if(cnt > 2){
+        if(primeCnt(d) > 1){
+            cout << "YES" << endl; return;
+        }
+    }
+    else{
+        // cnt==2
+
+        // d, d, d * R;
+
+        // need to check if d can be distributed aomong d and d * R
+        int cpy(d);
+        for(int i = 2; i * i <= cpy; i++){
+            while(d % i == 0){
+                // i is a prime; 
+
+                d /= i;
+
+                if((R * i) % (cpy)){
+                    cout << "YES" << endl; return;
+                }
+            }
+        }
+        if(d > 1 and (R * d) % (cpy)){
+            cout << "YES" << endl; return;
+        }
+    }
+    cout << "NO" << endl;
+}
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
-        
+        w(T){
+            solve();
+        }
+
         return 0;
 }
 /*

@@ -33,34 +33,51 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+int get(int H, vi &in){
+    
+    int ONE = 0, TWO = 0;
 
-void slv(){
+    for(auto p : in) ONE += ((H - p) % 2), TWO += ((H - p) / 2);
 
+    if(TWO < ONE){
+        return 2 * ONE - 1;
+    }
+    else{
+        TWO -= ONE;
+
+        int days = 2 * ONE;
+
+        int need = 2 * TWO;
+
+        int couple = need / 3;
+
+        return need % 3 + 2 * couple + days;
+    }
+    return 0;
 }
+void solve(){
+    int n; cin >> n; 
 
+    vi in(n);
+
+    for(auto &p : in) cin >> p;
+
+    int H = *max_element(all(in));
+    
+    cout << min(get(H, in), get(H + 1, in)) << endl;
+}
 int32_t main(){
         
         FIO
+        w(T){
 
-        w(T) 
-                slv();
-        
+            solve();
+        }
         return 0;
 }
 /*

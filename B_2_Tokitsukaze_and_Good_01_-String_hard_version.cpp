@@ -33,34 +33,67 @@ typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
-template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
+template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << " " << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
 template<typename T, typename T1> T amin(T &a, T1 b){if(b < a) a = b; return a;}
-template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto &x : v) in >> x; return in;}
-template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
-template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
-template<typename Iterable> void prnIter(const Iterable& iterable, ostream&out = cout){
-    if (iterable.begin() == iterable.end()) {
-        out << endl; return;
-    }
-    auto x = iterable.begin();out << *x;
-    for (++x; x != iterable.end(); ++x) out << ' ' << *x;
-    out << endl;
-}
 
 MOD_DEFINE
+// ?11??????00
+//  1110011000
+void solve(){
+    int n; cin >> n; 
 
-void slv(){
+    // odd segments always occur in pairs
 
+    string S; cin >> S;
+
+    S = "?" + S;
+
+    int B1 = 0;
+
+    int cnt = 0;
+
+    for(int i = 1; i <= n; i++){
+        if(S[i] != S[i - 1]){
+            if(cnt % 2){
+                S[i] = S[i - 1] = '?';
+
+                B1++;
+
+                cnt = 0;
+            }
+            else cnt = 1;
+        }
+        else cnt++;
+    }
+    vector<vi> dp(n + 1, vi(2, infinity));
+    // cout << S << endl;
+    dp[0][0] = 0;
+
+    dp[0][1] = 0;
+
+    for(int i = 1; i <= n; i++){
+        if(S[i] != '?'){
+            dp[i][S[i] - '0'] = min(1 + dp[i - 1][1 - (S[i] - '0')], dp[i - 1][S[i] - '0']);
+        }
+        else{
+            dp[i][0] = min(dp[i - 1][0], 1 + dp[i - 1][1]);
+
+            dp[i][1] = min(dp[i - 1][1], 1 + dp[i - 1][0]);
+
+            dp[i + 1] = dp[i];
+
+            i++;
+        }
+    }
+    cout << B1 << ' ' << min(dp[n][0], dp[n][1]) + 1 << endl; cout.flush();
 }
-
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
-        
+        w(T) solve();
+
         return 0;
 }
 /*
