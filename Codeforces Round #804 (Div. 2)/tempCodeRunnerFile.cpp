@@ -1,0 +1,1 @@
+cout << q << ' '; cout << endl;
