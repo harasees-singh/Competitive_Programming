@@ -42,7 +42,7 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-int m = 1e9 + 7; 
+int m; 
 struct mint{ 
 	int mod = m;
 	int x;
@@ -114,49 +114,33 @@ struct mint{
 		return x < a.x;
 	}
 };
-vector<mint> dp;
 
 void slv(){
-    mint pref = 1;
-    int n; cin >> n >> m; 
+		int n; cin >> n >> m; 
 
-    dp = vector<mint> (n + 1, mint(0));
+		mint pref = 0;
 
-    dp[1] = 1;
+		vector<mint> dp(n + 1), f(n + 1);
 
-    vector<mint> P(n + 1, mint(0));
 
-    P[1] = 1;
+		dp[1] = 1;
 
-    for(int i = 2; i <= n; i++){
-        cout << pref.x << ' ';
+		for(int i = 1; i <= n; i++){
+			f[i] += f[i - 1];
 
-        dp[i] += pref;
+			dp[i] += pref;
 
-        P[i] += P[i - 1];
-
-        for(int j = 2; j < i and i * j <= n; j++){
-            // till (i) * (i - 1)
-            // cout << i << ' ' << j << ' ' << dp[i].x  << ' ' << dp[j].x << endl;
-
-            P[i * j] += dp[i]; 
-            
-            if((i + 1) * j <= n)
-                P[(i + 1) * j] -= dp[i];
-        }
-        dp[i] += P[i];
-
-        if(i * i <= n)
-            dp[i * i] += P[i];
-        cout << P[i].x << ' ' << dp[i].x << endl;
-        
-        pref += dp[i];
-    }
-    // for(auto p :dp) cout << p.x << ' ';
-    // cout << dp[n].x << endl;
-    // cout << dp;
+			dp[i] += f[i];
+			
+			for(int j = i + i; j <= n; j += i){
+				f[j] += dp[i] - dp[i- 1];
+			}
+			
+			pref += dp[i];
+		}
+		cout << dp[n].x << endl;
 }
-
+const int N = 4e6 + 1;
 int32_t main(){
         
         FIO

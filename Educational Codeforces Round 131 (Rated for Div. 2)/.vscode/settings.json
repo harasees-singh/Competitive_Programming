@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.ejs": "html",
+        "deque": "cpp",
+        "string": "cpp",
+        "vector": "cpp"
+    }
+}
