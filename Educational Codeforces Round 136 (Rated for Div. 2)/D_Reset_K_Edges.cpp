@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,49 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// binary search for the best height
+vector<vector<int>> g;
+vector<int> dp;
+int dfs(int i, int k, int d){
+    // cout << i << ' ' << d << endl;
+    if(d == k + 1){
+        // cout << i << endl;
+        return infinity;
+    }
+    if(dp[i] != -1 and d == 1) return dp[i];
 
+    int mn = 0;
+
+    for(auto p : g[i]){
+        mn += min(1ll + dfs(p, k, 1), dfs(p, k, d + 1));
+    }
+    if(d == 1){
+        dp[i] = mn;
+    }
+    return mn;
+}
 void slv(){
-        
+    int n, k; cin >> n >> k; 
+
+    g = vector<vector<int>> (n + 1);
+
+    for(int i = 2; i <= n; i++){
+        int t; cin >> t;
+
+        g[t].push_back(i);
+    }  
+    int l = 1, r = n;
+
+    while(l <= r){
+        dp = vector<int> (n + 1, -1);
+        int mid = (l + r) / 2;
+        int need = dfs(1, mid, 0);
+
+        if(need <= k) r = mid - 1;
+
+        else l = mid + 1;
+    }
+    cout << l << endl;
 }
 
 int32_t main(){

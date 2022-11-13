@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,27 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        // every n has a number x, x <= n - 1, such dat n + x is a perfect square;
+
+        // keep doing dis recursively;
+        vector<int> ans(n);
+        vector<int> Squares;
+        for(int i = 0; i * i <= 2 * n; i++){
+                Squares.push_back(i * i);
+        }
+        for(int i = n - 1; i > -1; ){
+                int ub = *lower_bound(all(Squares), i);
+
+                int l = ub - i;
+
+                for(int j = l; j <= i; j++) ans[j] = i - (j - l);
+
+                i = l - 1;
+        }
+        for(auto p : ans)
+                cout << p << ' '; cout << endl;
 }
 
 int32_t main(){

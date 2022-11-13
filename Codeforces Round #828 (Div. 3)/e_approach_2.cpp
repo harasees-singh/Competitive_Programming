@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,39 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
 void slv(){
-        
+        int a, b, c, d; cin >> a >> b >> c >> d;
+
+        int p = a * b;
+
+        for(int i = 1; i * i <= p; i++){
+            if(p % i) continue;
+            int x = i, y = p / i;
+
+            // does x lie in (a, c]
+
+            // x = alpha * i
+            // y = beta * (p / i)
+
+            // a < alpha * i <= c satisfiable ?
+            // alpha must be >= 1 
+            // therefore c / i > a / i
+
+            if(c / x > a / x and d / y > b / y){
+                cout << x * (c / x) << ' ' << y * (d / y) << endl;
+
+                return;
+            }
+            swap(x, y);
+
+            if(c / x > a / x and d / y > b / y){
+                cout << x * (c / x) << ' ' << y * (d / y) << endl;
+
+                return;
+            }
+
+        }  
+        cout << -1 << ' ' << -1 << endl;
 }
 
 int32_t main(){

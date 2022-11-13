@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,35 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n ; 
+
+        vi in(n); cin >> in;
+
+        bool five = false;
+
+        for(auto p : in) five = five or (p % 10 == 5 or p % 10 == 0);
+
+        if(five){
+            for(auto &p : in) if(p % 10 == 5) p += 5;
+
+            for(int i = 1; i < n; i++){
+                if(in[i] != in[i - 1]){
+                    cout << "No" << endl; return;
+                }
+            }
+            cout << "Yes" << endl; return;
+        }
+        // 1, 2, 3, 4, 6, 7, 8, 9 form cycles
+
+        for(auto &p : in){
+            while(p % 10 != 2) p += p % 10;
+        }
+        for(int i = 1; i < n; i++){
+            if((in[i] - in[i - 1]) % 20){
+                cout << "No" << endl; return;
+            }
+        }
+        cout << "Yes" << endl; return;
 }
 
 int32_t main(){

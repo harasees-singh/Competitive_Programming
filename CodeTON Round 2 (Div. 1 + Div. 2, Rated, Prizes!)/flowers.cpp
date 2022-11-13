@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,15 +43,40 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+
+int distSquare(pii coords, int x, int y){
+    return (coords.first - x)*(coords.first - x) + (coords.second - y)*(coords.second-y);
+}
+
+
+
 void slv(){
-        
+     int n, x1, y1, x2, y2; cin >> n >> x1 >> y1 >> x2 >> y2;
+     vector<pii> flowers;
+     for(int i=0; i<n; i++){
+        int x, y; cin >> x >> y;
+        flowers.push_back({x, y});
+     }
+
+     int ans = INT_MAX;
+    
+    for(auto& i : flowers){
+        int d = distSquare(i, x1, y1);
+        int d2 = INT_MIN;
+        for(auto& j : flowers){
+            if(distSquare(j, x1, x2) < d) continue;
+            int temp = distSquare(j, x2, y2);
+            d2 = max(d2, temp);
+        }
+        ans = min(ans, d+d2);
+    }
+    cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
                 slv();
         
         return 0;

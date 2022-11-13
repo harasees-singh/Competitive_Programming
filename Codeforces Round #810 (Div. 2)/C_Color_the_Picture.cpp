@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,42 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+bool ok(int n, int m, vector<int> &in){
+    // need m columns;
 
+    int o = 0, O = 0, E = 0;
+
+    int b = 0;
+
+    for(auto p : in){
+        int have = p / n;
+
+        b += (have >= 3);
+
+        if(have < 2) continue;
+
+        if(have % 2) o++, O += have;
+
+        else E += have;
+    }
+    if(m % 2){
+        if(! b) return false;
+
+        if(o % 2 == 0){
+            O--; 
+        }
+    }
+    else{
+        if(o % 2) O--;
+    }
+    return (m <= O + E);
+}
 void slv(){
-        
+        int n, m, k; cin >> n >> m >> k; 
+
+        vi in(k); cin >> in;
+
+        cout << (ok(n, m, in) or ok(m, n, in) ? "Yes" : "No") << endl;        
 }
 
 int32_t main(){

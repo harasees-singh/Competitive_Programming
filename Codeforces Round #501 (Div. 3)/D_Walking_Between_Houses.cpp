@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,16 +42,53 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+bool good(int mid, int k, int s){
+        while(s > mid and k) k--, s -= mid;
 
+        if(s and !k) return false;
+
+        return true;
+}
 void slv(){
-        
+        int n, k, s; cin >> n >> k >> s; 
+
+        if((n - 1) * k < s or k > s){
+                cout << "NO" << endl; return;
+        }
+
+        cout << "YES" << endl;
+
+        int l = 1, r = n - 1; 
+
+        while(l <= r){
+                int mid = (l + r)/2;
+
+                if(good(mid, k, s)){
+                        r = mid - 1;
+                }
+                else l = mid + 1;
+        }
+        // l
+        assert(l + 1 <= n);
+        cout << l << endl;
+        s -= l;
+        int cur = l + 1;
+        bool run = false; 
+        for(; s >= l; s -= l, cur = (cur == 1 ? l + 1 : 1)) cout << cur << ' ';
+
+        cout << cur << ' ';
+
+        if(cur == 1) if(s) cout << 1 + s << ' ';
+
+        if(cur == l + 1) if(s) cout << l + 1 - s << ' ';
+
+        cout << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
                 slv();
         
         return 0;

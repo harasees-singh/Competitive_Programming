@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,15 +43,50 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+int sq(int x){
+    return x * x;
+}
+
 void slv(){
         
+        int x, y, r, R, a, b, r1, R1;
+
+        cin >> x >> y >> r >> R >> a >> b >> r1 >> R1; 
+
+        int distSquare = sq(x - a) + sq(y - b);
+        if(distSquare == 0 and min(R1, R) == max(r1, r)){
+            cout << 2 << endl; return;
+        }
+
+        if(distSquare >= sq(R1 + R)){
+            cout << 4 << endl; return;
+        }   
+        if(r > R1){
+            if(distSquare <= sq(r - R1)){
+                cout << 4 << endl; return;
+            }
+        }
+        if(r1 > R){
+            if(distSquare <= sq(r1 - R)){
+                cout << 4 << endl; return;
+            }
+        }
+        if(sq(max(R1 + r, r1 + R)) <= distSquare and distSquare <= sq(R1 + R)){
+            cout << 2 << endl; return;
+        }
+        if(sq(max(r1 + R, r + R1)) >= distSquare and sq(min(r1 + R, r + R1)) <= distSquare){
+            cout << 1 << endl; return;
+        }
+        if(sq(r1 - r) >= distSquare and sq(R1 - R) <= distSquare){
+            cout << 1 << endl; return;
+        }
+        cout << 0 << endl; return;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
                 slv();
         
         return 0;

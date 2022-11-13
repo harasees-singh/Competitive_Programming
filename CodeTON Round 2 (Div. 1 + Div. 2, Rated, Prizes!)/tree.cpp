@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,16 +43,73 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+vector<vector<int>> g;
+vector<int> d; 
+vector<int> p;
+vector<int> in;
+void setParent(int i, int j){
+    for(auto u : g[i]){
+        if(u != j){
+            p[u] = i; 
+
+            setParent(u, i);
+        }
+    }
+}
+int mx = INT64_MIN;
+void dfs(int i, int j, int depth, int have){
+    if(depth == d[i]){
+        have += in[i] / 2; 
+    }
+
+    else if(d[i] > depth or d[i] == -1) have += in[i];
+
+    mx = max(mx, have);
+
+    for(auto u : g[i]){
+        if(u != j){
+            dfs(u, i, depth + 1, have);
+        }
+    }
+}
 void slv(){
-        
+        int n; cin >> n;
+
+        int R; cin >> R;
+
+        g = vector<vector<int>> (n + 1);
+        in = vector<int> (n + 1);
+        p = vector<int> (n + 1);
+
+        for(int i = 0; i < n - 1; i++){
+            int u, v; cin >> u >> v; 
+
+            g[u].push_back(v);
+            g[v].push_back(u);
+        }
+        for(int i = 1; i <= n; i++) cin >> in[i];
+
+        d = vector<int> (n + 1, -1);
+
+        d[R] = 0;
+
+        setParent(1, 0);
+
+        int u = p[R];
+        int put = 0;
+        for(; u; u = p[u]){
+            d[u] = ++put; 
+        }
+        dfs(1, 0, 0, 0);
+
+        cout << mx << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

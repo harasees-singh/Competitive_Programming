@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,14 +42,59 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<int> pref; 
+vector<int> ans; 
+vector<vector<int>> g;
+vector<vector<int>> A, B; 
 
+void dfs(int i, int AA, int BB, int pt, int id){
+    
+    ans[i] = upper_bound(pref.begin(), pref.begin() + id, AA) - pref.begin() - 1;
+
+    for(int j = 0; j < sz(g[i]); j++){
+        int p = g[i][j];
+
+        pref[id] = (B[i][j]) + pref[id - 1];
+
+        dfs(p, AA + A[i][j], BB, pt, id + 1);
+    }
+    return;
+}
 void slv(){
+        int n; cin >> n; 
         
+        for(int i = 2; i <= n; i++){
+            int p; cin >> p; 
+
+            int a, b; cin >> a >> b; 
+            
+            A[p].push_back(a);
+            B[p].push_back(b);
+
+            g[p].push_back(i);
+        }
+
+        dfs(1, 0, 0, 0, 1);
+
+        for(int i = 2; i <= n; i++){
+            cout << ans[i] << ' ';
+        }
+        for(int i = 1; i <= n; i++) g[i] = {}, A[i] = {}, B[i] = {};
+        cout << endl;
 }
 
 int32_t main(){
         
         FIO
+        int n = 2e5;
+
+        pref = vector<int> (n + 1);
+
+        g = vector<vector<int>>(n + 1);
+        A = vector<vector<int>> (n + 1), B = vector<vector<int>> (n + 1); 
+
+        ans = vector<int> (n + 1);
+
 
         w(T) 
                 slv();

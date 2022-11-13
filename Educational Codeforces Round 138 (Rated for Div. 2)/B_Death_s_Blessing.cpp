@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,43 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
+int get(vector<int> &b, int i){
+    if(i < 0 or i == b.size()) return 0;
+    return b[i];
+}
 void slv(){
+        int n; cin>> n; 
+
+        vector<int> in(n);
+        cin >> in;
+
+        vector<int> b(n);
+        cin >> b;
+
+        vector<int> left(n), right(n);
+        left[0] = in[0], right[n - 1] = in[n - 1];
+        for(int i = 1; i < n; i++)
+            left[i] = in[i] + b[i - 1];
         
+        for(int i = n - 2; i >= 0; i--)
+            right[i] = in[i] + b[i + 1];
+
+        vector<int> pref(n + 2);
+
+        vector<int> suff(n + 2);
+
+        for(int i = 1; i <= n; i++){
+            pref[i] = pref[i - 1] + left[i - 1];
+        }
+        for(int i = n; i >= 1; i--){
+            suff[i] = suff[i + 1] + right[i - 1];
+        }
+        // cout << pref << suff;
+        int ans = infinity;
+        for(int i = 1; i <= n; i++){
+            amin(ans, pref[i - 1] + suff[i + 1] + in[i - 1] + get(b, i - 2) + get(b, i));
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){

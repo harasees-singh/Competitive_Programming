@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,8 +43,57 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+vector<int> Insert(vector<int> in, int X){
+    int n = in.size();
+    int mn = infinity, pos = -1;
+    for(int i = 1; i < n; i++){
+        int final = abs(in[i] - X) + abs(in[i - 1] - X);
+
+        int init = abs(in[i] - in[i - 1]);
+
+        if(mn > final - init) mn = final - init, pos = i; 
+    }
+    if(abs(X - in[0]) < mn) mn = abs(X - in[0]), pos = 0;
+
+    if(abs(X - in.back()) < mn) pos = n;
+
+    in.insert(in.begin() + pos, X);
+    return in;
+}
+int cost(vector<int> &in){
+    int ret = 0;
+    for(int i = 1; i < in.size(); i++) ret += abs(in[i] - in[i - 1]);
+
+    return ret;
+}
 void slv(){
-        
+    int n, x; cin >> n >> x; 
+
+    vector<int> in(n);
+
+    cin >> in;
+
+    // insert 1 and insert x 
+    // first 1 then x and first x and then 1
+
+    vector<int> ONE = Insert(in, 1);
+
+    int add = infinity;
+
+    for(int i = 1; i < n + 1; i++) amin(add, abs(x - ONE[i]) + abs(x - ONE[i - 1]) - abs(ONE[i] - ONE[i - 1]));
+    amin(add, abs(ONE[0] - x)); amin(add, abs(ONE.back() - x));
+
+    int ans = add + cost(ONE);
+
+    vector<int> TWO = Insert(in, x);
+
+    add = infinity;
+
+    for(int i = 1; i < n + 1; i++) amin(add, abs(1 - TWO[i]) + abs(1 - TWO[i - 1]) - abs(TWO[i] - TWO[i - 1]));
+    amin(add, abs(TWO[0] - 1)); amin(add, abs(TWO.back() - 1));
+
+    amin(ans, add + cost(TWO));
+    cout << ans << endl;
 }
 
 int32_t main(){

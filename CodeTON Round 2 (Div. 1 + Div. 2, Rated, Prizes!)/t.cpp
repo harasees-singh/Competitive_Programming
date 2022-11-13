@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,48 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int binSrch(vector<int> &v, int P, int have){
+    int l = 0, r = v.size() - 1;
+    while(l <= r){
+        int mid = (l + r) / 2;
+
+        if(v[mid] * have >= P) r = mid - 1;
+
+        else l = mid + 1;
+    }
+    return v.size() - l;
+}
 
 void slv(){
-        
+        int ts, tf; cin >> ts >> tf; 
+        int n; cin >> n; 
+        int P = ts * tf; 
+        vector<int> a(n), b(n); 
+        for(int i = 0; i < n; i++) cin >> a[i]; 
+        for(int i = 0; i < n; i++) cin >> b[i];
+
+        sort(b.begin(), b.end());
+        sort(a.begin(), a.end());
+
+        long long ans = 1; 
+
+        for(int i = 0; i < n; i++){
+            int have = a[i];
+
+            int cnt = binSrch(b, P, have);
+
+            ans *= (cnt - i);
+
+            ans %= (int)(1e9 + 7);
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

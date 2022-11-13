@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,20 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
 void slv(){
-        
+        int n; cin >> n; 
+
+        int x = n / 2;
+
+        vector<int> ans(n);
+
+        for(int i = 0; i < n; i += 2){
+            ans[i] = i / 2 + 1 + x; 
+        }
+        for(int i = 1; i < n; i += 2){
+            ans[i] = i / 2 + 1;
+        }
+        for(auto p : ans) cout << p << ' '; cout << endl;
 }
 
 int32_t main(){

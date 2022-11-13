@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,33 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// need atleast 1 empty space other than 1 and n*m to move;
+
 
 void slv(){
-        
+        int n, m, k; cin >> n >> m >> k;
+
+        int SPACE = n * m - 2;
+
+        vector<int> f(k + 1);
+        int put = k;
+
+        for(int i = 0; i < k; i++){
+            int t; cin >> t; 
+
+            f[t] = 1;
+
+            SPACE--;
+
+            while(put > 0 and f[put] == 1 and SPACE){
+                put--;
+                SPACE++;
+            }
+        }
+        if(put){
+            cout << "tidak" << endl;
+        }
+        else cout << "ya" << endl;
 }
 
 int32_t main(){

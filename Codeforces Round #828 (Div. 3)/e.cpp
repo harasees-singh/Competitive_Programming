@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,29 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        // x.y must be div by a.b
+        // iterate over x
+        // need a.b / gcd(x, a.b) as y or any multiple of it as y so bin search 
+        // and see if it fits in the range (b, d]
+
+        int a, b, c, d; cin >> a >> b >> c >> d;
+        pair<int, int> ans = make_pair(-1, -1);
+        for(int x = a + 1; x <= c; x++){
+            int y = (a * b) / __gcd(a * b, x);
+
+            int mn = b / y;
+            int mx = d / y;
+
+            // b < y * k <= d
+		    // floor(b / y) < k <= floor(d / y)
+		    // btw how would u find k if it was b <= y… ?
+
+            if(mx <= mn){
+                continue;
+            }
+            ans = {x, y * mx};
+        }
+        cout << ans.first << ' ' << ans.second << endl; 
 }
 
 int32_t main(){

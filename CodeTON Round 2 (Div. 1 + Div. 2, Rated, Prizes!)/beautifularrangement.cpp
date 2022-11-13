@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,49 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int cnt=0;
+void get(int i, vector<int> &rem, int n){
+        if(i == n+1){cnt++; return;}
+        for(int div = 1; div * div <= i; div++){
+                if(i % div == 0 and rem[div - 1]==0){
+                        rem[div - 1]=1;
 
+                        get(i + 1, rem, n);
+
+                        rem[div - 1] = 0;
+                }
+                if(i % div == 0 and rem[i/div - 1] == 0 and i/div != div){
+                        rem[i/div - 1] = 1;
+
+                        get(i + 1, rem, n);
+
+                        rem[i/div - 1] = 0;
+                }
+        }
+        for(int j = 2; j * i <= n; j++){
+                if(rem[i * j - 1]==0){
+                        rem[i * j - 1]=1;
+
+                        get(i + 1, rem, n);
+
+                        rem[i * j - 1]=0;
+                }
+        }
+}
 void slv(){
-        
+        int n; cin >> n; 
+        vector<int> rem(n);
+
+        get(1, rem, n);
+
+        cout << cnt << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

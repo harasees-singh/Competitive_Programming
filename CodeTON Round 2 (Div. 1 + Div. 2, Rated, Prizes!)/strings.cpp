@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,38 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+map<string, int> dp;
+set<string> have;
+int get(string &a){
+        if(have.count(a)==0)return 0;
 
+        if(dp.count(a)) return dp[a];
+
+        for(int i = 0; i < a.size()-1; i++){
+            string t = a.substr(0, i);
+
+            t += a.substr(i + 1);
+
+            dp[a] = 1 + max(dp[a], get(t));
+        }
+        return dp[a];
+}
 void slv(){
-        
+        int n; cin >> n; 
+        vector<string> in(n); for(auto &p : in) cin >> p;
+
+        for(auto p : in) have.insert(p);
+        int mx = 0;
+        for(auto p : in) mx = max(mx, get(p));
+
+        cout << mx << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

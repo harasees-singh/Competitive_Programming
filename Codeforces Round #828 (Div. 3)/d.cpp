@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,42 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        int cnt = 0;
+
+        for(int i = 0; i < n; i++){
+            int t; cin >> t; 
+
+            for(; t % 2 == 0; cnt++, t /= 2) ;
+        }
+        int mx = 0;
+
+        for(; (1 << mx) <= n; mx++) ;
+
+        mx--;
+
+        int ans = 0;
+
+        vector<int> have; 
+
+        map<int, bool> f;
+
+        for(; mx; mx--){
+
+            for(int j = (1 << mx); j <= n; j += (1 << mx)){
+                if(!f[j]) have.push_back(mx);
+                
+                f[j] = 1;
+            }
+        }
+
+        for(int i = 0; i < have.size() and cnt < n; i++, ans++) cnt += have[i];
+
+        if(cnt < n){
+            cout << -1 << endl; return;
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){

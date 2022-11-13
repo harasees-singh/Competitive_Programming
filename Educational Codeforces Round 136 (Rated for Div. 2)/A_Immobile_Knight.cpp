@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,32 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int n, m; 
+bool ok(int x, int y){
+    return (x >= 0 and x < n and y >= 0 and y < m);
+}
+bool isIsolated(int x, int y){
+    if(ok(x - 2, y + 1) or ok(x - 2, y - 1)) return false;
 
+    if(ok(x - 1, y + 2) or ok(x + 1, y + 2)) return false;
+
+    if(ok(x - 1, y - 2) or ok(x + 1, y - 2)) return false;
+
+    if(ok(x + 2, y - 1) or ok(x + 2, y + 1)) return false;
+
+    return true; 
+}
 void slv(){
-        
+        cin >> n >> m; 
+
+        // brute force
+
+        for(int i = 0; i < n; i++)
+            for(int j = 0; j < m; j++)
+                if(isIsolated(i, j)){
+                    cout << i + 1 << ' ' << j + 1 << endl; return;
+                }
+        cout << 1 << ' ' << 1 << endl;
 }
 
 int32_t main(){

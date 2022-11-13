@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,50 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int ok(int i, int left, vector<int> &pref){
+        int l = i, r = pref.size() - 1;
 
+        while(l <= r){
+                int mid = (l + r) / 2;
+
+                int need = pref[mid] - pref[i];
+
+                if(need <= left) l = mid + 1;
+
+                else r = mid - 1;
+        }
+        return r - i;
+}
 void slv(){
-        
+        int n, k; cin >> n >> k;
+
+        vi in(n); cin >> in;
+
+        vi pref(in); for(int i = 1; i < n; i++) pref[i] += pref[i - 1];
+
+        int tot = 0; 
+        int i = 0;
+
+        for(; i < n and k >= pref[i]; i++){
+                ;
+        } 
+
+        int mx = i; int ans = 0;
+
+        int done = 0;
+
+        for(i = 0; i < n and done <= k; i++){
+                int have = i;
+
+                int cand = ok(i, k - done, pref);
+
+                if(cand + have > mx){
+                        ans = i + 1, mx = cand + i;
+                }
+
+                done += in[i];
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){

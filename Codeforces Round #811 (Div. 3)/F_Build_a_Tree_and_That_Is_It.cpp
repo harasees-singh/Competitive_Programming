@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,66 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> f(3); cin >> f; // d12, d23, d31 [x + y, y + z, x + z] // x, y, z non negative integers
+
+        // x = (d12 + d13 - d23) / 2;
+        // y = d12 - x; 
+        // z = d23 - y;
+
+        // check number of edges should be sufficient so that solution is possible
+
+        int X = f[0] + f[2] - f[1];
+
+        if(X < 0 or X % 2){
+            cout << "NO" << endl; return;
+        }    
+        int x = X / 2;
+
+        int y = f[0] - x; 
+        int z = f[1] - y;
+
+        if(y < 0 or z < 0){
+            cout << "NO" << endl; return;
+        }
+        if(x + y + z > n - 1){
+            cout << "NO" << endl; return;
+        }
+        int center = -1;
+        if(((bool)x + (bool)y + (bool)z) < 2){
+            cout << "NO" << endl; return;
+        }
+        cout << "YES" << endl;
+        if(!x) center = 1;
+        if(!y) center = 2;
+        if(!z) center = 3; 
+
+        int pt = 4; 
+        int lst = 1; 
+        for(int i = 0; i < x - 1; i++, lst = pt, pt++) cout << lst << ' ' << pt << endl;
+
+        if(x){
+            if(center == -1) center = pt, pt++;
+
+            cout << lst << ' ' << center << endl; lst = center;
+        }
+        lst = 2; 
+
+        for(int i = 0; i < y - 1; i++, lst = pt, pt++) cout << lst << ' ' << pt << endl;
+
+        if(y){
+            cout << lst << ' ' << center << endl; lst = center; 
+        }
+
+        lst = 3; 
+
+        for(int i = 0; i < z - 1; i++, lst = pt, pt++) cout << lst << ' ' << pt << endl; 
+
+        if(z){
+            cout << lst << ' ' << center << endl; lst = center; 
+        }
+        for(int i = 0; i < n - 1 - x - y - z; i++, pt++) cout << 1 << ' ' << pt << endl;
 }
 
 int32_t main(){

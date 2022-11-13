@@ -14,7 +14,6 @@ using namespace std;
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
-#define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -32,7 +31,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +41,45 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int minDuration(int k, int n, vector<int>d, vector<int>s){
 
+    vector<vector<long double>> have;
+
+    for(int i = 0; i < n; i++){
+        have.push_back({s[i] / (long double)d[i], (long double)s[i]});
+    }
+    sort(have.begin(), have.end());
+
+    reverse(have.begin(), have.end());
+
+    long double ans = 0;
+
+    for(int i = 0; i < n and k; i++){
+        int need = min(k, (int)have[i][1]);
+
+        k -= need;
+
+        ans += need / have[i][0]; 
+    }
+    if(k) return -1;
+    return (int)round(ans);
+}
 void slv(){
-        
+        long long k, n; cin >> k >> n; 
+
+        vector<int> d(n), s(n); 
+
+        for(auto &p : d) cin >> p;
+        for(auto &p : s) cin >> p;
+
+        cout << minDuration(k, n, d, s);
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

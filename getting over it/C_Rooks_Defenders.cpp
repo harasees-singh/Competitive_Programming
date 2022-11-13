@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,95 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+struct FenwickTree{
+    // zero based indexing
+    // use query(l, r) to get the sum of elements in range[l, r]
+    // exceptions handled when l = 0; (read(-1) returns 0)
+    // increase and query take logn time and constant space.
+    // constructor takes vector<int> input (a const reference) to construct the tree (ft) in nlogn time.
+
+    vector<int> ft;
+
+    FenwickTree(vector<int> const &I){
+        ft.assign(I.size(), 0);
+
+        for(int i = 0; i < I.size(); i++){
+            increase(i, I[i]);
+        }
+    }
+
+    int read(int idx){
+        if(idx < 0) return 0;
+
+        int ret = 0;
+
+        for(int i = idx; i >= 0; i = (i&(i + 1)) - 1){
+            ret += ft[i];
+        }
+        return ret;
+    }
+
+    void increase(int i, int delta){
+        for(int j = i; j < ft.size(); j = j|(j + 1)){
+            ft[j] += delta;
+        }
+    }
+
+    int query(int l, int r){
+        return read(r) - read(l - 1);
+    }
+};
 
 void slv(){
-        
+        int n, q; cin >> n >> q; 
+
+        vector<int> row(1e5 + 1), column(1e5 + 1);
+
+        FenwickTree X(row), Y(row);
+
+        for(int i = 0; i < q; i++){
+                int t; cin >> t; 
+
+                if(t == 1){
+                        int x, y; cin >> x >> y;
+
+                        row[x]++;
+                        column[y]++;
+
+                        if(row[x] == 1) X.increase(x, 1);
+                        if(column[y] == 1) Y.increase(y, 1);
+                }
+                if(t == 2){
+                        int x, y; cin >> x >> y;
+
+                        row[x]--;
+                        column[y]--;
+
+                        if(column[y] == 0) Y.increase(y, -1);
+                        if(row[x] == 0) X.increase(x, -1);
+                }
+                if(t == 3){
+                        int x1, y1, x2, y2; cin >> x1 >> y1 >> x2 >> y2;
+
+                        bool vert = Y.query(y1, y2) == (y2 - y1 + 1);
+
+                        bool hori = X.query(x1, x2) == (x2 - x1 + 1);
+
+                        if(vert or hori){
+                                cout << "Yes" << endl;
+                        }
+                        else{
+                                cout << "No" << endl;
+                        }
+                }
+        }
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

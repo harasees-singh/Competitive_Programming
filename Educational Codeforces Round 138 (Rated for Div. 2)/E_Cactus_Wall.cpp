@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,9 +43,94 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
-void slv(){
-        
+int N, M;
+
+vector<string> mat;
+vector<vector<int>> dp;
+
+bool safe(int i, int j){
+    if(!(i >= 0 and i < N and j >= 0 and j < M)) return false;
+    bool left = j == 0 or mat[i][j - 1] == '.';
+    bool right = j == M - 1 or mat[i][j + 1] == '.';
+    bool up = i == 0 or mat[i - 1][j] == '.';
+    bool down = i == N - 1 or mat[i + 1][j] == '.';
+
+    return left and right and up and down;
 }
+
+vector<vector<bool>> direction;
+
+int cnt = 0;
+
+void mark(int i, int j){
+    // cout << i << ' ' << j << endl; cout.flush();
+    // assert(i >= 0 and i < N and j < M and j >= 0);
+    cnt += mat[i][j] == '.';
+    mat[i][j] = '#';
+
+    if(j == M - 1) return;
+
+    mark(i + (direction[i][j] ? -1 : 1), j + 1);
+}
+
+int dfs(int i, int j){
+    if(j == M - 1){
+        return 0;
+    }
+
+    if(dp[i][j] != -1) return dp[i][j];
+
+    // assertion: i, j is cactus;
+    int put = infinity;
+
+    bool up = true;
+
+    if(safe(i - 1, j + 1)){
+        int ne = (mat[i - 1][j + 1] == '.') + dfs(i - 1, j + 1);
+        amin(put, ne);
+    }
+    if(safe(i + 1, j + 1)){
+        int se = (mat[i + 1][j + 1] == '.') + dfs(i + 1, j + 1);
+        up = se > put;
+        amin(put, se);
+    }
+    direction[i][j] = up;
+
+    return dp[i][j] = put;
+}
+
+void slv(){
+        int n, m; cin >> n >> m; 
+
+        cnt = 0;
+
+        N = n, M = m;
+
+        mat = vector<string> (n); cin >> mat;
+
+        dp = vector<vector<int>> (n, vector<int> (m, -1));
+        direction = vector<vector<bool>> (n, vector<bool> (m)); // go up or not
+        int ans = infinity;
+
+        int p = -1;
+        for(int j = 0; j < n; j++){
+            if(safe(j, 0)){
+                int semi_ans = dfs(j, 0) + (mat[j][0] == '.');
+
+                if(semi_ans < ans) ans = semi_ans, p = j; 
+            }
+        }
+
+        if(ans == infinity){
+            cout << "NO" << endl; return;
+        }
+        cout << "YES" << endl;
+
+        mark(p, 0);
+        assert(cnt == ans);
+
+        for(auto p : mat) cout << p << endl;
+}       
 
 int32_t main(){
         

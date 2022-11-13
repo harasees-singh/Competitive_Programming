@@ -12,7 +12,7 @@ using namespace std;
 #define infinity                        8999999999999999999
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
-#define MOD_DEFINE                      const int MOD = 1e9 + 7;
+#define MOD_DEFINE                      const int MOD = 998244353;
 #define endl                            '\n'
 #define int                             long long
 #define pii                             pair<int, int>
@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,117 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
+struct mint{ 
+	int mod = MOD;
+	int x;
+ 
+	mint() : x(0) {}
+	mint(int _x) {
+		_x %= mod;
+		if (_x < 0) _x += mod;
+		x = _x;
+	}
+ 
+	mint& operator += (const mint &a) {
+		x += a.x;
+		if (x >= mod) x -= mod;
+		return *this;
+	}
+	mint& operator -= (const mint &a) {
+		x += mod - a.x;
+		if (x >= mod) x -= mod;
+		return *this;
+	}
+	mint& operator *= (const mint &a) {
+		x = x * a.x % mod;
+		return *this;
+	}
+	mint pow(int pw) const {
+		mint res = 1;
+		mint cur = *this;
+		while(pw) {
+			if (pw & 1) res *= cur;
+			cur *= cur;
+			pw >>= 1;
+		}
+		return res;
+	}
+	mint inv() const {
+		assert(x != 0);
+		int t = x;
+		int res = 1;
+		while(t != 1) {
+			int z = mod / t;
+			res = res * (mod - z) % mod;
+			t = mod - t * z;
+		}
+		return res;
+	}
+	mint& operator /= (const mint &a) {
+		return *this *= a.inv();
+	}
+	mint operator + (const mint &a) const {
+		return mint(*this) += a;
+	}
+	mint operator - (const mint &a) const {
+		return mint(*this) -= a;
+	}
+	mint operator * (const mint &a) const {
+		return mint(*this) *= a;
+	}
+	mint operator / (const mint &a) const {
+		return mint(*this) /= a;
+	}
+	bool operator == (const mint &a) const {
+		return x == a.x;
+	}
+	bool operator != (const mint &a) const {
+		return x != a.x;
+	}
+	bool operator < (const mint &a) const {
+		return x < a.x;
+	}
+};
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> f(1e6 + 1);
+
+        vector<vector<int>> g(n);
+
+        for(int i = 0; i < n; i++){
+                int t; cin >> t; 
+
+                for(int j = 0; j < t; j++){
+                        int u; cin >> u; 
+
+                        g[i].push_back(u);
+
+                        f[u]++;
+                }
+        }
+        mint P = 0;
+
+        for(int i = 0; i < n; i++){
+                mint add = 0;
+
+                for(auto p : g[i]){
+                        add += mint(f[p]) /= n;
+                }
+                add /= sz(g[i]);
+
+                P += add;
+        }
+        P /= n;
+
+        cout << P.x << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

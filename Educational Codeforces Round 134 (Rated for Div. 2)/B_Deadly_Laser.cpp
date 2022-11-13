@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,50 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<vector<bool>> dp;
+bool safe(int i, int j, int sx, int sy, int d){
+    if(i == dp.size() or j == dp[0].size() or i == 0 or j == 0) return false;
 
+    return (abs(i - sx) + abs(j - sy) > d);
+}
+void mark(int i, int j, int sx, int sy, int d){
+    if(!safe(i, j, sx, sy, d)) return;
+
+    if(dp[i][j]) return;
+    dp[i][j] = 1;
+    mark(i + 1, j, sx, sy, d); mark(i - 1, j, sx, sy, d);
+
+    mark(i, j + 1, sx, sy, d); mark(i, j - 1, sx, sy, d);
+}
 void slv(){
+        int n, m, sx, sy, d; cin >> n >> m >> sx >> sy >> d; 
+
+        dp = vector<vector<bool>> (n + 1, vector<bool> (m + 1));
+
+        // mark(1, 1, sx, sy, d);
+        bool top = true, right = true, left = true, bottom = true;
+        for(int j = 1; j <= m; j++){
+            if(!safe(1, j, sx, sy, d)){
+                top = false;
+            }
+            if(!safe(n, j, sx, sy, d)){
+                bottom = false;
+            }
+        }
+        for(int i = 1; i <= n; i++){
+            if(!safe(i, m, sx, sy, d)){
+                right = false; 
+            }
+            if(!safe(i, 1, sx, sy, d)){
+                left = false; 
+            }
+        }
         
+
+        if(top and right or bottom and left){
+            cout << n + m - 2 << endl; return;
+        }
+        cout << -1 << endl;
 }
 
 int32_t main(){

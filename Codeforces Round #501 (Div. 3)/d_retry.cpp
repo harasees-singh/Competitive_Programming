@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,14 +44,42 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
+        int n, k, s; cin >> n >> k >> s; 
+
+        if((n - 1) * k < s or k > s){
+            cout << "NO" << endl; return;
+        }
+        int jump = s / k;
+
+        int rem = s % k;
+
+        cout << "YES" << endl;
+
+        int cur = jump + 1;  
         
+        if(rem){
+            cur = jump + 2;
+            for(int i = 0; i < rem - 1; i++, cur = (cur == 1 ? jump + 2 : 1)) cout << cur << ' '; cout << cur << ' ';
+        }
+        cur = (cur == jump + 2 ? 2 : jump + 1);
+        
+        for(int i = 0; i < k - rem; i++){
+            cout << cur << ' '; 
+
+            if(cur == 1) cur = jump + 1;
+
+            else if(cur == jump + 1) cur = 1; 
+
+            else if(cur == jump + 2) cur = 2; 
+
+            else cur = jump + 2;
+        }
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
                 slv();
         
         return 0;

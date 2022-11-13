@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,60 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<int> rightshift(vector<int> t){
+    int save = t[0];
 
+    int put = t.back();
+
+    t[0] = put;
+
+    for(int i = 1; i < 26; i++) swap(t[i], save);
+
+    return t;
+}
+vector<int> leftshift(vector<int> t){
+    int save = t.back();
+
+    int put = t[0];
+
+    t.back() = put;
+
+    for(int i = 26 - 2; i >= 0; i--) swap(t[i], save);
+
+    return t;
+}
 void slv(){
-        
+        int n; cin >> n; // number of operations
+        vector<int> dict(26);
+        string s; cin >> s; 
+        cin >> dict; 
+
+        vector<int> f(26);
+
+        for(int _ = 0; _ < n; _++){
+            f[s[_] - 'a']++;
+
+            int mx = -1;
+
+            for(int i = 25; i >= 0; i--) if(f[i]) {mx = i; break;}
+
+            assert(mx > -1);
+
+            int shift = dict[mx];
+
+            if(shift == 1) f = rightshift(f);
+            else f = leftshift(f);
+        }   
+        // printing counts
+
+        cout << f; 
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,14 +43,40 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+vector<vector<int>> POSSIBILITIES;
+
 void slv(){
-        
+        int n; cin >> n; 
+        vector<int> in(n); cin >> in;
+        vector<int> have(10);
+        for(auto p : in){
+                have[p % 10]++;
+        }
+        for(auto p : POSSIBILITIES){
+                bool ok = 1;
+                for(int i = 0; i < 10; i++){
+                        if(have[i] < p[i]) 
+                                {ok = 0; break;}
+                }
+                if(ok){
+                        cout << "YES" << endl; return;
+                }
+        }
+        cout << "NO" << endl;
 }
 
 int32_t main(){
         
         FIO
 
+        for(int i = 0; i <= 9; i++)
+                for(int j = 0; j <= 9; j++)
+                        for(int k = 0; k <= 9; k++)
+                                if((i + j + k) % 10 == 3){
+                                        vector<int> t(10);
+                                        t[i]++, t[j]++, t[k]++;
+                                        POSSIBILITIES.push_back(t);
+                                }
         w(T) 
                 slv();
         

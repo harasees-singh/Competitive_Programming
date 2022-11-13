@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,16 +42,46 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<int> deepestLeaf;
+vector<vector<int>> g;
+int dfs(int i){
+    int ans = deepestLeaf[i];
+    int tot = 0;
+    for(auto p : g[i]){
+        tot += dfs(p);
+    }
+    return max(ans, tot);
+}
+void calc(int i){
+    if(sz(g[i]) == 0){
+        deepestLeaf[i] = 1;
+
+        return;
+    }
+    for(auto p : g[i]) calc(p), amax(deepestLeaf[i], 1 + deepestLeaf[p]);
+}
 
 void slv(){
-        
+    int n; cin >> n; 
+
+    g = vector<vector<int>>(n + 1);
+
+    for(int i = 2; i <= n; i++){
+        int t; cin >> t; 
+
+        g[t].push_back(i);
+    }
+    deepestLeaf = vector<int> (n + 1);
+
+    calc(1);
+
+    cout << dfs(1);
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
                 slv();
         
         return 0;

@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,16 +43,92 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+struct SegmentTreeCustom{
+    vector<vector<int>> t; 
+
+    int N;
+
+    SegmentTreeCustom(vector<int>& in){
+        N = 4 * in.size() + 5;
+
+        t = vector<vector<int>> (N);
+
+        build(0, 0, in.size() - 1, in);
+    }
+    int cnt(vector<int> &v, int ele){
+        return upper_bound(v.begin(), v.end(), ele) - v.begin();
+    }
+    vector<int> add(vector<int> &a, vector<int> &b){
+        vector<int> ret(a); for(auto p : b) ret.push_back(p);
+        sort(ret.begin(), ret.end());
+
+        return ret;
+    }
+    void build(int v, int tl, int tr, vector<int> &in){
+        if(tl > tr) return;
+
+        if(tl == tr){
+            t[v] = {in[tl]};
+
+            return;
+        }
+
+        int mid = (tl + tr) / 2; 
+
+        // tl to mid - 1 and mid to tr
+
+        build(2 * v + 1, tl, mid, in);
+        build(2 * v + 2, mid + 1, tr, in);
+
+        t[v] = add(t[2 * v + 1], t[2 * v + 2]);
+
+        return;
+    }
+    int query(int v, int tl, int tr, int l, int r, int w){
+        // number of ele less than equal to w
+        if(tl > tr or tl > r or tr < l) return 0;
+
+        if(tl >= l and tr <= r) return cnt(t[v], w);
+
+        int mid = (tl + tr) / 2;
+
+        return query(2 * v + 1, tl, mid, l, r, w) + query(2 * v + 2, mid + 1, tr, l, r, w);
+    }       
+};
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> in(n);
+
+        cin >> in;
+
+        SegmentTreeCustom T(in);
+
+        cout << "build successful" << endl; cout.flush();
+
+        int Q; cin >> Q;
+
+        for(int i = 0; i < Q; i++){
+            int j; cin >> j;
+
+            if(j == 2){
+                int l, r, w; cin >> l >> r >> w;
+
+                cout << T.query(0, 0, n - 1, l, r - 1, w) << endl;
+            }
+            else{
+                int id, put; cin >> id >> put; 
+
+                cout << "UNDER CONSTRUCTION" << endl;
+            }
+        }
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        slv();
         
         return 0;
 }

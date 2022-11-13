@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,30 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >>n; 
+        string s; cin >>s;
+        vector<int> in(n); cin >> in;
+
+        // move once to the left
+
+        // dp 2 states move and not move;
+
+
+        vector<pair<int, int>> dp(n + 1);
+
+        for(int i = 1; i <= n; i++){
+            if(s[i - 1] == '0'){
+                // no hood
+                dp[i].first = max(dp[i - 1].first, dp[i - 1].second); // no cover
+                dp[i].second = -infinity; // cover
+            }
+            else{
+                // hood
+                dp[i].second = max(dp[i - 1].first, dp[i - 1].second) + in[i - 1];
+                dp[i].first = dp[i - 1].first + (i - 2 >= 0 ? in[i - 2] : 0);
+            }
+        }
+        cout << max(dp[n].first, dp[n].second) << endl;
 }
 
 int32_t main(){

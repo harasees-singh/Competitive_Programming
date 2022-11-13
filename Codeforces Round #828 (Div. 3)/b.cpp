@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,32 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n, q; cin >> n >> q; 
+
+        vector<int> f(2); // even, odd;
+
+        int tot = 0;
+
+        for(int i = 0; i < n; i++){
+            int t; cin >> t; 
+
+            tot += t;
+
+            f[t&1]++;
+            // same as f[t%2]++; btw will it work ? 
+            // is the type of t and 1 the same ? 
+            // what happens if i bitwise and two numbers that have different types ? 
+
+        }
+        for(int i = 0; i < q; i++){
+            int p, d; cin >> p >> d; 
+
+            tot += d * f[p];
+
+            if(d & 1) f[p ^ 1] += f[p], f[p] = 0;
+
+            cout << tot << endl;
+        }
 }
 
 int32_t main(){

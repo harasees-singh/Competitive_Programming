@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,14 +44,47 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        string s; cin >> s; 
+
+        // both strings will be prefixes of s
+
+        int z = n;
+
+        reverse(all(s));
+        while(s.size() > 1 and s.back() == '0') s.pop_back();
+        reverse(all(s));
+        n = s.size();
+        for(int i = 0; i < n; i++){
+            if(s[i] == '0'){
+                z = i; break;
+            }
+        }        
+        set<string> have;
+        for(int j = 0; j < z; j++){
+            string t(s);
+            int it = j;
+            for(int i = z; i < n; i++, it++){
+                if(s[it] == '1') t[i] = '1';
+            }
+            have.insert(t);
+        }
+        string ans; 
+        if(have.size()) ans = *prev(have.end());
+        else ans = s;
+
+        reverse(all(ans));
+        while(ans.size() > 1 and ans.back() == '0') ans.pop_back();
+        reverse(all(ans));
+
+        cout << ans;
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
                 slv();
         
         return 0;

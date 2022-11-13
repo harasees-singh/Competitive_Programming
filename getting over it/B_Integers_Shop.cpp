@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +44,39 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        int l = infinity, r = -infinity;
+        int lcost = 0, rcost = 0;
+
+        pair<int, int> single(0, infinity);
+
+        for(int i = 0; i < n; i++){
+                int L, R; cin >> L >> R;
+
+                int cost; cin >> cost; 
+
+                if(R - L > single.first) single.first = R - L, single.second = cost;
+                if(R - L == single.first) amin(single.second, cost);
+
+                if(L < l) l = L, lcost = cost;
+                if(L == l) amin(lcost, cost);
+
+                if(R > r) r = R, rcost = cost;
+                if(R == r) amin(rcost, cost);
+
+                if(single.first > r - l){
+                        cout << single.second;
+                }
+                else if(single.first == r - l){
+                        cout << min(single.second, lcost + rcost);
+                }
+                else{
+                        cout << lcost + rcost;
+                }
+                cout << endl;
+        }
+
 }
 
 int32_t main(){

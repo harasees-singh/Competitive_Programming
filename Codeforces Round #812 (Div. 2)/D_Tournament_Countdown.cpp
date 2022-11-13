@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,16 +42,64 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int query(int u, int v, int w, int x){
+        cout << "? " << u << ' ' << w << endl; cout.flush();
 
+        int a; cin >> a; 
+
+        if(a == 0){
+                cout << "? " << v << ' ' << x << endl; cout.flush();
+
+                int b; cin >> b; 
+
+                return (b==1?v:x); 
+        }
+        if(a == 1){
+                cout << "? " << u << ' ' << x << endl; cout.flush();
+
+                int b; cin >> b; 
+
+                return (b==1 ? u : x);
+        }
+        else {cout << "? " << v << ' ' << w << endl; cout.flush();}
+        int b; cin >> b; 
+
+        return (b==1 ? v : w);
+}
 void slv(){
-        
+        int n; cin >> n; 
+        vector<int> P;
+        for(int i = 1; i <= (1 << n); i++){
+                P.push_back(i);
+        }
+        for(; P.size() > 2; ){
+                vector<int> t;
+                int run = P.size() / 4;
+                for(int i = 0; i < run; i++){
+                        int u, v, w, x; 
+                        u = P[4 * i + 0];
+                        v = P[4 * i + 1];
+                        w = P[4 * i + 2];
+                        x = P[4 * i + 3];
+
+                        t.push_back(query(u, v, w, x));
+                }       
+                P = t;
+        }
+        if(P.size() == 1){
+                cout << "! " << *P.begin() << endl; cout.flush(); return;
+        }
+        cout << "? " << *P.begin() << ' ' << *++P.begin() << endl; cout.flush();
+
+        int t; cin >> t; 
+
+        cout << "! " << (t==1?*P.begin():*++P.begin()) << endl; cout.flush();
 }
 
 int32_t main(){
         
         FIO
-
-        w(T) 
+        w(T)
                 slv();
         
         return 0;

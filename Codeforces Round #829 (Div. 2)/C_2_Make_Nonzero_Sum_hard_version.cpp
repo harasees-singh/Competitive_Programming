@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +42,80 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<pair<int, int>> ans;
 
+void reduceD(int i, int j, vector<int> &in, int &d, const int more){
+    bool hasZero = (in[i] == 0);
+
+    // cout << i << ' ' << j << endl;
+
+    if(j == i){
+        ans.push_back({i + 1, i + 1}); return;
+    }
+
+    for(int it = i; it <= j; it++){
+        if(d and it + 1 <= j){
+            if(hasZero and it == i and in[it + 1] == more){
+                d--;
+                ans.push_back({it + 1, it + 2}); it++;
+
+                continue;
+            }
+            if(in[it] == -more and in[it + 1] == more){
+                // -1 -1
+                ans.push_back({it + 1, it + 2}); it++;
+                d--;
+                continue;
+            }
+            if(in[it] == more and in[it + 1] == more){
+                ans.push_back({it + 1, it + 2}); it++;
+                d--;
+                continue;
+            }
+        }            
+        ans.push_back({it + 1, it + 1});
+    }
+}
 void slv(){
-        
+        int n; cin >> n; 
+        vector<int> in(n);
+
+        ans = vector<pair<int, int>>();
+
+        cin >> in;
+
+        vector<int> f(2);
+
+        f = {count(all(in), 1), count(all(in), -1)};
+
+        int more = 1;
+
+        if((f[0] - f[1]) % 2){
+            cout << -1 << endl; return;
+        }
+        if(f[0] < f[1]) more = -1;
+        int d = abs(f[0] - f[1]);
+
+        d /= 2;
+
+        for(int i = 0; i < n; ){
+            if(in[i] == 0){
+                while(i + 1 < n and in[i + 1] == 0){
+                    reduceD(i, i, in, d, more);
+                    i++;
+                }
+            }
+            int j = i;
+
+            while(j + 1 < n and in[j + 1] != 0) j++;
+
+            reduceD(i, j, in, d, more);
+
+            i = j + 1;
+        }
+        cout << ans.size() << endl;
+
+        for(auto p : ans) cout << p << endl;
 }
 
 int32_t main(){

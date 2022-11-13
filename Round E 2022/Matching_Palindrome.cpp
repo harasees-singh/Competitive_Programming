@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,17 +42,58 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
+int LongestPalindromicPrefix(string str)
+{
+    string temp = str + '?';
+ 
+    reverse(str.begin(), str.end());
+    temp += str;
+ 
+    int n = temp.length();
+ 
+    vector<int> lps(n);
+ 
+    for (int i = 1; i < n; i++) {
+        int len = lps[i - 1];
+        while (len > 0
+               && temp[len] != temp[i]) {
+            len = lps[len - 1];
+        }
+ 
+        if (temp[i] == temp[len]) {
+            len++;
+        }
+        lps[i] = len;
+    }
+    return lps[n - 1];
+}
 void slv(){
-        
+        int n; cin >> n; 
+
+        string s; cin >> s; 
+        vector<int> pallindrom(n);
+        for(int i = 1; i <= n; i++){
+            int lps = LongestPalindromicPrefix(s.substr(0, i));
+            pallindrom[i - 1] = (lps == i);
+        }
+        for(int i = 0; i < n - 1; i++){
+            if(pallindrom[i] and pallindrom[n - i - 2]){
+                cout << s.substr(0, i + 1) << endl; return;
+            }
+        }
+        cout << s << endl;
+
 }
 
 int32_t main(){
         
         FIO
 
-        w(T) 
-                slv();
+        int T; cin>>T;
+
+        for(int t=1; t<=T; t++){
+            cout<<"Case #"<<t<<": "; slv();
+        }
         
         return 0;
 }

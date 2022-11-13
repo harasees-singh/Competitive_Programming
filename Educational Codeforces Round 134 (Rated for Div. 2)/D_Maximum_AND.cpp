@@ -14,7 +14,6 @@ using namespace std;
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
-#define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -32,7 +31,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,7 +43,53 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        // map a set to set
+
+        // TC = n * 30
+
+        int AND = 0;
+
+        map<set<int>, set<int>> F;
+
+        int n; cin >> n;
+
+        vector<int> a(n), b(n); cin >> a >> b;
+
+        set<int> t;
+        for(int i = 0; i < n; i++){
+            t.insert(i);
+        }
+
+        F[t] = t;
+
+        for(int i = 29; i >= 0; i--){
+            bool partition = true;
+            map<set<int>, set<int>> P; 
+            for(const pair<set<int>, set<int>> &p : F){
+
+                pair<set<int>, set<int>> ZERO, ONE;
+
+                for(auto &q : p.first) 
+                    if((a[q] >> i) & 1) ONE.first.insert(q);
+                    else ZERO.first.insert(q);
+
+                for(auto &q : p.second)
+                    if((b[q] >> i) & 1) ZERO.second.insert(q);
+                    else ONE.second.insert(q);
+
+                P.insert(ZERO); P.insert(ONE);
+                
+                partition = partition and (ONE.first.size() == ONE.second.size() and ZERO.first.size() == ZERO.second.size());
+                // partition = partition and (f == f_);
+            }
+
+            if(partition){
+                F = P;
+
+                AND += (1 << i);
+            }
+        }
+        cout << AND << endl;
 }
 
 int32_t main(){

@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,8 +43,36 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+vector<int> dp; // dp[i] is the max value of array d that can replace a[i];
+
+int dfs(int i, vector<int> &a, vector<int> &b){
+    int n = a.size();
+    if(i == n - 1) return b[n - 1];
+
+    if(dp[i] != -1) return dp[i];
+
+    if(a[i + 1] <= b[i]) return dp[i] = dfs(i + 1, a, b);
+
+    return dp[i] = b[i];
+}
+
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> a(n); cin >> a;
+        vector<int> b(n); cin >> b; 
+
+        dp = vector<int> (n, -1);
+
+        for(int i = 0; i < n; i++){
+            cout << *lower_bound(all(b), a[i]) - a[i] << ' ';
+        }
+        cout << endl;
+
+        for(int i = 0; i < n; i++){
+            cout << dfs(i, a, b) - a[i] << ' ';
+        }
+        cout << endl;
 }
 
 int32_t main(){
