@@ -44,26 +44,41 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
-void slv(){
-        
+int shave(int i){
+    int cnt = 0;
+    for(; i > 1 and (i % 2 == 0 or i % 3 == 0); cnt++){
+        if(i % 2 == 0) i /= 2;
+        else if(i % 3 == 0) i /= 3;
+    }
+    return i > 1 ? -1 : cnt;
 }
+
+void slv(){
+        // make them equal to gcd ?
+        // shave off redundant 2s and 3s
+
+        int n; cin >> n;
+        int gcd = 0;
+        vector<int> in(n); cin >> in;
+        for(auto p : in) gcd = __gcd(gcd, p);
+
+        int ops = 0;
+
+        for(auto p : in) {
+            int ret = shave(p / gcd);
+
+            if(ret == -1){
+                cout << -1 << endl; return;
+            }
+            ops += ret;
+        }
+        cout << ops << endl;    
+}   
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

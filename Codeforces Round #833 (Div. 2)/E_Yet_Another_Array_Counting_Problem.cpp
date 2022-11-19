@@ -52,18 +52,8 @@ int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

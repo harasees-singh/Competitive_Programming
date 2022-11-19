@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,27 +42,38 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+void B(vector<int>& perm, int k){
+        int less_or_equal = k + 1, greater = k;
 
+        vector<int> b(sz(perm)); 
+
+        for(int i = 0; i < sz(perm); i++){
+            b[perm[i] - 1] = (perm[i] <= k ? (greater > k ? greater : sz(perm) + 1) : (less_or_equal <= k ? less_or_equal : 0));
+
+            if(perm[i] <= k) less_or_equal = perm[i];
+            if(perm[i] > k) greater = perm[i];
+        }
+        cout << k << endl;
+        cout << "b " << b;
+}
 void slv(){
-        
+        int n = 4; 
+
+        vector<int> f(4); iota(all(f), 1);
+
+        do{
+            cout << "perm " << f;
+            for(int k = 0; k <= n; k++)
+                B(f, k);
+
+                cout << "------------" << endl;
+        } while(next_permutation(all(f)));
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

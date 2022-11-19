@@ -44,26 +44,119 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+struct mint{ 
+	int mod = MOD;
+	int x;
+ 
+	mint() : x(0) {}
+	mint(int _x) {
+		_x %= mod;
+		if (_x < 0) _x += mod;
+		x = _x;
+	}
+ 
+	mint& operator += (const mint &a) {
+		x += a.x;
+		if (x >= mod) x -= mod;
+		return *this;
+	}
+	mint& operator -= (const mint &a) {
+		x += mod - a.x;
+		if (x >= mod) x -= mod;
+		return *this;
+	}
+	mint& operator *= (const mint &a) {
+		x = x * a.x % mod;
+		return *this;
+	}
+	mint pow(int pw) const {
+		mint res = 1;
+		mint cur = *this;
+		while(pw) {
+			if (pw & 1) res *= cur;
+			cur *= cur;
+			pw >>= 1;
+		}
+		return res;
+	}
+	mint inv() const {
+		assert(x != 0);
+		int t = x;
+		int res = 1;
+		while(t != 1) {
+			int z = mod / t;
+			res = res * (mod - z) % mod;
+			t = mod - t * z;
+		}
+		return res;
+	}
+	mint& operator /= (const mint &a) {
+		return *this *= a.inv();
+	}
+	mint operator + (const mint &a) const {
+		return mint(*this) += a;
+	}
+	mint operator - (const mint &a) const {
+		return mint(*this) -= a;
+	}
+	mint operator * (const mint &a) const {
+		return mint(*this) *= a;
+	}
+	mint operator / (const mint &a) const {
+		return mint(*this) /= a;
+	}
+	bool operator == (const mint &a) const {
+		return x == a.x;
+	}
+	bool operator != (const mint &a) const {
+		return x != a.x;
+	}
+	bool operator < (const mint &a) const {
+		return x < a.x;
+	}
+};
+struct Factorials {
+	
+	vector<mint> f, fi;
+ 
+	Factorials() : f(), fi() {}
+	Factorials(int n) {
+		n += 10;
+		f = vector<mint>(n);
+		fi = vector<mint>(n);
+		f[0] = 1;
+		for (int i = 1; i < n; i++)
+			f[i] = f[i - 1] * i;
+		fi[n - 1] = f[n - 1].inv();
+		for (int i = n - 1; i > 0; i--)
+			fi[i - 1] = fi[i] * i;
+	}
+ 
+	mint C(int n, int k) {
+		if (k < 0 || k > n) return 0;
+		return f[n] * fi[k] * fi[n - k];
+	}
+};
 void slv(){
-        
+        int n, k; cin >> n >> k; amin(k, n);
+
+        Factorials F(n);
+
+        // if k == n we can always make 1 << n as the winner by directing all the edges as we like
+
+        mint ans = 1;
+
+        for(int i = 1; i <= k; i++){
+            ans += F.C(n, i); 
+        }
+        cout << ans.x << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

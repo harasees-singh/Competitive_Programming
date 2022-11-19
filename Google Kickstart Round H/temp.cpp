@@ -20,8 +20,6 @@ using namespace std;
 #define pb(n)                           push_back((n))
 #define mii                             map<int, int>
 #define umii                            unordered_map<int, int>
-#define w(T)                            int T; cin >> T; while(T--)
-#define FIO                             ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 #define l(var, initial, final)          for(int var=initial; var < final; var++)
 #define cout                            std::cout
 #define cin                             std::cin
@@ -32,7 +30,7 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
+void prn() { }
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,28 +41,34 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+const int N = 5e3;
+vector<int> f(N + 1);
+void get(int x){
+    for(int i = 2; i * i <= x; i++){
+        while(x % i == 0)
+            f[i]++, x /= i;
+    }
+    if(x > 1) f[x]++;
+}
 
 void slv(){
-        
-}
+        for(int i = 2; i <= N; i++) get(i);
+
+        cout << accumulate(all(f), 0ll) << endl;
+
+        cout << N - count(all(f), 0) << endl; // number of primes;
+}       
 
 int32_t main(){
         
-        FIO
+        ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
         int T = 1;
 
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
+        // cin >> T;
+        for(int t = 1; t <= T; t++){
+                slv();
         }
-        
-        
         return 0;
 }
 /*

@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        INT32_MAX
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -32,7 +32,7 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
+void prn() { }
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,9 +43,44 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// vector<int> dp;
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> in(n + 1); for(int i = 1; i <= n; i++) cin >> in[i];
+
+        vector<bool> vis(n + 1);
+
+        vector<int> perm;
+
+        for(int i = 1; i <= n; i++){
+            int p = i;
+            if(vis[p]) continue;
+            int len = 0;
+
+            for(; vis[p] == false; vis[p] = true, p = in[p], len++) ;
+
+            perm.push_back(len);
+        }   
+        sort(all(perm)); reverse(all(perm));
+
+        vector<int> dp(n + 1, infinity);
+
+        for(auto p : perm) dp[p] = 0;
+
+        int pt = 0;
+        int tot = 0;
+        for(int i = 1; i <= n; i++){
+            while(tot < i) tot += perm[pt], pt++;
+
+            int joins = pt - 1;
+
+            bool cut = true;
+            if(tot == i) cut = false;
+
+            dp[i] = min({2 * cut + joins, dp[tot - i] + joins + 1, dp[i]});
+        }
 }
 
 int32_t main(){
@@ -54,16 +89,13 @@ int32_t main(){
 
         int T = 1;
 
-        int t = 1; 
-        
-        cin >> t;
+        int t; cin >> t;
 
         for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
+            cout << "Case #" << T << ": ";
             
             slv();
         }
-        
         
         return 0;
 }

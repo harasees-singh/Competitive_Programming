@@ -43,27 +43,50 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// brute force over substrings of len from 1 to 81
+// any string over 18 len will have atmost 9 unique chars and each occurs 9 times so cool.
+// pigeonhole baby  
+int ret(int len, const string &in){
+        vector<int> f(10);
 
+        int unique = 0;
+        for(int i = 0; i < len - 1; i++){
+            if(f[in[i] - '0'] == 0) unique++;
+
+            f[in[i] - '0']++;
+        }
+        int cnt = 0;
+        for(int i = len - 1; i < sz(in); i++){
+            if(f[in[i] - '0'] == 0) unique++;
+            f[in[i] - '0']++;
+
+            int mx = *max_element(all(f));
+
+            cnt += (mx <= unique);
+
+            if(f[in[i - (len - 1)] - '0'] == 1) unique--;
+            f[in[i - (len - 1)] - '0']--;
+        }
+        return cnt;
+}   
 void slv(){
-        
+        int n; cin >> n; 
+        string in; cin>> in;
+
+        int ans = 0;
+
+        for(int len = 1; len <= min(101ll, n); len++){
+            ans += ret(len, in);
+        }   
+        cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

@@ -9,7 +9,7 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        INT32_MAX
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
@@ -43,9 +43,71 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// code a basic knapsack
+// given cycle lens are vlaues and weight associated with each cycle is 1
 
 void slv(){
+        int n; cin >> n;
+
+        vector<int> in(n + 1); for(int i = 1; i <= n; i++) cin >> in[i];
+
+        vector<bool> vis(n + 1);
+
+        vector<pair<int, int>> perm = {{0, 0}};
+
+        mii f;
+
+        for(int i = 1; i <= n; i++){
+            int p = i;
+            if(vis[p]) continue;
+            int len = 0;
+
+            for(; vis[p] == false; vis[p] = true, p = in[p], len++) ;
+            f[len]++;
+        }
+        for(auto p : f) perm.push_back(p);
+        vector<int> dp(n + 1, infinity);
+        dp[0] = 0;
+
+        for(int i = 1; i < perm.size(); i++){
+
+            vector<int> temp(dp);
+
+            int k = perm[i].second;
+            int len = perm[i].first;
+
+            for(int it = 0; it < len; it++){
+                deque<pair<int, int>> Q;
+                for(int j = it; j <= n; j += len){
+                    while(Q.empty() == false and Q.back().first >= dp[j] - j / len){
+                        Q.pop_back();
+                    }
+                    Q.push_back(make_pair(dp[j] - j / len, j));
+
+                    while(Q.front().second < j - k * len)
+                        Q.pop_front();
+                    
+                    // lazy delete done
+                    auto p = Q.front();
+
+                    int range_min = p.first + p.second / len + (j - p.second) / len; // first (-it)
+                    // then the ans = dp[j] + x; where x is the number of cycles of len perm[i]
+                    // needed to get to j i.e. (j - j') / k;
+                    
+                    amin(temp[j], range_min);
+                }
+            }
+            dp = temp;
+        }
+        for(auto &p : dp) p--;
         
+        int mn = dp[n];
+    
+        for(int i = n - 1; i >= 1; i--){
+            amin(dp[i], mn + 1);
+            amin(mn, dp[i]);
+        }
+        for(int i = 1; i <= n; i++) cout << dp[i] << " \n"[i == n];
 }
 
 int32_t main(){
@@ -54,16 +116,13 @@ int32_t main(){
 
         int T = 1;
 
-        int t = 1; 
-        
-        cin >> t;
+        int t; cin >> t;
 
         for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
+            cout << "Case #" << T << ": ";
             
             slv();
         }
-        
         
         return 0;
 }

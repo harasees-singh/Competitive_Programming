@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,27 +42,56 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+bool possible(int k, const vector<int>& in){
+    // on right we have rewards
+    // to the left shall the mighty cross
+    int cur = in[k - 1];
+    vector<pair<int, int>> rewards; 
 
+    int p = 0, mn = 0;
+    for(int i = k; i < in.size(); i++){
+        p += in[i];
+        amin(mn, p);
+
+        if(p > 0){
+            rewards.push_back({mn, p});
+            p = 0, mn = 0;
+        }
+    }
+    int re = 0;
+    for(int i = k - 2; i >= 0; i--){
+        while(re < rewards.size() and cur + rewards[re].first >= 0){
+            cur += rewards[re].second;
+            re++;
+        }
+        cur += in[i];
+
+        if(cur < 0) return false;
+    }
+    return true;
+}
 void slv(){
-        
+        int n, k; cin >> n >> k; 
+
+        vector<int> in(n); cin >> in;
+
+        bool ans = possible(k, in);
+
+        reverse(all(in));
+
+        k = n - k + 1;
+
+        ans = ans or possible(k, in);
+
+        cout << (ans ? "YES" : "NO") << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

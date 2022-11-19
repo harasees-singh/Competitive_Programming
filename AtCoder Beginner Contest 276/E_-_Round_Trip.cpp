@@ -43,27 +43,48 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<string> mat;
+int n, m; 
+int dx[] = {-1, 0, 1, 0};
+int dy[] = {0, -1, 0, 1};
+vector<int> footstep(4);
+void dfs(int i, int j, int id){
+        if(i < 0 or j < 0 or i == n or j == m) return;
 
+        if(mat[i][j] == '#') return;
+
+        if(mat[i][j] == 'S') {footstep[id]++; return;}
+
+        mat[i][j] = '#';
+
+        for(int it = 0; it < 4; it++){
+            dfs(i + dx[it], j + dy[it], id);
+        }
+}
 void slv(){
-        
+        cin >> n >> m;
+
+        mat = vector<string> (n);
+
+        for(auto &p : mat) cin >> p;
+        pair<int, int> start;
+
+        for(int i = 0; i < n; i++) 
+            for(int j = 0; j < m; j++)
+                if(mat[i][j] == 'S'){
+                    start = make_pair(i, j); 
+                    break;
+                }
+        for(int it = 0; it < 4; it++){
+            dfs(start.first + dx[it], start.second + dy[it], it);
+        }
+        cout << (*max_element(all(footstep)) > 1 ? "Yes" : "No") << endl;
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

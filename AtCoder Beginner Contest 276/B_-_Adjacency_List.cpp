@@ -45,25 +45,29 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n, m; cin >> n >> m;
+
+        vector<vector<int>> g (n + 1);
+
+        for(int i = 0; i < m; i++){
+            int u, v; cin >> u >> v;
+            g[u].push_back(v);
+            g[v].push_back(u);
+        }        
+
+        for(int i = 1; i <= n; i++){
+            sort(g[i].begin(), g[i].end());   
+            cout << g[i].size() << ' ';
+
+            for(auto q : g[i]) cout << q << ' ';
+            cout << endl;
+        }
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

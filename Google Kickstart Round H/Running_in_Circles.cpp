@@ -45,25 +45,42 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        // cout << (-5) % 5 << endl;
+        int L, n; cin >> L >> n;
+
+        int ans = 0;
+
+        int cur = 0;
+
+        for(int i= 0; i < n; i++){
+            int t; cin >> t;
+
+            char dir; cin >> dir;
+
+            if(dir == 'C'){
+                cur += t;
+            }
+            else cur -= t;
+
+            ans += (abs(cur) / L);
+
+            cur %= L;
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
-
         int T = 1;
 
-        int t = 1; 
-        
-        cin >> t;
+        int t; cin >> t;
 
         for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
+            cout << "Case #" << T << ": ";
             
             slv();
         }
-        
         
         return 0;
 }

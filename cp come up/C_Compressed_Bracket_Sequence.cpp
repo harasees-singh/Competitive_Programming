@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,25 +44,45 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> in(n); cin >> in;
+
+        // even id open, odd id cloase
+
+        int ans = 0; 
+
+        for(int i = 0; i < n; i += 2){
+            int crucial = in[i];
+            int not_crucial = 0;
+            for(int j = i + 1; j < n; j++){
+                if(j % 2 == 0) not_crucial += in[j];
+
+                else{
+                    int need = in[j];
+
+                    if(not_crucial <= need){
+
+                        ans += min(crucial, need - not_crucial) + (j > i + 1);
+                    }
+
+                    int sub = min(not_crucial, need);
+                    need -= sub; not_crucial -= sub;
+
+                    if(need) crucial -= need;
+
+                    if(crucial < 0)
+                        break;
+                }
+            }
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

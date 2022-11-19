@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,27 +42,67 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<vector<int>> dp;
+string s;
+int dfs(int i, int j){
+    // always make both moves 
+    // first alice then bob     
+    // total 4 calls
+
+    // max internal, min overall
+
+    if(j - i == 1){
+        // base case
+        if(s[j] != s[i]) return 0;
+
+        return 1;
+    }
+    // case 1
+    if(dp[i][j] != -1) return dp[i][j];
+    // ll, lr, rl, rr
+
+    int LL = dfs(i + 2, j);
+
+    if(LL == 1){
+        LL = (s[i] < s[i + 1] ? 0 : (s[i] == s[i + 1] ? 1 : 2));
+    }
+    int LR = dfs(i + 1, j - 1);
+
+    if(LR == 1){
+        LR = (s[i] < s[j] ? 0 : (s[i] == s[j] ? 1 : 2));
+    }
+    int RL = dfs(i + 1, j - 1);
+
+    if(RL == 1){
+        RL = (s[i] < s[j] ? 2 : (s[i] == s[j] ? 1 : 0));
+    }
+    int RR = dfs(i, j - 2);
+
+    if(RR == 1){
+        RR = (s[j] < s[j - 1] ? 0 : (s[j] == s[j - 1] ? 1 : 2));
+    }   
+
+    return dp[i][j] = min(max(LR, LL), max(RR, RL));
+}
 
 void slv(){
-        
+        cin >> s; 
+        int n = s.size();
+
+        dp = vector<vector<int>> (n, vector<int> (n, -1));
+
+        // dp[0][i][j] stores if Alice has to make a move on the substring [i, j] then does the game end in draw or Alice or Bob
+
+        // 0 if alice 1 if draw and 2 if bob
+        cout << (dfs(0, n - 1) == 0 ? "Alice" : (dfs(0, n - 1) == 1 ? "Draw" : "Bob")) << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

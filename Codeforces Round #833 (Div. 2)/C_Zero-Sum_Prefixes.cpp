@@ -43,27 +43,54 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// 1 operation should do it
 
 void slv(){
-        
+        int n; cin>> n;
+        vector<int> in(n); cin >> in;
+
+        set<int> zeroes; 
+
+        for(int i = 0; i < n; i++) if(in[i] == 0) zeroes.insert(i);
+
+        for(int i = 1; i < n; i++) in[i] += in[i - 1];
+
+        // cout << in; 
+
+        // int cur = count(all(in), 0ll);
+
+        int limit = (zeroes.size() ? *zeroes.begin() : n);
+
+        int cur = 0;
+        for(int i = 0; i < limit; i++) cur += in[i]==0; 
+
+        int ans = 0;
+
+        mii f;
+
+        int mx = 0;
+        for(int i = n - 1; i >= 0; i--){
+                f[in[i]]++;
+                // cout << ans <<endl;
+                amax(mx, f[in[i]]);
+
+                if(zeroes.count(i)){
+                    // amax(ans, f[in[i]]);
+                    // amax(ans, mx);
+                    ans += mx;
+                    mx = 0;
+                    f = mii();
+                }
+        }
+        cout << ans + cur << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

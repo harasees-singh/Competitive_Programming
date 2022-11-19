@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,27 +42,34 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
+int match(const pair<char, char> &p1, const pair<char, char> &p2){
+    return (p1.ff != p2.ff) + (p1.ss != p2.ss);
+}
 void slv(){
+        int n; cin>> n; 
+
+        string a, b; cin >> a >> b; 
+        int ans = (n&1) and (a[n / 2] != b[n / 2]);
         
+        for(int i = 0; i < n/2; i++){
+            // cout << ans << endl;
+            int A = a[i], B = a[n - i - 1], C = b[i], D = b[n - i - 1];
+
+            if(C != D){
+                ans += min(match({A, B}, {C, D}), match({A, B}, {D, C}));
+            }
+            else{
+                ans += (A != B);
+            }
+        }
+        cout << ans << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

@@ -45,25 +45,31 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+
+        vector<int> in(n); cin >> in;
+
+        int it = n - 1;
+
+        for(int i = n - 1; ; i--){
+            if(in[i - 1] > in[i]){
+                it = i; break;
+            }
+        }
+        int mx = it;
+        for(int i = it; i < n; i++){
+            if(in[i] < in[it - 1] and in[i] > in[mx]) mx = i;
+        }
+        swap(in[it - 1], in[mx]);
+
+        sort(in.begin() + it, in.end(), greater<int>());
+        for(auto p : in) cout << p << ' ';
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,27 +42,55 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+int query(int i, string q, int j = -1){
+    if(j == -1) j = i + 1;
+    cout << q << ' ' << i << ' ' << j << endl; cout.flush();
 
+    int t; cin >> t; 
+
+    return t;
+}
 void slv(){
-        
+        // 1, 11, 100
+        // find element number 1 and 3
+
+        // element 1 is ([1] or [2]) - (([1] or [2]) and ([2] or [3])) + [1] and [2]
+
+        int n, k; cin >> n >> k; 
+
+        vector<int> f(n);
+
+        int i = 1;
+
+        int OR1 = query(i, "or");
+
+        int OR2 = query(i + 1, "or");
+
+        int AND1 = query(i, "and");
+
+        int AND2 = query(i + 1, "and");
+
+        f[i - 1] = OR1 + AND1 - ((OR1 & OR2) - query(i, "and", i + 2) + (AND1 & AND2));
+
+        f[i + 1] = OR2 + AND2 - ((OR1 & OR2) - query(i, "and", i + 2) + (AND1 & AND2));
+
+        for(int i = 3; i < n; i++){
+            f[i] = query(i, "or") - f[i - 1] + query(i, "and");
+        }
+        f[1] = OR1 - f[0] + AND1;
+
+        sort(all(f));
+
+        cout << "finish " << f[k - 1] << endl;
+
+        return;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

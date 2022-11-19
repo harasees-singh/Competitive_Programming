@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,25 +44,58 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
-}
+        int n, k; cin >> n >> k; 
+
+        map<int, int> in;
+
+        vector<int> have(2 * n + 1);
+
+        for(int i = 0; i < k; i++){
+            int u, v; cin >> u >> v; 
+
+            have[u] = have[v] = 1;
+            if(u > v)swap(u, v);
+
+            in[u] = v;
+        }   
+        set<int> endings; 
+
+        for(int i = 2 * n, j = 0; i >= 1 and j < n - k; i--){
+            if(have[i] == 0) endings.insert(i), j++;
+        }
+
+        // for(auto p : endings) cout << p << endl;
+
+        pbds END;
+        vector<bool> vis(2 * n + 1);
+        int ans = 0;
+
+        for(int i = 1; i <= 2 * n; i++){
+            int end;
+            if(END.find(i) != END.end()) END.erase(i);
+            if(vis[i]) continue;
+            vis[i] = 1;
+            if(in.count(i)){
+                end = in[i];
+
+            }
+            else{
+                end = *endings.begin();
+                endings.erase(endings.begin());
+            }
+            ans += END.order_of_key(end);
+            vis[end] = 1;
+            END.insert(end);
+        }
+        cout << ans << endl;
+}   
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

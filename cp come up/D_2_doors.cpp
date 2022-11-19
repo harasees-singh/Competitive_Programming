@@ -14,7 +14,6 @@ using namespace std;
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
-#define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -32,7 +31,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,26 +42,91 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+vector<vector<int>> g_dir;
+map<pair<int, int>, int> E;
+vector<int> val;
+
+int lookup(int i, int j){
+	if(i > j) swap(i, j);
+	return E[{i, j}]; 
+}
+
+bool ok(int i, int j){
+	// j the bit 1
+	// ith node
+    return ((val[i] >> j) & 1);
+}
+
 void slv(){
+	int n, q; cin >> n >> q;
+	
+	val = vector<int> (n + 1, (1 << 30) - 1);
+
+	g_dir = vector<vector<int>> (n + 1, vector<int>());
+	vector<int> arr(n + 1);
+
+	for(int i = 0; i < q; i++){
+		int u, v; cin >> u >> v; 
+		
+		if(u > v) swap(u, v);
         
+		if(u != v) g_dir[u].push_back(v);
+
+		int w; cin >> w;
+
+		val[u] &= w;
+		val[v] &= w;
+
+        if(u == v){
+            arr[u] = w;
+        }
+		E[make_pair(u, v)] = w;
+	}
+
+	for(int i = 1; i <= n; i++){
+		for(int j = 0; j < 30; j++){
+			if(((arr[i] >> j) & 1)){
+				continue;
+			}
+			bool bit = false;
+
+            vector<int> LOOKUP;
+			
+			for(auto p : g_dir[i]){
+                // iterate over direct descendants
+                int t = (lookup(i, p));
+                
+                LOOKUP.push_back(t);
+
+                if(!ok(p, j) and (t >> j) & 1){
+                    bit = true; break;
+                    // there is an edge where jth bit is 1 but the child cannot have the bit on
+                }
+			}
+			if(bit){
+                // so the parent must have it on or else the graph breaks which never happens according to the statement
+				arr[i] |= (1 << j);
+
+                assert(ok(i, j));
+			}
+			else{
+                // let the children have their bits on
+                int it = 0;
+				for(auto p : g_dir[i]){
+					arr[p] |= (LOOKUP[it++] & (1 << j));
+				}
+			}
+		}
+	}
+	for(int i = 1; i <= n; i++){
+		cout << arr[i] << " \n"[i == n];
+	}
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

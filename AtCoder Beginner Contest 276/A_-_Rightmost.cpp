@@ -48,22 +48,12 @@ void slv(){
         
 }
 
-int32_t main(){
+int main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        assert(false);
+        w(T) 
+                slv();
         
         return 0;
 }

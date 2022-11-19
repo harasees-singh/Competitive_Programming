@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -41,31 +40,93 @@ template<typename T> istream& operator>>(istream &in, vector<T> &v) { for (auto 
 template<typename T> ostream& operator<<(ostream &out, vector<T> &v) {out << "{ "; for (auto &x : v) out << x << " "; out << "}\n"; return out;}
 template<typename T, typename... Args> void prn(T x, Args... args) {cout << x << " "; prn(args...);}
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
+// template <typename... T> void print(T&&... t){ ((cout << t << ' '), ...) << '\n';}
 
 MOD_DEFINE
 
+vector<vector<int>> g;
+vector<int> p;
+vector<bool> vis;
+vector<int> d;
+
+void mark(int i){
+	if(vis[i]) return;
+	
+	vis[i] = true;
+
+	for(auto p : g[i])
+		mark(p);
+}
+void dfs(int i){
+	for(int p : g[i]) d[p] = d[i] + 1, dfs(p);
+}
+bool good(int mid, const vector<pair<int, int>> &order, int k){
+	int n = order.size();
+
+	vis = vector<bool> (n + 1);
+
+	int operations = 0;
+	for(int i = n - 1; i >= 0; i--){
+		int idx = order[i].second;
+
+		int depth = order[i].first;
+
+		if(vis[idx] or depth <= mid) continue;
+
+		operations++;
+
+		int parent = idx; 
+
+		for(int j = 0; j < mid - 1; j++, parent = p[parent]) ;
+
+		mark(parent);
+	}
+	return operations <= k;
+}
 void slv(){
-        
+	int n, k; cin >> n >> k; 
+
+	g = vector<vector<int>> (n + 1);
+
+	p = vector<int> (n + 1);        
+
+	for(int i = 2; i <= n; i++){
+		int t; cin >> t; 
+
+		g[t].push_back(i);
+
+		p[i] = t;
+	}
+	d = vector<int> (n + 1);
+	dfs(1);
+
+	vector<pair<int, int>> order;
+
+	for(int i = 1; i <= n; i++){
+		order.push_back(make_pair(d[i], i));
+	}
+	sort(all(order));
+
+	int l = 1, r = n; 
+
+	while(l <= r){
+		int mid = (l + r) / 2;
+
+		if(good(mid, order, k)) r = mid - 1;
+
+		else l = mid + 1;
+	}
+	cout << l << endl;
 }
 
 int32_t main(){
         
-        FIO
+	FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
-        
-        return 0;
+	w(T) 
+		slv();
+	
+	return 0;
 }
 /*
 *think brute force first.

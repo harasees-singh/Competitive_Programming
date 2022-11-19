@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,25 +44,51 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+        vector<int> b(n); cin >> b;
+
+        int k = 0; 
+
+        for(int i = 1; i <= n; i++){
+            if(b[i - 1] <= i) break;
+
+            k = i;
+        }
+        cout << k << endl;
+
+        vector<vector<int>> g(n + 2);
+
+        for(int i = 0; i < n; i++){
+            g[b[i]].push_back(i + 1);
+        }
+        int p = (g[0].size() ? 0 : n + 1);
+
+        int cnt = 0;
+
+        for(; cnt < n; ){
+            int nxt = -1;
+
+            for(auto it : g[p]){
+                if(g[it].size()){
+                    nxt = it;
+                }
+                else cout << it << ' ', cnt++;
+            }
+            if(nxt != -1)
+                cout << nxt << ' '; 
+            cnt++;
+
+            p = nxt;
+        }
+        cout << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

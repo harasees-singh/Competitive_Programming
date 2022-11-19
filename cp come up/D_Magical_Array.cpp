@@ -45,25 +45,36 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n, m; cin >> n >> m;
+
+	map<int, int> f;
+
+	int not_ans = -1;
+
+	for(int i = 0; i < n; i++){
+		int tot = 0;
+		for(int j = 0; j < m; j++){
+			int t; cin >> t;
+
+			tot += t * (j + 1);
+		}
+		if(f.count(tot)){
+			not_ans = i;
+		}
+		f[tot] = i;
+	}
+	for(auto p : f) if(p.second != not_ans){
+		cout << p.second + 1 << ' ';
+	}
+	cout << (*prev(f.end())).first - (*(f.begin())).first << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

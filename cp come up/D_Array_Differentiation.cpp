@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,29 +42,37 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+bool ans = false;
+void rec(int i, const vector<int> &in, int tot, int len){
+    if((tot == 0 and len) or ans){
+        ans = true; return;
+    }
+    if(i == in.size()) return;
+    for(int j = -1; j <= 1; j++){
+        rec(i + 1, in, tot + in[i] * j, len + (bool)j);
+    }
+}
 
 void slv(){
-        
+    int n; cin >> n; 
+
+    ans = false;
+
+    vector<int> in(n); cin >> in;
+
+    rec(0, in, 0, 0);
+
+    cout << (ans ? "YES" : "NO") << endl;
 }
 
 int32_t main(){
         
-        FIO
+    FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
+    w(T) 
             slv();
-        }
-        
-        
-        return 0;
+    
+    return 0;
 }
 /*
 *think brute force first.

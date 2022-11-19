@@ -9,12 +9,11 @@ using namespace __gnu_pbds;
 using namespace std;
 #define ff                              first
 #define ss                              second
-#define infinity                        8999999999999999999
+#define infinity                        INT32_MAX
 #define sz(v)                           ((int)(v).size())
 #define all(v)                          (v).begin(),(v).end()
 #define MOD_DEFINE                      const int MOD = 1e9 + 7;
 #define endl                            '\n'
-#define int                             long long
 #define pii                             pair<int, int>
 #define vi                              vector<int>
 #define pb(n)                           push_back((n))
@@ -32,7 +31,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,25 +43,41 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        int n; cin >> n; 
+        vector<int> in(n); cin >> in;
+        in.push_back(0);
+
+        // dp[i][j] is the minium cost to get an array with 0 at positions 1....i - 1 and j at position i;
+        // at i u have 2 options u either xor it with itself and put a zero there
+        // or u xor it and the nxt element with itself.
+
+        vector<vector<int>> dp(n + 2, vector<int> (8192, infinity));
+
+        dp[1][in[0]] = 0;
+        dp[0][0] = 0;
+
+        for(int i = 1; i <= n; i++){
+            for(int j = 0; j < 8192; j++){
+                if(dp[i][j] != infinity){
+                    amin(dp[i + 1][j ^ in[i]], 1 + dp[i][j]);
+                }
+                amin(dp[i][0], 1 + dp[i - 1][0]);
+                amin(dp[i][in[i - 1]], dp[i - 1][0]);
+            }
+        }    
+        // cout << dp[3][5] << endl;
+
+        cout << dp[n][0] << endl;
+
+        // cout << dp[n];
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

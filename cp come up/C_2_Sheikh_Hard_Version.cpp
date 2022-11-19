@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,8 +42,70 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<int> sum, XOR;
+int get(int l, int r){
+    return (sum[r] - sum[l - 1] - (XOR[r] xor XOR[l - 1]));
+}
+int find_R(int l, int R){
+    int D = get(l, R); // ok
 
+    int Rl = l, Rr = R; // r
+
+    while(Rl <= Rr){
+        int mid = (Rl + Rr) / 2;
+
+        int have = get(l, mid);
+
+        if(have < D){
+            Rl = mid + 1;
+        }
+        else Rr = mid - 1;
+    }
+    assert(Rl <= R);
+    return Rl;
+}
 void slv(){
+        int n, q; cin >> n >> q; 
+
+        vector<int> in(n + 1); for(int i = 1; i <= n; i++) cin >> in[i];
+
+        sum = vector<int> (n + 1);
+        
+        XOR = vector<int>(n + 1);
+
+        for(int i = 1; i <= n; i++) sum[i] = sum[i - 1] + in[i];
+        for(int i = 1; i <= n; i++) XOR[i] = XOR[i - 1] xor in[i];
+    
+        set<int> NON_ZERO;
+
+        for(int i = 1; i <= n; i++){
+            if(in[i]){
+                NON_ZERO.insert(i);
+            }
+        }
+        for(int i = 0; i < q; i++){
+            int L, R; cin >> L >> R;
+
+            pair<int, int> ans = {L, R};
+
+            int need = get(L, R);
+
+            if(need == 0){
+                cout << L << ' ' << L << endl; continue;
+            }
+
+            auto it = NON_ZERO.lower_bound(L);
+
+            for(int j = 0; it != NON_ZERO.end() and *it <= R and get(*it, R) == need and j < 32; it++, j++){
+                int l = *it;
+                int r = find_R(l, R);
+
+                if(r - l < ans.second - ans.first){
+                    ans = {l, r};
+                }
+            }
+            cout << ans << endl;
+        }
         
 }
 
@@ -52,18 +113,8 @@ int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

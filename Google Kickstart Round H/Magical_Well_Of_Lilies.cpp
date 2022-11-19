@@ -43,9 +43,24 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+// number of divisors n lg n
+// for each div O(1) operation
 
 void slv(){
-        
+        // dp[i] is the min number of coins required for i lilies
+        // dp[i] = min over {dp[i - 1] + 1, dp[dj] + (i / dj - 1) * 2 + 4} over all divisors dj of i
+        int n; cin >> n;
+        vector<int> dp(n + 1, infinity);
+
+        dp[1] = 1;
+        for(int i = 2; i <= n; i++){
+            amin(dp[i], 1 + dp[i - 1]);
+
+            for(int mj = i; mj <= n; mj += i){
+                amin(dp[mj], dp[i] + ((mj / i) - 1) * 2 + 4);
+            }
+        }
+        cout << dp[n] << endl;
 }
 
 int32_t main(){
@@ -54,16 +69,13 @@ int32_t main(){
 
         int T = 1;
 
-        int t = 1; 
-        
-        cin >> t;
+        int t; cin >> t;
 
         for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
+            cout << "Case #" << T << ": ";
             
             slv();
         }
-        
         
         return 0;
 }

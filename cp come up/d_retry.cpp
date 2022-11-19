@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -44,26 +43,58 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 
 MOD_DEFINE
 
+bool rec(int i, const vector<int> &in, vector<int> &d){
+        if(i == in.size()){
+            map<int, int> f;
+            for(int i = 0; i < sz(in); i++){
+                for(int j = 0; j < sz(in); j++){
+                    f[d[i] - d[j]]++;
+                    f[d[j] - d[i]]++;
+                }
+            }
+            for(auto p : in){
+                if(f.count(p) == 0){
+                    return false;
+                }
+            }
+            return true;
+        }
+        // i and i - 1 ka difference is controlled
+
+        // i is d[i - 1] + in[i]
+        // i is d[i - 1] - in[i]
+
+        d[i] = d[i - 1] + in[i];
+        bool ret = rec(i + 1, in, d);
+        d[i] = d[i - 1] - in[i];
+        ret = ret or rec(i + 1, in, d);
+
+        return ret;
+}
+
 void slv(){
-        
+        int n; cin >> n;
+
+        vector<int> in(n); cin >> in;
+        vector<int> d(n);
+        for(int i = 0; i < n; i++){
+            swap(in[0], in[i]);
+            d[0] = in[0];
+            if(rec(1, in, d)){
+                cout << "YES" << endl; return;
+            }
+
+            swap(in[0], in[i]);
+        }
+        cout <<"NO" << endl; 
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }

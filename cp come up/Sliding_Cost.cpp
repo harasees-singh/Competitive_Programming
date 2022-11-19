@@ -30,9 +30,8 @@ using namespace std;
 #define fps(x, y)                       fixed<<setprecision(y)<<x
 typedef long long ll;
 typedef vector<pii> vpii;
-typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+typedef tree<pii, null_type, less<pii>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,25 +44,68 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+    int n, k; cin >> n >> k;
+
+    vector<int> in(n); cin >> in;
+
+    // median shifts by one only at each step
+
+    // 2, 4, 3 and 4, 3, 5
+    // median goes from 3 to 4 (1 step right) ans changes from 
+    // (3 - 2) + (4 - 3) to (5 - 4) + (4 - 3);        
+    // add and remove contribution of each element to the answer at each step
+
+    pbds PBDS;
+
+    for(int i = 0; i < k - 1; i++){
+        int t = in[i]; 
+
+        PBDS.insert(make_pair(t, i));
+    }
+    int ans = 0;
+
+    int t = in[k - 1]; 
+
+    PBDS.insert({t, k - 1});
+
+    int median = (*PBDS.find_by_order(k / 2)).first;
+    // cout << median << endl;
+
+    for(pii p : PBDS) ans += abs(p.first - median);
+
+    // cout << ans << ' ';
+    cout << median << endl;
+
+    for(int i = k; i < n; i++){
+        // prnIter(PBDS);
+
+        int t = in[k]; 
+
+        PBDS.insert({t, i});
+
+        ans += (abs(median - t));
+
+        ans -= abs(median - in[i - k]);
+
+        PBDS.erase(make_pair(in[i - k], i - k));
+
+        pii Median = (*PBDS.find_by_order(k / 2));
+
+        cout << Median.first << endl;
+        int d = Median.first - median;
+
+        ans -= d * (n - n / 2);
+
+        ans += d * (n / 2);
+
+        // cout << ans << ' ';
+    } 
 }
 
 int32_t main(){
         
         FIO
-
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

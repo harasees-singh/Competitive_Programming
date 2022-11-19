@@ -43,9 +43,54 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
+vector<int> in;
+vector<int> dp1;
+vector<int> root_dp;
+vector<vector<int>> g;
+void fill_dp1(int i, int p){
+    for(auto des: g[i]) 
+        if(des != p) 
+            fill_dp1(des, i), dp1[i] += (in[des] < in[i] ? dp1[des] : 0);
 
+    dp1[i] ++; // itself
+}
+void re_root(int i, int p){
+    // root at i
+    
+    if(in[p] < in[i]){
+        // root_dp[i] += parent_ans;
+        root_dp[i] = root_dp[p] + dp1[i];
+    }
+    else{
+        root_dp[i] = dp1[i];
+    }
+    for(auto q : g[i]){
+        if(q != p)
+            re_root(q, i);
+    }
+}
 void slv(){
-        
+        int n; cin >> n;
+
+        in = vector<int> (n + 1);
+        for(int i= 1; i <= n; i++) cin >> in[i];
+        dp1 = vector<int> (n + 1);
+        root_dp = vector<int> (n + 1);
+        g = vector<vector<int>> (n + 1);
+        for(int i = 0; i < n - 1; i++){
+            // tree given in limits
+
+            int u, v; cin >>u >> v; 
+
+            g[u].push_back(v); 
+            g[v].push_back(u); 
+        }
+        fill_dp1(1, 0);
+        // cout << dp1;
+        root_dp[1] = dp1[1];
+        for(auto p : g[1]) re_root(p, 1);
+
+        cout << *max_element(all(root_dp)) << endl;
 }
 
 int32_t main(){
@@ -54,16 +99,13 @@ int32_t main(){
 
         int T = 1;
 
-        int t = 1; 
-        
-        cin >> t;
+        int t; cin >> t;
 
         for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
+            cout << "Case #" << T << ": ";
             
             slv();
         }
-        
         
         return 0;
 }

@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -45,25 +44,42 @@ template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cou
 MOD_DEFINE
 
 void slv(){
-        
+        vector<int> f, g; 
+        for(int i = 2; i <= 26; i++){
+            cout << "? " << 1 <<' ' << i << endl; cout.flush();
+
+            int t; cin >> t; 
+
+            if(t == -1){
+                cout << "! " << i - 1 << endl; return;
+            }
+
+            f.push_back(t);
+        }
+        for(int i = 2; i <= 26; i++){
+            cout << "? " << i << ' ' << 1 << endl; cout.flush();
+
+            int t; cin >> t; 
+
+            if(t == -1){
+                cout << "! " << i - 1 << endl; return;
+            }
+
+            g.push_back(t);
+        }
+        for(int i = 0; i < 25; i++){
+            if(f[i] == g[i]){
+                continue;
+            }
+            cout << "! " << f[i] + g[i] << endl; return;
+        }
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+                slv();
         
         return 0;
 }

@@ -32,7 +32,6 @@ typedef long long ll;
 typedef vector<pii> vpii;
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
-void prn() {}
 template<typename T1, typename T2> istream &operator >> (istream& in, pair<T1, T2> &a){in >> a.ff >> a.ss; return in;}
 template<typename T1, typename T2> ostream &operator << (ostream& out, pair<T1, T2> a){out << a.ff << ' ' << a.ss; return out;}
 template<typename T, typename T1> T amax(T &a, T1 b){if(b > a) a = b; return a;}
@@ -43,27 +42,62 @@ template<typename T, typename... Args> void prn(T x, Args... args) {cout << x <<
 template<typename Iterable> void prnIter(const Iterable& ITER, ostream&out = cout){ auto x = ITER.begin(); out << "{ "; for (; x != ITER.end(); ++x) out << *x << ' '; out << "}" << endl;}
 
 MOD_DEFINE
-
+void complement(string &b){
+    for(auto &p : b){
+        p = (1 - (p - '0')) + '0';
+    }
+}
 void slv(){
-        
+        int n; cin >> n; 
+
+        string a, b; cin >> a >> b;
+        vector<pair<int, int>> ans;
+
+        if(n == 1){
+            if(b[0] == '1'){
+                cout << "NO" << endl; return;
+            }
+            cout << "YES" << endl; 
+            if(a[0]=='1'){
+                cout << 1 << endl; cout << 1 << ' ' << 1 << endl; return;
+            }
+            cout << 0 << endl; return;
+        }
+
+        if(a != b){
+            complement(a);
+            if(a != b){
+                cout << "NO" << endl; return;
+            }
+            ans.push_back({1, n});
+        }
+        vector<int> ops(n);
+        for(int i = n - 1; i >= 1; i--){
+            if(a[i] == '1'){
+                // ans.push_back({1, i + 1});
+                ops[i] ^= 1; ops[i - 1] = 1;
+            }
+        }
+        for(int i = n - 1; i >= 0; i--){
+            if(ops[i]){
+                ans.push_back({1, i + 1});
+            }
+        }
+        if(a[0] == '1'){
+            ans.push_back({2, n});
+            ans.push_back({1, n});
+        }
+        cout << "YES" << endl;
+        cout << ans.size() << endl;
+        for(auto p : ans) cout << p << endl;
 }
 
 int32_t main(){
         
         FIO
 
-        int T = 1;
-
-        int t = 1; 
-        
-        cin >> t;
-
-        for(; T <= t; T++){
-            // cout << "Case #" << T << ": ";
-            
-            slv();
-        }
-        
+        w(T) 
+                slv();
         
         return 0;
 }
